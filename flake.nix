@@ -6,13 +6,16 @@
   inputs.flake-compat.url = "github:edolstra/flake-compat";
   inputs.flake-compat.flake = false;
 
-  outputs = { self, flake-utils, nixpkgs, ... }:
+  inputs.foundry.url = "github:shazow/foundry.nix/monthly";
+
+  outputs = { self, flake-utils, nixpkgs, foundry, ... }:
     let
       goVersion = 21;
       overlays = [
         (final: prev: {
           go = prev."go_1_${toString goVersion}";
         })
+        foundry.overlay
       ];
     in
     flake-utils.lib.eachDefaultSystem (system:
@@ -37,6 +40,8 @@
             golangci-lint
             jq
             just
+            foundry-bin
+            go-ethereum
           ] ++ lib.optionals stdenv.isDarwin [
             darwin.libobjc
             darwin.IOKit

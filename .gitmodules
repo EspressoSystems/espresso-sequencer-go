@@ -1,0 +1,3 @@
+[submodule "espresso-sequencer"]
+	path = espresso-sequencer
+	url = https://github.com/EspressoSystems/espresso-sequencer

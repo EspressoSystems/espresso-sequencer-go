@@ -1,7 +1,7 @@
 package nmt
 
 import (
-	"github.com/EspressoSystems/go-espresso-sequencer/types"
+	"github.com/EspressoSystems/espresso-sequencer-go/types"
 )
 
 // This function mocks batch transaction validation against a set of HotShot NMT roots.

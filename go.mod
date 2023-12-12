@@ -1,4 +1,4 @@
-module github.com/EspressoSystems/go-espresso-sequencer
+module github.com/EspressoSystems/espresso-sequencer-go
 
 go 1.21
 

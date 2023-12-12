@@ -9,7 +9,7 @@ sequencer.
 
 - Obtain code:
     
-        git clone git@github.com:EspressoSystems/go-espresso-sequencer
+        git clone git@github.com:EspressoSystems/espresso-sequencer-go
         git submodule update --init --recursive
 
 - Make sure [nix](https://nixos.org/download.html) is installed.

@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/EspressoSystems/go-espresso-sequencer/types"
+	"github.com/EspressoSystems/espresso-sequencer-go/types"
 
 	"github.com/ethereum/go-ethereum/log"
 )

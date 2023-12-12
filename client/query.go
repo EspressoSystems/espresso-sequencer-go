@@ -16,16 +16,13 @@ type QueryService interface {
 	// less than `end`. This can be used to continue fetching headers in a time window if not all
 	// headers in the window were available when `FetchHeadersForWindow` was called.
 	FetchRemainingHeadersForWindow(ctx context.Context, from uint64, end uint64) (WindowMore, error)
-	// Get the transactions belonging to the given namespace in the block numbered `block` with the
-	// given header, along with a proof that these are all such transactions.
-	FetchTransactionsInBlock(ctx context.Context, block uint64, header *types.Header, namespace uint64) (TransactionsInBlock, error)
+	// Get the transactions belonging to the given namespace in the block with the given header,
+	// along with a proof that these are all such transactions.
+	FetchTransactionsInBlock(ctx context.Context, header *types.Header, namespace uint64) (TransactionsInBlock, error)
 }
 
 // Response to `FetchHeadersForWindow`.
 type WindowStart struct {
-	// The block number of the first block in the window, unless the window is empty, in which case
-	// this is the block number of `Next`.
-	From uint64 `json:"from"`
 	// The available block headers in the requested window.
 	Window []types.Header `json:"window"`
 	// The header of the last block before the start of the window. This proves that the query
@@ -42,7 +39,6 @@ type WindowStart struct {
 func (w *WindowStart) UnmarshalJSON(b []byte) error {
 	// Parse using pointers so we can distinguish between missing and default fields.
 	type Dec struct {
-		From   *uint64         `json:"from"`
 		Window *[]types.Header `json:"window"`
 		Prev   *types.Header   `json:"prev"`
 		Next   *types.Header   `json:"next"`
@@ -52,11 +48,6 @@ func (w *WindowStart) UnmarshalJSON(b []byte) error {
 	if err := json.Unmarshal(b, &dec); err != nil {
 		return err
 	}
-
-	if dec.From == nil {
-		return fmt.Errorf("Field from of type WindowStart is required")
-	}
-	w.From = *dec.From
 
 	if dec.Window == nil {
 		return fmt.Errorf("Field window of type WindowStart is required")

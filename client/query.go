@@ -16,9 +16,9 @@ type QueryService interface {
 	// less than `end`. This can be used to continue fetching headers in a time window if not all
 	// headers in the window were available when `FetchHeadersForWindow` was called.
 	FetchRemainingHeadersForWindow(ctx context.Context, from uint64, end uint64) (WindowMore, error)
-	// Get the transactions belonging to the given namespace in the block numbered `block` with the
-	// given header, along with a proof that these are all such transactions.
-	FetchTransactionsInBlock(ctx context.Context, block uint64, header *types.Header, namespace uint64) (TransactionsInBlock, error)
+	// Get the transactions belonging to the given namespace in the block with the given header,
+	// along with a proof that these are all such transactions.
+	FetchTransactionsInBlock(ctx context.Context, header *types.Header, namespace uint64) (TransactionsInBlock, error)
 }
 
 // Response to `FetchHeadersForWindow`.

@@ -29,12 +29,12 @@ var ReferenceL1BLockInfo L1BlockInfo = L1BlockInfo{
 }
 
 var ReferenceHeader Header = Header{
-	TransactionsRoot: ReferenceNmtRoot,
-	Metadata: Metadata{
-		Timestamp:   789,
-		L1Head:      124,
-		L1Finalized: &ReferenceL1BLockInfo,
-	},
+	Height:            42,
+	Timestamp:         789,
+	L1Head:            124,
+	L1Finalized:       &ReferenceL1BLockInfo,
+	PayloadCommitment: []byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+	TransactionsRoot:  ReferenceNmtRoot,
 }
 
 func TestEspressoTypesNmtRootJson(t *testing.T) {
@@ -85,19 +85,20 @@ func TestEspressoTypesL1BLockInfoJson(t *testing.T) {
 
 func TestEspressoTypesHeaderJson(t *testing.T) {
 	data := []byte(removeWhitespace(`{
+		"height": 42,
+		"timestamp": 789,
+		"l1_head": 124,
+		"l1_finalized": {
+			"number": 123,
+			"timestamp": "0x456",
+			"hash": "0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+		},
+		"payload_commitment": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 		"transactions_root": {
 			"root": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-		},
-		"metadata": {
-			"timestamp": 789,
-			"l1_head": 124,
-			"l1_finalized": {
-				"number": 123,
-				"timestamp": "0x456",
-				"hash": "0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
-			}
 		}
-	}`))
+	}
+	`))
 
 	// Check encoding.
 	encoded, err := json.Marshal(ReferenceHeader)
@@ -113,36 +114,7 @@ func TestEspressoTypesHeaderJson(t *testing.T) {
 	}
 	require.Equal(t, decoded, ReferenceHeader)
 
-	CheckJsonRequiredFields[Header](t, data, "transactions_root", "metadata")
-}
-
-func TestEspressoMetadataJson(t *testing.T) {
-	data := []byte(removeWhitespace(`{
-			"timestamp": 789,
-			"l1_head": 124,
-			"l1_finalized": {
-				"number": 123,
-				"timestamp": "0x456",
-				"hash": "0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
-			}
-		}`))
-	m := ReferenceHeader.Metadata
-
-	// Check encoding.
-	encoded, err := json.Marshal(m)
-	if err != nil {
-		t.Fatalf("Failed to marshal JSON: %v", err)
-	}
-	require.Equal(t, encoded, data)
-
-	// Check decoding
-	var decoded Metadata
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		t.Fatalf("Failed to unmarshal JSON: %v", err)
-	}
-	require.Equal(t, decoded, m)
-
-	CheckJsonRequiredFields[Metadata](t, data, "timestamp", "l1_head")
+	CheckJsonRequiredFields[Header](t, data, "height", "timestamp", "l1_head", "payload_commitment", "transactions_root")
 }
 
 func TestEspressoTransactionJson(t *testing.T) {
@@ -184,7 +156,7 @@ func TestEspressoTypesL1BlockInfoCommit(t *testing.T) {
 }
 
 func TestEspressoTypesHeaderCommit(t *testing.T) {
-	require.Equal(t, ReferenceHeader.Commit(), Commitment{26, 77, 186, 162, 251, 241, 135, 23, 132, 5, 196, 207, 131, 64, 207, 215, 141, 144, 146, 65, 158, 30, 169, 102, 251, 183, 101, 149, 168, 173, 161, 149})
+	require.Equal(t, ReferenceHeader.Commit(), Commitment{69, 70, 204, 173, 194, 81, 14, 28, 209, 104, 204, 53, 32, 43, 75, 233, 35, 99, 95, 128, 155, 14, 46, 17, 217, 191, 252, 217, 29, 252, 131, 61})
 }
 
 func TestEspressoCommitmentFromU256TrailingZero(t *testing.T) {

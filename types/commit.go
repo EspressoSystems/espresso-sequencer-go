@@ -88,16 +88,11 @@ func (b *RawCommitmentBuilder) Field(f string, c Commitment) *RawCommitmentBuild
 }
 
 func (b *RawCommitmentBuilder) OptionalField(f string, c *Commitment) *RawCommitmentBuilder {
-	b.ConstantString(f)
-
-	// Encode a 0 or 1 to separate the nil domain from the non-nil domain.
 	if c == nil {
-		b.Uint64(0)
+		b.Uint64Field(f, 0)
 	} else {
-		b.Uint64(1)
-		b.FixedSizeBytes((*c)[:])
+		b.FixedSizeField(f, (*c)[:])
 	}
-
 	return b
 }
 

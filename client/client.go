@@ -63,21 +63,16 @@ func (c *Client) FetchTransactionsInBlock(ctx context.Context, header *types.Hea
 	return res.Validate(header, namespace)
 }
 
-func (c *Client) SubmitTransaction(ctx context.Context, namespace uint64, tx types.Transaction) error {
-
-	txnBytes, err := json.Marshal(tx)
-	if err != nil {
-		return err
-	}
+func (c *Client) SubmitTransaction(ctx context.Context, tx types.Transaction) error {
 
 	// json.RawMessage is a []byte array, which go marshals as a base64-encoded string.
 	// Our sequencer API expects a JSON array, so as a workaround we convert the byte
 	// array to a uint array. This can be removed once the submit API can handle bytes
 	// encoded as base64 strings.
 	// https://github.com/EspressoSystems/espresso-sequencer-go/issues/5
-	payload := make([]uint64, len(txnBytes))
-	for i := range payload {
-		payload[i] = uint64(txnBytes[i])
+	payloadUint := make([]uint64, len(tx.Payload))
+	for i := range tx.Payload {
+		payloadUint[i] = uint64(tx.Payload[i])
 	}
 
 	type SequencerTransaction struct {
@@ -86,8 +81,8 @@ func (c *Client) SubmitTransaction(ctx context.Context, namespace uint64, tx typ
 	}
 
 	txn := SequencerTransaction{
-		Vm:      namespace,
-		Payload: payload,
+		Vm:      tx.Vm,
+		Payload: payloadUint,
 	}
 
 	marshalled, err := json.Marshal(txn)

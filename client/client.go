@@ -63,7 +63,7 @@ func (c *Client) FetchTransactionsInBlock(ctx context.Context, header *types.Hea
 	return res.Validate(header, namespace)
 }
 
-func (c *Client) SubmitTransaction(ctx context.Context, tx types.Transaction, namespace uint64) error {
+func (c *Client) SubmitTransaction(ctx context.Context, namespace uint64, tx types.Transaction) error {
 
 	txnBytes, err := json.Marshal(tx)
 	if err != nil {

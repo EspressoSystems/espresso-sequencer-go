@@ -39,7 +39,7 @@ func (c *Client) FetchHeadersForWindow(ctx context.Context, start uint64, end ui
 	return res, nil
 }
 
-func (c *Client) FetchHeader(ctx context.Context, blockHeight uint64) (types.Header, error) {
+func (c *Client) FetchHeaderByHeight(ctx context.Context, blockHeight uint64) (types.Header, error) {
 	var res types.Header
 	if err := c.get(ctx, &res, "availability/header/%d", blockHeight); err != nil {
 		return types.Header{}, err
@@ -64,28 +64,7 @@ func (c *Client) FetchTransactionsInBlock(ctx context.Context, header *types.Hea
 }
 
 func (c *Client) SubmitTransaction(ctx context.Context, tx types.Transaction) error {
-
-	// json.RawMessage is a []byte array, which go marshals as a base64-encoded string.
-	// Our sequencer API expects a JSON array, so as a workaround we convert the byte
-	// array to a uint array. This can be removed once the submit API can handle bytes
-	// encoded as base64 strings.
-	// https://github.com/EspressoSystems/espresso-sequencer-go/issues/5
-	payloadUint := make([]uint64, len(tx.Payload))
-	for i := range tx.Payload {
-		payloadUint[i] = uint64(tx.Payload[i])
-	}
-
-	type SequencerTransaction struct {
-		Vm      uint64   `json:"vm"`
-		Payload []uint64 `json:"payload"`
-	}
-
-	txn := SequencerTransaction{
-		Vm:      tx.Vm,
-		Payload: payloadUint,
-	}
-
-	marshalled, err := json.Marshal(txn)
+	marshalled, err := json.Marshal(tx)
 	if err != nil {
 		return err
 	}

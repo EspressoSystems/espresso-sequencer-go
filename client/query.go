@@ -10,6 +10,7 @@ import (
 
 // Interface to the Espresso Sequencer query service.
 type QueryService interface {
+	FetchHeader(ctx context.Context, height uint64) (types.Header, error)
 	// Get all the available headers whose timestamps fall in the window [start, end).
 	FetchHeadersForWindow(ctx context.Context, start uint64, end uint64) (WindowStart, error)
 	// Get all the available headers starting with the block numbered `from` whose timestamps are

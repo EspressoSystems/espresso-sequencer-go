@@ -63,24 +63,50 @@ func (c *Client) FetchTransactionsInBlock(ctx context.Context, header *types.Hea
 	return res.Validate(header, namespace)
 }
 
-func (c *Client) SubmitTransaction(ctx context.Context, tx types.Transaction) error {
-	txJson, err := json.Marshal(tx)
+func (c *Client) SubmitTransaction(ctx context.Context, tx types.Transaction, namespace uint64) error {
+
+	txnBytes, err := json.Marshal(tx)
 	if err != nil {
 		return err
 	}
-	request, err := http.NewRequest("POST", c.baseUrl+"submit/submit", bytes.NewBuffer(txJson))
+
+	// json.RawMessage is a []byte array, which go marshals as a base64-encoded string.
+	// Our sequencer API expects a JSON array, so as a workaround we convert the byte
+	// array to a uint array. This can be removed once the submit API can handle bytes
+	// encoded as base64 strings.
+	// https://github.com/EspressoSystems/espresso-sequencer-go/issues/5
+	payload := make([]uint64, len(txnBytes))
+	for i := range payload {
+		payload[i] = uint64(txnBytes[i])
+	}
+
+	type SequencerTransaction struct {
+		Vm      uint64   `json:"vm"`
+		Payload []uint64 `json:"payload"`
+	}
+
+	txn := SequencerTransaction{
+		Vm:      namespace,
+		Payload: payload,
+	}
+
+	marshalled, err := json.Marshal(txn)
+	if err != nil {
+		return err
+	}
+
+	request, err := http.NewRequestWithContext(ctx, "POST", c.baseUrl+"submit/submit", bytes.NewBuffer(marshalled))
 	if err != nil {
 		return err
 	}
 	request.Header.Set("Content-Type", "application/json")
-	client := &http.Client{}
-	response, err := client.Do(request)
+	response, err := c.client.Do(request)
 	if err != nil {
 		return err
 	}
 	defer response.Body.Close()
 	if response.StatusCode != 200 {
-		return fmt.Errorf("receieved unexpected status code: %v", response.StatusCode)
+		return fmt.Errorf("received unexpected status code: %v", response.StatusCode)
 	}
 	return nil
 }

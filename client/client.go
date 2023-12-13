@@ -1,6 +1,7 @@
 package client
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -38,6 +39,14 @@ func (c *Client) FetchHeadersForWindow(ctx context.Context, start uint64, end ui
 	return res, nil
 }
 
+func (c *Client) FetchHeader(ctx context.Context, blockHeight uint64) (types.Header, error) {
+	var res types.Header
+	if err := c.get(ctx, &res, "availability/header/%d", blockHeight); err != nil {
+		return types.Header{}, err
+	}
+	return res, nil
+}
+
 func (c *Client) FetchRemainingHeadersForWindow(ctx context.Context, from uint64, end uint64) (WindowMore, error) {
 	var res WindowMore
 	if err := c.get(ctx, &res, "availability/headers/window/from/%d/%d", from, end); err != nil {
@@ -52,6 +61,28 @@ func (c *Client) FetchTransactionsInBlock(ctx context.Context, header *types.Hea
 		return TransactionsInBlock{}, err
 	}
 	return res.Validate(header, namespace)
+}
+
+func (c *Client) SubmitTransaction(ctx context.Context, tx types.Transaction) error {
+	txJson, err := json.Marshal(tx)
+	if err != nil {
+		return err
+	}
+	request, err := http.NewRequest("POST", c.baseUrl+"submit/submit", bytes.NewBuffer(txJson))
+	if err != nil {
+		return err
+	}
+	request.Header.Set("Content-Type", "application/json")
+	client := &http.Client{}
+	response, err := client.Do(request)
+	if err != nil {
+		return err
+	}
+	defer response.Body.Close()
+	if response.StatusCode != 200 {
+		return fmt.Errorf("receieved unexpected status code: %v", response.StatusCode)
+	}
+	return nil
 }
 
 type NamespaceResponse struct {

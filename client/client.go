@@ -31,6 +31,14 @@ func NewClient(log log.Logger, url string) *Client {
 	}
 }
 
+func (c *Client) FetchLatestBlockHeight(ctx context.Context) (uint64, error) {
+	var res uint64
+	if err := c.get(ctx, &res, "status/latest_block_height"); err != nil {
+		return 0, err
+	}
+	return res, nil
+}
+
 func (c *Client) FetchHeadersForWindow(ctx context.Context, start uint64, end uint64) (WindowStart, error) {
 	var res WindowStart
 	if err := c.get(ctx, &res, "availability/headers/window/%d/%d", start, end); err != nil {

@@ -10,6 +10,8 @@ import (
 
 // Interface to the Espresso Sequencer query service.
 type QueryService interface {
+	// Get the latest block number
+	FetchLatestBlockHeight(ctx context.Context) (uint64, error)
 	// Get the header for block number `height`.
 	FetchHeaderByHeight(ctx context.Context, height uint64) (types.Header, error)
 	// Get all the available headers whose timestamps fall in the window [start, end).

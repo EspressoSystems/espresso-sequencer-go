@@ -29,12 +29,6 @@ var (
 	_ = abi.ConvertType
 )
 
-// BN254G1Point is an auto generated low-level Go binding around an user-defined struct.
-type BN254G1Point struct {
-	X *big.Int
-	Y *big.Int
-}
-
 // BN254G2Point is an auto generated low-level Go binding around an user-defined struct.
 type BN254G2Point struct {
 	X0 *big.Int
@@ -53,7 +47,7 @@ type HotShotQC struct {
 
 // HotshotMetaData contains all meta data concerning the Hotshot contract.
 var HotshotMetaData = &bind.MetaData{
-	ABI: "[{\"type\":\"function\",\"name\":\"MAX_BLOCKS\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"addNewStakingKey\",\"inputs\":[{\"name\":\"stakingKey\",\"type\":\"tuple\",\"internalType\":\"structBN254.G2Point\",\"components\":[{\"name\":\"x0\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"x1\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"y0\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"y1\",\"type\":\"uint256\",\"internalType\":\"uint256\"}]},{\"name\":\"amount\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"blockHeight\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"commitments\",\"inputs\":[{\"name\":\"blockHeight\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"outputs\":[{\"name\":\"commitment\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"getStakingKey\",\"inputs\":[{\"name\":\"index\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"outputs\":[{\"name\":\"\",\"type\":\"tuple\",\"internalType\":\"structBN254.G2Point\",\"components\":[{\"name\":\"x0\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"x1\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"y0\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"y1\",\"type\":\"uint256\",\"internalType\":\"uint256\"}]},{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"newBlocks\",\"inputs\":[{\"name\":\"qcs\",\"type\":\"tuple[]\",\"internalType\":\"structHotShot.QC[]\",\"components\":[{\"name\":\"height\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"blockCommitment\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"pad1\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"pad2\",\"type\":\"uint256\",\"internalType\":\"uint256\"}]}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"verifyAggSig\",\"inputs\":[{\"name\":\"message\",\"type\":\"bytes\",\"internalType\":\"bytes\"},{\"name\":\"sig\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"uint256\"}]},{\"name\":\"bitmap\",\"type\":\"bool[]\",\"internalType\":\"bool[]\"},{\"name\":\"minStakeThreshold\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"outputs\":[],\"stateMutability\":\"view\"},{\"type\":\"event\",\"name\":\"NewBlocks\",\"inputs\":[{\"name\":\"firstBlockNumber\",\"type\":\"uint256\",\"indexed\":false,\"internalType\":\"uint256\"},{\"name\":\"numBlocks\",\"type\":\"uint256\",\"indexed\":false,\"internalType\":\"uint256\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"NewStakingKey\",\"inputs\":[{\"name\":\"stakingKey\",\"type\":\"tuple\",\"indexed\":false,\"internalType\":\"structBN254.G2Point\",\"components\":[{\"name\":\"x0\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"x1\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"y0\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"y1\",\"type\":\"uint256\",\"internalType\":\"uint256\"}]},{\"name\":\"amount\",\"type\":\"uint256\",\"indexed\":false,\"internalType\":\"uint256\"},{\"name\":\"index\",\"type\":\"uint256\",\"indexed\":false,\"internalType\":\"uint256\"}],\"anonymous\":false},{\"type\":\"error\",\"name\":\"BLSSigVerificationFailed\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"IncorrectBlockNumber\",\"inputs\":[{\"name\":\"blockNumber\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"expectedBlockNumber\",\"type\":\"uint256\",\"internalType\":\"uint256\"}]},{\"type\":\"error\",\"name\":\"InvalidQC\",\"inputs\":[{\"name\":\"blockNumber\",\"type\":\"uint256\",\"internalType\":\"uint256\"}]},{\"type\":\"error\",\"name\":\"NoKeySelected\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"NotEnoughStake\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"TooManyBlocks\",\"inputs\":[{\"name\":\"numBlocks\",\"type\":\"uint256\",\"internalType\":\"uint256\"}]}]",
+	ABI: "[{\"type\":\"function\",\"name\":\"MAX_BLOCKS\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"addNewStakingKey\",\"inputs\":[{\"name\":\"stakingKey\",\"type\":\"tuple\",\"internalType\":\"structBN254.G2Point\",\"components\":[{\"name\":\"x0\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"x1\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y0\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y1\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"amount\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"blockHeight\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"commitments\",\"inputs\":[{\"name\":\"blockHeight\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"outputs\":[{\"name\":\"commitment\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"getStakingKey\",\"inputs\":[{\"name\":\"index\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"outputs\":[{\"name\":\"\",\"type\":\"tuple\",\"internalType\":\"structBN254.G2Point\",\"components\":[{\"name\":\"x0\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"x1\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y0\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y1\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"newBlocks\",\"inputs\":[{\"name\":\"qcs\",\"type\":\"tuple[]\",\"internalType\":\"structHotShot.QC[]\",\"components\":[{\"name\":\"height\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"blockCommitment\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"pad1\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"pad2\",\"type\":\"uint256\",\"internalType\":\"uint256\"}]}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"event\",\"name\":\"NewBlocks\",\"inputs\":[{\"name\":\"firstBlockNumber\",\"type\":\"uint256\",\"indexed\":false,\"internalType\":\"uint256\"},{\"name\":\"numBlocks\",\"type\":\"uint256\",\"indexed\":false,\"internalType\":\"uint256\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"NewStakingKey\",\"inputs\":[{\"name\":\"stakingKey\",\"type\":\"tuple\",\"indexed\":false,\"internalType\":\"structBN254.G2Point\",\"components\":[{\"name\":\"x0\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"x1\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y0\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y1\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"amount\",\"type\":\"uint256\",\"indexed\":false,\"internalType\":\"uint256\"},{\"name\":\"index\",\"type\":\"uint256\",\"indexed\":false,\"internalType\":\"uint256\"}],\"anonymous\":false},{\"type\":\"error\",\"name\":\"IncorrectBlockNumber\",\"inputs\":[{\"name\":\"blockNumber\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"expectedBlockNumber\",\"type\":\"uint256\",\"internalType\":\"uint256\"}]},{\"type\":\"error\",\"name\":\"InvalidQC\",\"inputs\":[{\"name\":\"blockNumber\",\"type\":\"uint256\",\"internalType\":\"uint256\"}]},{\"type\":\"error\",\"name\":\"NoKeySelected\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"NotEnoughStake\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"TooManyBlocks\",\"inputs\":[{\"name\":\"numBlocks\",\"type\":\"uint256\",\"internalType\":\"uint256\"}]}]",
 }
 
 // HotshotABI is the input ABI used to generate the binding from.
@@ -325,35 +319,6 @@ func (_Hotshot *HotshotSession) GetStakingKey(index *big.Int) (BN254G2Point, *bi
 // Solidity: function getStakingKey(uint256 index) view returns((uint256,uint256,uint256,uint256), uint256)
 func (_Hotshot *HotshotCallerSession) GetStakingKey(index *big.Int) (BN254G2Point, *big.Int, error) {
 	return _Hotshot.Contract.GetStakingKey(&_Hotshot.CallOpts, index)
-}
-
-// VerifyAggSig is a free data retrieval call binding the contract method 0x0340961e.
-//
-// Solidity: function verifyAggSig(bytes message, (uint256,uint256) sig, bool[] bitmap, uint256 minStakeThreshold) view returns()
-func (_Hotshot *HotshotCaller) VerifyAggSig(opts *bind.CallOpts, message []byte, sig BN254G1Point, bitmap []bool, minStakeThreshold *big.Int) error {
-	var out []interface{}
-	err := _Hotshot.contract.Call(opts, &out, "verifyAggSig", message, sig, bitmap, minStakeThreshold)
-
-	if err != nil {
-		return err
-	}
-
-	return err
-
-}
-
-// VerifyAggSig is a free data retrieval call binding the contract method 0x0340961e.
-//
-// Solidity: function verifyAggSig(bytes message, (uint256,uint256) sig, bool[] bitmap, uint256 minStakeThreshold) view returns()
-func (_Hotshot *HotshotSession) VerifyAggSig(message []byte, sig BN254G1Point, bitmap []bool, minStakeThreshold *big.Int) error {
-	return _Hotshot.Contract.VerifyAggSig(&_Hotshot.CallOpts, message, sig, bitmap, minStakeThreshold)
-}
-
-// VerifyAggSig is a free data retrieval call binding the contract method 0x0340961e.
-//
-// Solidity: function verifyAggSig(bytes message, (uint256,uint256) sig, bool[] bitmap, uint256 minStakeThreshold) view returns()
-func (_Hotshot *HotshotCallerSession) VerifyAggSig(message []byte, sig BN254G1Point, bitmap []bool, minStakeThreshold *big.Int) error {
-	return _Hotshot.Contract.VerifyAggSig(&_Hotshot.CallOpts, message, sig, bitmap, minStakeThreshold)
 }
 
 // AddNewStakingKey is a paid mutator transaction binding the contract method 0xf1f45d99.

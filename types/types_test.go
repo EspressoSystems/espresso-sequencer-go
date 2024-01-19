@@ -5,6 +5,8 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/EspressoSystems/espresso-sequencer-go/tagged-base64"
+
 	"github.com/ethereum/go-ethereum/common"
 
 	"github.com/stretchr/testify/require"
@@ -28,13 +30,17 @@ var ReferenceL1BLockInfo L1BlockInfo = L1BlockInfo{
 	Hash:      common.Hash{0x01, 0x23, 0x45, 0x67, 0x89, 0xab, 0xcd, 0xef, 0x01, 0x23, 0x45, 0x67, 0x89, 0xab, 0xcd, 0xef, 0x01, 0x23, 0x45, 0x67, 0x89, 0xab, 0xcd, 0xef, 0x01, 0x23, 0x45, 0x67, 0x89, 0xab, 0xcd, 0xef},
 }
 
+var ReferencePayloadCommitment, _ = tagged_base64.Parse("HASH~1yS-KEtL3oDZDBJdsW51Pd7zywIiHesBZsTbpOzrxOfu")
+var ReferenceBlockMerkleTreeRoot, _ = tagged_base64.Parse("MERKLE_COMM~AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAQA")
+
 var ReferenceHeader Header = Header{
-	Height:            42,
-	Timestamp:         789,
-	L1Head:            124,
-	L1Finalized:       &ReferenceL1BLockInfo,
-	PayloadCommitment: []byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-	TransactionsRoot:  ReferenceNmtRoot,
+	Height:              42,
+	Timestamp:           789,
+	L1Head:              124,
+	L1Finalized:         &ReferenceL1BLockInfo,
+	PayloadCommitment:   ReferencePayloadCommitment,
+	TransactionsRoot:    ReferenceNmtRoot,
+	BlockMerkleTreeRoot: ReferenceBlockMerkleTreeRoot,
 }
 
 func TestEspressoTypesNmtRootJson(t *testing.T) {
@@ -93,12 +99,12 @@ func TestEspressoTypesHeaderJson(t *testing.T) {
 			"timestamp": "0x456",
 			"hash": "0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
 		},
-		"payload_commitment": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+		"payload_commitment": "HASH~1yS-KEtL3oDZDBJdsW51Pd7zywIiHesBZsTbpOzrxOfu",
 		"transactions_root": {
 			"root": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-		}
-	}
-	`))
+		},
+		"block_merkle_tree_root": "MERKLE_COMM~AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAQA"
+	}`))
 
 	// Check encoding.
 	encoded, err := json.Marshal(ReferenceHeader)
@@ -114,7 +120,7 @@ func TestEspressoTypesHeaderJson(t *testing.T) {
 	}
 	require.Equal(t, decoded, ReferenceHeader)
 
-	CheckJsonRequiredFields[Header](t, data, "height", "timestamp", "l1_head", "payload_commitment", "transactions_root")
+	CheckJsonRequiredFields[Header](t, data, "height", "timestamp", "l1_head", "payload_commitment", "transactions_root", "block_merkle_tree_root")
 }
 
 func TestEspressoTransactionJson(t *testing.T) {
@@ -156,7 +162,7 @@ func TestEspressoTypesL1BlockInfoCommit(t *testing.T) {
 }
 
 func TestEspressoTypesHeaderCommit(t *testing.T) {
-	require.Equal(t, ReferenceHeader.Commit(), Commitment{69, 70, 204, 173, 194, 81, 14, 28, 209, 104, 204, 53, 32, 43, 75, 233, 35, 99, 95, 128, 155, 14, 46, 17, 217, 191, 252, 217, 29, 252, 131, 61})
+	require.Equal(t, ReferenceHeader.Commit(), Commitment{190, 236, 151, 104, 129, 198, 158, 31, 9, 215, 60, 100, 89, 107, 255, 69, 215, 118, 14, 183, 5, 50, 36, 182, 21, 202, 230, 196, 124, 243, 255, 212})
 }
 
 func TestEspressoCommitmentFromU256TrailingZero(t *testing.T) {

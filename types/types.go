@@ -5,27 +5,33 @@ import (
 	"fmt"
 	"math/big"
 
+	"github.com/EspressoSystems/espresso-sequencer-go/tagged-base64"
+
 	"github.com/ethereum/go-ethereum/common"
 )
 
+type TaggedBase64 = tagged_base64.TaggedBase64
+
 type Header struct {
-	Height            uint64       `json:"height"`
-	Timestamp         uint64       `json:"timestamp"`
-	L1Head            uint64       `json:"l1_head"`
-	L1Finalized       *L1BlockInfo `json:"l1_finalized" rlp:"nil"`
-	PayloadCommitment Bytes        `json:"payload_commitment"`
-	TransactionsRoot  NmtRoot      `json:"transactions_root"`
+	Height              uint64        `json:"height"`
+	Timestamp           uint64        `json:"timestamp"`
+	L1Head              uint64        `json:"l1_head"`
+	L1Finalized         *L1BlockInfo  `json:"l1_finalized" rlp:"nil"`
+	PayloadCommitment   *TaggedBase64 `json:"payload_commitment"`
+	TransactionsRoot    NmtRoot       `json:"transactions_root"`
+	BlockMerkleTreeRoot *TaggedBase64 `json:"block_merkle_tree_root"`
 }
 
 func (h *Header) UnmarshalJSON(b []byte) error {
 	// Parse using pointers so we can distinguish between missing and default fields.
 	type Dec struct {
-		Height            *uint64      `json:"height"`
-		Timestamp         *uint64      `json:"timestamp"`
-		L1Head            *uint64      `json:"l1_head"`
-		L1Finalized       *L1BlockInfo `json:"l1_finalized" rlp:"nil"`
-		PayloadCommitment *Bytes       `json:"payload_commitment"`
-		TransactionsRoot  *NmtRoot     `json:"transactions_root"`
+		Height              *uint64        `json:"height"`
+		Timestamp           *uint64        `json:"timestamp"`
+		L1Head              *uint64        `json:"l1_head"`
+		L1Finalized         *L1BlockInfo   `json:"l1_finalized" rlp:"nil"`
+		PayloadCommitment   **TaggedBase64 `json:"payload_commitment"`
+		TransactionsRoot    *NmtRoot       `json:"transactions_root"`
+		BlockMerkleTreeRoot **TaggedBase64 `json:"block_merkle_tree_root"`
 	}
 
 	var dec Dec
@@ -58,6 +64,11 @@ func (h *Header) UnmarshalJSON(b []byte) error {
 	}
 	h.TransactionsRoot = *dec.TransactionsRoot
 
+	if dec.BlockMerkleTreeRoot == nil {
+		return fmt.Errorf("Field block_merkle_tree_root of type Header is required")
+	}
+	h.BlockMerkleTreeRoot = *dec.BlockMerkleTreeRoot
+
 	h.L1Finalized = dec.L1Finalized
 	return nil
 }
@@ -74,7 +85,7 @@ func (self *Header) Commit() Commitment {
 		Uint64Field("timestamp", self.Timestamp).
 		Uint64Field("l1_head", self.L1Head).
 		OptionalField("l1_finalized", l1FinalizedComm).
-		FixedSizeField("payload_commitment", self.PayloadCommitment).
+		FixedSizeField("payload_commitment", self.PayloadCommitment.Value()).
 		Field("transactions_root", self.TransactionsRoot.Commit()).
 		Finalize()
 }

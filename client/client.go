@@ -33,7 +33,7 @@ func NewClient(log log.Logger, url string) *Client {
 
 func (c *Client) FetchLatestBlockHeight(ctx context.Context) (uint64, error) {
 	var res uint64
-	if err := c.get(ctx, &res, "status/latest_block_height"); err != nil {
+	if err := c.get(ctx, &res, "status/block-height"); err != nil {
 		return 0, err
 	}
 	return res, nil

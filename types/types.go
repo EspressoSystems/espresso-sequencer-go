@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"math/big"
 
-	"github.com/EspressoSystems/espresso-sequencer-go/tagged-base64"
+	tagged_base64 "github.com/EspressoSystems/espresso-sequencer-go/tagged-base64"
 
 	"github.com/ethereum/go-ethereum/common"
 )
@@ -20,6 +20,7 @@ type Header struct {
 	PayloadCommitment   *TaggedBase64 `json:"payload_commitment"`
 	TransactionsRoot    NmtRoot       `json:"transactions_root"`
 	BlockMerkleTreeRoot *TaggedBase64 `json:"block_merkle_tree_root"`
+	FeeMerkleTreeRoot   *TaggedBase64 `json:"fee_merkle_tree_root"`
 }
 
 func (h *Header) UnmarshalJSON(b []byte) error {
@@ -32,6 +33,7 @@ func (h *Header) UnmarshalJSON(b []byte) error {
 		PayloadCommitment   **TaggedBase64 `json:"payload_commitment"`
 		TransactionsRoot    *NmtRoot       `json:"transactions_root"`
 		BlockMerkleTreeRoot **TaggedBase64 `json:"block_merkle_tree_root"`
+		FeeMerkleTreeRoot   **TaggedBase64 `json:"fee_merkle_tree_root"`
 	}
 
 	var dec Dec
@@ -69,6 +71,11 @@ func (h *Header) UnmarshalJSON(b []byte) error {
 	}
 	h.BlockMerkleTreeRoot = *dec.BlockMerkleTreeRoot
 
+	if dec.FeeMerkleTreeRoot == nil {
+		return fmt.Errorf("Field fee_merkle_tree_root of type Header is required")
+	}
+	h.FeeMerkleTreeRoot = *dec.FeeMerkleTreeRoot
+
 	h.L1Finalized = dec.L1Finalized
 	return nil
 }
@@ -87,6 +94,8 @@ func (self *Header) Commit() Commitment {
 		OptionalField("l1_finalized", l1FinalizedComm).
 		FixedSizeField("payload_commitment", self.PayloadCommitment.Value()).
 		Field("transactions_root", self.TransactionsRoot.Commit()).
+		VarSizeField("block_merkle_tree_root", self.BlockMerkleTreeRoot.Value()).
+		VarSizeField("fee_merkle_tree_root", self.FeeMerkleTreeRoot.Value()).
 		Finalize()
 }
 

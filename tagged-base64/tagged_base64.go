@@ -39,6 +39,7 @@ func (t *TaggedBase64) String() string {
 func Parse(s string) (*TaggedBase64, error) {
 	// Split tag and data.
 	tokens := strings.Split(s, "~")
+        fmt.Println(tokens);
 	if len(tokens) < 2 {
 		return nil, fmt.Errorf("missing delimeter")
 	} else if len(tokens) > 2 {
@@ -84,6 +85,7 @@ func (t *TaggedBase64) UnmarshalJSON(in []byte) error {
 		return err
 	}
 	parsed, err := Parse(s)
+        fmt.Println(parsed);
 	if err != nil {
 		return err
 	}

@@ -20,10 +20,6 @@ func removeWhitespace(s string) string {
 // Reference data taken from the reference sequencer implementation
 // (https://github.com/EspressoSystems/espresso-sequencer/blob/main/data)
 
-var ReferenceNmtRoot NmtRoot = NmtRoot{
-	Root: []byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-}
-
 var ReferenceL1BLockInfo L1BlockInfo = L1BlockInfo{
 	Number:    123,
 	Timestamp: *NewU256().SetUint64(0x456),
@@ -40,31 +36,8 @@ var ReferenceHeader Header = Header{
 	L1Head:              124,
 	L1Finalized:         &ReferenceL1BLockInfo,
 	PayloadCommitment:   ReferencePayloadCommitment,
-	TransactionsRoot:    ReferenceNmtRoot,
 	BlockMerkleTreeRoot: ReferenceBlockMerkleTreeRoot,
 	FeeMerkleTreeRoot:   ReferenceFeeMerkleTreeRoot,
-}
-
-func TestEspressoTypesNmtRootJson(t *testing.T) {
-	data := []byte(removeWhitespace(`{
-		"root": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-	}`))
-
-	// Check encoding.
-	encoded, err := json.Marshal(ReferenceNmtRoot)
-	if err != nil {
-		t.Fatalf("Failed to marshal JSON: %v", err)
-	}
-	require.Equal(t, encoded, data)
-
-	// Check decoding
-	var decoded NmtRoot
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		t.Fatalf("Failed to unmarshal JSON: %v", err)
-	}
-	require.Equal(t, decoded, ReferenceNmtRoot)
-
-	CheckJsonRequiredFields[NmtRoot](t, data, "root")
 }
 
 func TestEspressoTypesL1BLockInfoJson(t *testing.T) {
@@ -102,9 +75,6 @@ func TestEspressoTypesHeaderJson(t *testing.T) {
 			"hash": "0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
 		},
 		"payload_commitment": "HASH~1yS-KEtL3oDZDBJdsW51Pd7zywIiHesBZsTbpOzrxOfu",
-		"transactions_root": {
-			"root": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-		},
 		"block_merkle_tree_root": "MERKLE_COMM~yB4_Aqa35_PoskgTpcCR1oVLh6BUdLHIs7erHKWi-usUAAAAAAAAAAEAAAAAAAAAJg",
 		"fee_merkle_tree_root": "MERKLE_COMM~VJ9z239aP9GZDrHp3VxwPd_0l28Hc5KEAB1pFeCIxhYgAAAAAAAAAAIAAAAAAAAAdA"
 	}`))
@@ -123,7 +93,7 @@ func TestEspressoTypesHeaderJson(t *testing.T) {
 	}
 	require.Equal(t, decoded, ReferenceHeader)
 
-	CheckJsonRequiredFields[Header](t, data, "height", "timestamp", "l1_head", "payload_commitment", "transactions_root", "block_merkle_tree_root", "fee_merkle_tree_root")
+	CheckJsonRequiredFields[Header](t, data, "height", "timestamp", "l1_head", "payload_commitment", "block_merkle_tree_root", "fee_merkle_tree_root")
 }
 
 func TestEspressoTransactionJson(t *testing.T) {
@@ -155,10 +125,6 @@ func TestEspressoTransactionJson(t *testing.T) {
 
 // Commitment tests ported from the reference sequencer implementation
 // (https://github.com/EspressoSystems/espresso-sequencer/blob/main/sequencer/src/block.rs)
-
-func TestEspressoTypesNmtRootCommit(t *testing.T) {
-	require.Equal(t, ReferenceNmtRoot.Commit(), Commitment{251, 80, 232, 195, 91, 2, 138, 18, 240, 231, 31, 172, 54, 204, 90, 42, 215, 42, 72, 187, 15, 28, 128, 67, 149, 117, 26, 114, 232, 57, 190, 10})
-}
 
 func TestEspressoTypesL1BlockInfoCommit(t *testing.T) {
 	require.Equal(t, ReferenceL1BLockInfo.Commit(), Commitment{224, 122, 115, 150, 226, 202, 216, 139, 51, 221, 23, 79, 54, 243, 107, 12, 12, 144, 113, 99, 133, 217, 207, 73, 120, 182, 115, 84, 210, 230, 126, 148})

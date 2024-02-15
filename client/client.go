@@ -63,12 +63,40 @@ func (c *Client) FetchRemainingHeadersForWindow(ctx context.Context, from uint64
 	return res, nil
 }
 
-func (c *Client) FetchTransactionsInBlock(ctx context.Context, header *types.Header, namespace uint64) (TransactionsInBlock, error) {
+//func (c *Client) FetchTransactionsInBlock(ctx context.Context, header *types.Header, namespace uint64) (TransactionsInBlock, error) {
+//	var res NamespaceResponse
+//	if err := c.get(ctx, &res, "availability/block/%d/namespace/%d", header.Height, namespace); err != nil {
+//		return TransactionsInBlock{}, err
+//	}
+//	return res.Validate(header, namespace)
+//}
+
+func (c *Client) FetchTransactionsInBlock(ctx context.Context, blockHeight uint64, namespace uint64) (TransactionsInBlock, error) {
 	var res NamespaceResponse
-	if err := c.get(ctx, &res, "availability/block/%d/namespace/%d", header.Height, namespace); err != nil {
+	if err := c.get(ctx, &res, "availability/block/%d/namespace/%d", blockHeight, namespace); err != nil {
 		return TransactionsInBlock{}, err
 	}
-	return res.Validate(header, namespace)
+	if res.Proof == nil {
+		return TransactionsInBlock{}, fmt.Errorf("field proof of type NamespaceResponse is required")
+	}
+	if res.Transactions == nil {
+		return TransactionsInBlock{}, fmt.Errorf("field transactions of type NamespaceResponse is required")
+	}
+
+	// Extract the transactions.
+	var txs []types.Bytes
+	for i, tx := range *res.Transactions {
+		if tx.Vm != namespace {
+			return TransactionsInBlock{}, fmt.Errorf("transaction %d has wrong namespace (%d, expected %d)", i, tx.Vm, namespace)
+		}
+		txs = append(txs, tx.Payload)
+	}
+
+	return TransactionsInBlock{
+		Transactions: txs,
+		Proof:        *res.Proof,
+	}, nil
+
 }
 
 func (c *Client) SubmitTransaction(ctx context.Context, tx types.Transaction) error {
@@ -96,47 +124,6 @@ func (c *Client) SubmitTransaction(ctx context.Context, tx types.Transaction) er
 type NamespaceResponse struct {
 	Proof        *json.RawMessage     `json:"proof"`
 	Transactions *[]types.Transaction `json:"transactions"`
-}
-
-// Validate a NamespaceResponse and extract the transactions.
-// NMT proof validation is currently stubbed out.
-func (res *NamespaceResponse) Validate(header *types.Header, namespace uint64) (TransactionsInBlock, error) {
-	if res.Proof == nil {
-		return TransactionsInBlock{}, fmt.Errorf("field proof of type NamespaceResponse is required")
-	}
-	if res.Transactions == nil {
-		return TransactionsInBlock{}, fmt.Errorf("field transactions of type NamespaceResponse is required")
-	}
-
-	// Check that these transactions are only and all of the transactions from `namespace` in the
-	// block with `header`.
-	// TODO this is a hack. We should use the proof from the response (`proof := NmtProof{}`).
-	// However, due to a simplification in the Espresso NMT implementation, where left and right
-	// boundary transactions not belonging to this namespace are included in the proof in their
-	// entirety, this proof can be quite large, even if this rollup has no large transactions in its
-	// own namespace. In production, we have run into issues where huge transactions from other
-	// rollups cause this proof to be so large, that the resulting PayloadAttributes exceeds the
-	// maximum size allowed for an HTTP request by OP geth. Since NMT proof validation is currently
-	// mocked anyways, we can subvert this issue in the short term without making the rollup any
-	// less secure than it already is simply by using an empty proof.
-	proof := types.NmtProof{}
-	if err := proof.Validate(header.TransactionsRoot, *res.Transactions); err != nil {
-		return TransactionsInBlock{}, err
-	}
-
-	// Extract the transactions.
-	var txs []types.Bytes
-	for i, tx := range *res.Transactions {
-		if tx.Vm != namespace {
-			return TransactionsInBlock{}, fmt.Errorf("transaction %d has wrong namespace (%d, expected %d)", i, tx.Vm, namespace)
-		}
-		txs = append(txs, tx.Payload)
-	}
-
-	return TransactionsInBlock{
-		Transactions: txs,
-		Proof:        proof,
-	}, nil
 }
 
 func (c *Client) get(ctx context.Context, out any, format string, args ...any) error {

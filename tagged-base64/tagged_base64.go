@@ -32,8 +32,8 @@ func New(tag string, value []byte) (*TaggedBase64, error) {
 }
 
 func (t *TaggedBase64) String() string {
-    data := append(t.value, t.checksum)
-    return fmt.Sprintf("%s~%s", t.tag, BASE64.EncodeToString(data))
+	data := append(t.value, t.checksum)
+	return fmt.Sprintf("%s~%s", t.tag, BASE64.EncodeToString(data))
 }
 
 func Parse(s string) (*TaggedBase64, error) {
@@ -61,8 +61,8 @@ func Parse(s string) (*TaggedBase64, error) {
 	if len(data) == 0 {
 		return nil, fmt.Errorf("missing checksum")
 	}
-	value := data[:len(data) - 1]
-	cs := data[len(data) - 1]
+	value := data[:len(data)-1]
+	cs := data[len(data)-1]
 	if cs != calcChecksum(tag, value) {
 		return nil, fmt.Errorf("incorrect checksum")
 	}

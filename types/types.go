@@ -17,8 +17,8 @@ type Header struct {
 	Timestamp           uint64        `json:"timestamp"`
 	L1Head              uint64        `json:"l1_head"`
 	L1Finalized         *L1BlockInfo  `json:"l1_finalized" rlp:"nil"`
+	NsTable             *NsTable      `json:"ns_table"`
 	PayloadCommitment   *TaggedBase64 `json:"payload_commitment"`
-	TransactionsRoot    NmtRoot       `json:"transactions_root"`
 	BlockMerkleTreeRoot *TaggedBase64 `json:"block_merkle_tree_root"`
 	FeeMerkleTreeRoot   *TaggedBase64 `json:"fee_merkle_tree_root"`
 }
@@ -31,7 +31,7 @@ func (h *Header) UnmarshalJSON(b []byte) error {
 		L1Head              *uint64        `json:"l1_head"`
 		L1Finalized         *L1BlockInfo   `json:"l1_finalized" rlp:"nil"`
 		PayloadCommitment   **TaggedBase64 `json:"payload_commitment"`
-		TransactionsRoot    *NmtRoot       `json:"transactions_root"`
+		NsTable             **NsTable      `json:"ns_table"`
 		BlockMerkleTreeRoot **TaggedBase64 `json:"block_merkle_tree_root"`
 		FeeMerkleTreeRoot   **TaggedBase64 `json:"fee_merkle_tree_root"`
 	}
@@ -61,10 +61,10 @@ func (h *Header) UnmarshalJSON(b []byte) error {
 	}
 	h.PayloadCommitment = *dec.PayloadCommitment
 
-	if dec.TransactionsRoot == nil {
+	if dec.NsTable == nil {
 		return fmt.Errorf("Field transactions_root of type Header is required")
 	}
-	h.TransactionsRoot = *dec.TransactionsRoot
+	h.NsTable = *dec.NsTable
 
 	if dec.BlockMerkleTreeRoot == nil {
 		return fmt.Errorf("Field block_merkle_tree_root of type Header is required")
@@ -92,8 +92,9 @@ func (self *Header) Commit() Commitment {
 		Uint64Field("timestamp", self.Timestamp).
 		Uint64Field("l1_head", self.L1Head).
 		OptionalField("l1_finalized", l1FinalizedComm).
-		FixedSizeField("payload_commitment", self.PayloadCommitment.Value()).
-		Field("transactions_root", self.TransactionsRoot.Commit()).
+		ConstantString("payload_commitment").
+		FixedSizeBytes(self.PayloadCommitment.Value()).
+		Field("ns_table", self.NsTable.Commit()).
 		VarSizeField("block_merkle_tree_root", self.BlockMerkleTreeRoot.Value()).
 		VarSizeField("fee_merkle_tree_root", self.FeeMerkleTreeRoot.Value()).
 		Finalize()
@@ -144,14 +145,16 @@ func (self *L1BlockInfo) Commit() Commitment {
 		Finalize()
 }
 
-type NmtRoot struct {
-	Root Bytes `json:"root"`
+type NsTable struct {
+	RawPayload Bytes `json:"raw_payload"`
 }
 
-func (r *NmtRoot) UnmarshalJSON(b []byte) error {
+type NamespaceProof = json.RawMessage
+
+func (r *NsTable) UnmarshalJSON(b []byte) error {
 	// Parse using pointers so we can distinguish between missing and default fields.
 	type Dec struct {
-		Root *Bytes `json:"root"`
+		RawPayload *Bytes `json:"raw_payload"`
 	}
 
 	var dec Dec
@@ -159,17 +162,17 @@ func (r *NmtRoot) UnmarshalJSON(b []byte) error {
 		return err
 	}
 
-	if dec.Root == nil {
-		return fmt.Errorf("Field root of type NmtRoot is required")
+	if dec.RawPayload == nil {
+		return fmt.Errorf("Field root of type RawPayload is required")
 	}
-	r.Root = *dec.Root
+	r.RawPayload = *dec.RawPayload
 
 	return nil
 }
 
-func (self *NmtRoot) Commit() Commitment {
-	return NewRawCommitmentBuilder("NMTROOT").
-		VarSizeField("root", self.Root).
+func (self *NsTable) Commit() Commitment {
+	return NewRawCommitmentBuilder("NSTABLE").
+		VarSizeBytes(self.RawPayload).
 		Finalize()
 }
 
@@ -200,16 +203,6 @@ func (t *Transaction) UnmarshalJSON(b []byte) error {
 	}
 	t.Payload = *dec.Payload
 
-	return nil
-}
-
-type BatchMerkleProof = Bytes
-type NmtProof = Bytes
-
-func (*NmtProof) Validate(root NmtRoot, transactions []Transaction) error {
-	// TODO since porting the Rust NMT to Go is a big task, this validation is stubbed out for now,
-	// and always succeeds. Essentially, we trust the sequencer until this is fixed.
-	// https://github.com/EspressoSystems/op-espresso-integration/issues/17
 	return nil
 }
 

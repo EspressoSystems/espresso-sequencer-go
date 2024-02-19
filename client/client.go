@@ -63,14 +63,6 @@ func (c *Client) FetchRemainingHeadersForWindow(ctx context.Context, from uint64
 	return res, nil
 }
 
-//func (c *Client) FetchTransactionsInBlock(ctx context.Context, header *types.Header, namespace uint64) (TransactionsInBlock, error) {
-//	var res NamespaceResponse
-//	if err := c.get(ctx, &res, "availability/block/%d/namespace/%d", header.Height, namespace); err != nil {
-//		return TransactionsInBlock{}, err
-//	}
-//	return res.Validate(header, namespace)
-//}
-
 func (c *Client) FetchTransactionsInBlock(ctx context.Context, blockHeight uint64, namespace uint64) (TransactionsInBlock, error) {
 	var res NamespaceResponse
 	if err := c.get(ctx, &res, "availability/block/%d/namespace/%d", blockHeight, namespace); err != nil {

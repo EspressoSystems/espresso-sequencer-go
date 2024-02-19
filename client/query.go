@@ -97,14 +97,14 @@ type TransactionsInBlock struct {
 	// The transactions.
 	Transactions []types.Bytes `json:"transactions"`
 	// A proof that these are all the transactions in the block with the requested namespace.
-	Proof types.NmtProof `json:"proof"`
+	Proof types.NamespaceProof `json:"proof"`
 }
 
 func (t *TransactionsInBlock) UnmarshalJSON(b []byte) error {
 	// Parse using pointers so we can distinguish between missing and default fields.
 	type Dec struct {
-		Transactions *[]types.Bytes  `json:"transactions"`
-		Proof        *types.NmtProof `json:"proof"`
+		Transactions *[]types.Bytes        `json:"transactions"`
+		Proof        *types.NamespaceProof `json:"proof"`
 	}
 
 	var dec Dec

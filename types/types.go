@@ -17,8 +17,8 @@ type Header struct {
 	Timestamp           uint64        `json:"timestamp"`
 	L1Head              uint64        `json:"l1_head"`
 	L1Finalized         *L1BlockInfo  `json:"l1_finalized" rlp:"nil"`
+	NsTable             *NsTable      `json:"ns_table"`
 	PayloadCommitment   *TaggedBase64 `json:"payload_commitment"`
-	NsTable             NsTable       `json:"ns_table"`
 	BlockMerkleTreeRoot *TaggedBase64 `json:"block_merkle_tree_root"`
 	FeeMerkleTreeRoot   *TaggedBase64 `json:"fee_merkle_tree_root"`
 }
@@ -31,7 +31,7 @@ func (h *Header) UnmarshalJSON(b []byte) error {
 		L1Head              *uint64        `json:"l1_head"`
 		L1Finalized         *L1BlockInfo   `json:"l1_finalized" rlp:"nil"`
 		PayloadCommitment   **TaggedBase64 `json:"payload_commitment"`
-		NsTable             *NsTable       `json:"ns_table"`
+		NsTable             **NsTable      `json:"ns_table"`
 		BlockMerkleTreeRoot **TaggedBase64 `json:"block_merkle_tree_root"`
 		FeeMerkleTreeRoot   **TaggedBase64 `json:"fee_merkle_tree_root"`
 	}
@@ -92,7 +92,8 @@ func (self *Header) Commit() Commitment {
 		Uint64Field("timestamp", self.Timestamp).
 		Uint64Field("l1_head", self.L1Head).
 		OptionalField("l1_finalized", l1FinalizedComm).
-		VarSizeField("payload_commitment", self.PayloadCommitment.Value()).
+		ConstantString("payload_commitment").
+		FixedSizeBytes(self.PayloadCommitment.Value()).
 		Field("ns_table", self.NsTable.Commit()).
 		VarSizeField("block_merkle_tree_root", self.BlockMerkleTreeRoot.Value()).
 		VarSizeField("fee_merkle_tree_root", self.FeeMerkleTreeRoot.Value()).
@@ -148,7 +149,7 @@ type NsTable struct {
 	RawPayload Bytes `json:"raw_payload"`
 }
 
-type NmtProof = json.RawMessage
+type NamespaceProof = json.RawMessage
 
 func (r *NsTable) UnmarshalJSON(b []byte) error {
 	// Parse using pointers so we can distinguish between missing and default fields.

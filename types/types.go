@@ -297,18 +297,8 @@ type FeeInfo struct {
 }
 
 func (self *FeeInfo) Commit() Commitment {
-	buf := make([]byte, 32)
-	self.Amount.FillBytes(buf)
 	return NewRawCommitmentBuilder("FEE_INFO").
 		FixedSizeField("account", self.Account.Bytes()).
-		FixedSizeField("amount", reverseBytes(buf)).
+		Uint256Field("amount", &self.Amount).
 		Finalize()
-}
-
-// BigEndian to LittleEndian
-func reverseBytes(data []byte) []byte {
-	for i, j := 0, len(data)-1; i < j; i, j = i+1, j-1 {
-		data[i], data[j] = data[j], data[i]
-	}
-	return data
 }

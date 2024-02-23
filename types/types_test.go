@@ -43,6 +43,7 @@ var ReferenceHeader Header = Header{
 	PayloadCommitment:   ReferencePayloadCommitment,
 	BlockMerkleTreeRoot: ReferenceBlockMerkleTreeRoot,
 	FeeMerkleTreeRoot:   ReferenceFeeMerkleTreeRoot,
+	FeeInfo:             &FeeInfo{Account: common.HexToAddress("0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"), Amount: *NewU256().SetUint64(0)},
 }
 
 func TestEspressoTypesL1BLockInfoJson(t *testing.T) {
@@ -84,7 +85,8 @@ func TestEspressoTypesHeaderJson(t *testing.T) {
 		},
 		"payload_commitment": "HASH~1yS-KEtL3oDZDBJdsW51Pd7zywIiHesBZsTbpOzrxOfu",
 		"block_merkle_tree_root": "MERKLE_COMM~yB4_Aqa35_PoskgTpcCR1oVLh6BUdLHIs7erHKWi-usUAAAAAAAAAAEAAAAAAAAAJg",
-		"fee_merkle_tree_root": "MERKLE_COMM~VJ9z239aP9GZDrHp3VxwPd_0l28Hc5KEAB1pFeCIxhYgAAAAAAAAAAIAAAAAAAAAdA"
+		"fee_merkle_tree_root": "MERKLE_COMM~VJ9z239aP9GZDrHp3VxwPd_0l28Hc5KEAB1pFeCIxhYgAAAAAAAAAAIAAAAAAAAAdA",
+		"fee_info":{"account":"0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266","amount":"0x0"}
 	}`))
 
 	// Check encoding.
@@ -101,7 +103,7 @@ func TestEspressoTypesHeaderJson(t *testing.T) {
 	}
 	require.Equal(t, decoded, ReferenceHeader)
 
-	CheckJsonRequiredFields[Header](t, data, "height", "timestamp", "l1_head", "payload_commitment", "block_merkle_tree_root", "fee_merkle_tree_root")
+	CheckJsonRequiredFields[Header](t, data, "height", "timestamp", "l1_head", "payload_commitment", "block_merkle_tree_root", "fee_merkle_tree_root", "fee_info")
 }
 
 func TestEspressoTransactionJson(t *testing.T) {
@@ -143,7 +145,7 @@ func TestEspressoTypesNsTable(t *testing.T) {
 }
 
 func TestEspressoTypesHeaderCommit(t *testing.T) {
-	require.Equal(t, ReferenceHeader.Commit(), Commitment{19, 245, 91, 19, 221, 210, 135, 172, 20, 94, 23, 207, 136, 96, 55, 55, 54, 123, 194, 75, 253, 27, 178, 32, 197, 202, 228, 155, 161, 34, 164, 35})
+	require.Equal(t, ReferenceHeader.Commit(), Commitment{10, 91, 108, 15, 144, 22, 84, 196, 88, 160, 240, 149, 162, 42, 255, 79, 202, 148, 222, 162, 83, 35, 24, 185, 168, 24, 242, 90, 239, 111, 175, 232})
 }
 
 func TestEspressoCommitmentFromU256TrailingZero(t *testing.T) {

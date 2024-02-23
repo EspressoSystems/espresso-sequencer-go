@@ -21,6 +21,7 @@ type Header struct {
 	PayloadCommitment   *TaggedBase64 `json:"payload_commitment"`
 	BlockMerkleTreeRoot *TaggedBase64 `json:"block_merkle_tree_root"`
 	FeeMerkleTreeRoot   *TaggedBase64 `json:"fee_merkle_tree_root"`
+	FeeInfo             *FeeInfo      `json:"fee_info"`
 }
 
 func (h *Header) UnmarshalJSON(b []byte) error {
@@ -34,6 +35,7 @@ func (h *Header) UnmarshalJSON(b []byte) error {
 		NsTable             **NsTable      `json:"ns_table"`
 		BlockMerkleTreeRoot **TaggedBase64 `json:"block_merkle_tree_root"`
 		FeeMerkleTreeRoot   **TaggedBase64 `json:"fee_merkle_tree_root"`
+		FeeInfo             **FeeInfo      `json:"fee_info"`
 	}
 
 	var dec Dec
@@ -76,6 +78,11 @@ func (h *Header) UnmarshalJSON(b []byte) error {
 	}
 	h.FeeMerkleTreeRoot = *dec.FeeMerkleTreeRoot
 
+	if dec.FeeInfo == nil {
+		return fmt.Errorf("Field fee_info of type Header is required")
+	}
+	h.FeeInfo = *dec.FeeInfo
+
 	h.L1Finalized = dec.L1Finalized
 	return nil
 }
@@ -97,6 +104,7 @@ func (self *Header) Commit() Commitment {
 		Field("ns_table", self.NsTable.Commit()).
 		VarSizeField("block_merkle_tree_root", self.BlockMerkleTreeRoot.Value()).
 		VarSizeField("fee_merkle_tree_root", self.FeeMerkleTreeRoot.Value()).
+		Field("fee_info", self.FeeInfo.Commit()).
 		Finalize()
 }
 
@@ -281,4 +289,26 @@ func (i *U256) UnmarshalJSON(in []byte) error {
 		return err
 	}
 	return nil
+}
+
+type FeeInfo struct {
+	Account common.Address `json:"account"`
+	Amount  U256           `json:"amount"`
+}
+
+func (self *FeeInfo) Commit() Commitment {
+	buf := make([]byte, 32)
+	self.Amount.FillBytes(buf)
+	return NewRawCommitmentBuilder("FEE_INFO").
+		FixedSizeField("account", self.Account.Bytes()).
+		FixedSizeField("amount", reverseBytes(buf)).
+		Finalize()
+}
+
+// BigEndian to LittleEndian
+func reverseBytes(data []byte) []byte {
+	for i, j := 0, len(data)-1; i < j; i, j = i+1, j-1 {
+		data[i], data[j] = data[j], data[i]
+	}
+	return data
 }

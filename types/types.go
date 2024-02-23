@@ -154,7 +154,7 @@ func (self *L1BlockInfo) Commit() Commitment {
 }
 
 type NsTable struct {
-	RawPayload Bytes `json:"raw_payload"`
+	Bytes Bytes `json:"bytes"`
 }
 
 type NamespaceProof = json.RawMessage
@@ -162,7 +162,7 @@ type NamespaceProof = json.RawMessage
 func (r *NsTable) UnmarshalJSON(b []byte) error {
 	// Parse using pointers so we can distinguish between missing and default fields.
 	type Dec struct {
-		RawPayload *Bytes `json:"raw_payload"`
+		Bytes *Bytes `json:"bytes"`
 	}
 
 	var dec Dec
@@ -170,17 +170,17 @@ func (r *NsTable) UnmarshalJSON(b []byte) error {
 		return err
 	}
 
-	if dec.RawPayload == nil {
+	if dec.Bytes == nil {
 		return fmt.Errorf("Field root of type RawPayload is required")
 	}
-	r.RawPayload = *dec.RawPayload
+	r.Bytes = *dec.Bytes
 
 	return nil
 }
 
 func (self *NsTable) Commit() Commitment {
 	return NewRawCommitmentBuilder("NSTABLE").
-		VarSizeBytes(self.RawPayload).
+		VarSizeBytes(self.Bytes).
 		Finalize()
 }
 

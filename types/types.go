@@ -166,7 +166,8 @@ type HotShotBlockMerkleProof struct {
 	L1Height uint64
 }
 
-// Validates a block merkle proof, returning the validated HotShot block height
+// Validates a block merkle proof, returning the validated HotShot block height. This is mocked until we have real
+// merkle tree snapshot support.
 func (p *HotShotBlockMerkleProof) Verify(root BlockMerkleRoot) (uint64, error) {
 	return 0, nil
 }

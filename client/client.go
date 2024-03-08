@@ -63,11 +63,12 @@ func (c *Client) FetchRemainingHeadersForWindow(ctx context.Context, from uint64
 	return res, nil
 }
 
+// TODO: This is a stub for now until we have merkle proof snapshots implemented in the query service
 func (c *Client) FetchBlockMerkleProof(l1Height uint64, hotshotHeight uint64) (types.HotShotBlockMerkleProof, error) {
 	mockProof := `{"proof":[]}`
 	return types.HotShotBlockMerkleProof{
 		Proof:    json.RawMessage(mockProof),
-		L1Height: 0,
+		L1Height: l1Height,
 	}, nil
 }
 

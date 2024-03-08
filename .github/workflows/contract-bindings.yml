@@ -45,5 +45,6 @@ jobs:
 
       - name: Generate Bindings
         run: |
-          just bind
+          just bind-hotshot
+          just bind-light-client
           git diff --exit-code

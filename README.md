@@ -22,4 +22,5 @@ sequencer.
 
 ## Generating contract bindings
 
-    just bind
+    just bind-hotshot
+    just bind-light-client

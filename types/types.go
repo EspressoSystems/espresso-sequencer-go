@@ -16,7 +16,7 @@ type Header struct {
 	Height              uint64        `json:"height"`
 	Timestamp           uint64        `json:"timestamp"`
 	L1Head              uint64        `json:"l1_head"`
-	L1Finalized         *L1BlockInfo  `json:"l1_finalized" rlp:"nil"`
+	L1Finalized         *L1BlockInfo  `json:"l1_finalized"           rlp:"nil"`
 	NsTable             *NsTable      `json:"ns_table"`
 	PayloadCommitment   *TaggedBase64 `json:"payload_commitment"`
 	BlockMerkleTreeRoot *TaggedBase64 `json:"block_merkle_tree_root"`
@@ -30,7 +30,7 @@ func (h *Header) UnmarshalJSON(b []byte) error {
 		Height              *uint64        `json:"height"`
 		Timestamp           *uint64        `json:"timestamp"`
 		L1Head              *uint64        `json:"l1_head"`
-		L1Finalized         *L1BlockInfo   `json:"l1_finalized" rlp:"nil"`
+		L1Finalized         *L1BlockInfo   `json:"l1_finalized"           rlp:"nil"`
 		PayloadCommitment   **TaggedBase64 `json:"payload_commitment"`
 		NsTable             **NsTable      `json:"ns_table"`
 		BlockMerkleTreeRoot **TaggedBase64 `json:"block_merkle_tree_root"`
@@ -158,6 +158,19 @@ type NsTable struct {
 }
 
 type NamespaceProof = json.RawMessage
+
+type BlockMerkleRoot = Commitment
+
+type HotShotBlockMerkleProof struct {
+	Proof    json.RawMessage
+	L1Height uint64
+}
+
+// Validates a block merkle proof, returning the validated HotShot block height. This is mocked until we have real
+// merkle tree snapshot support.
+func (p *HotShotBlockMerkleProof) Verify(root BlockMerkleRoot) (uint64, error) {
+	return 0, nil
+}
 
 func (r *NsTable) UnmarshalJSON(b []byte) error {
 	// Parse using pointers so we can distinguish between missing and default fields.

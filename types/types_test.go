@@ -46,6 +46,11 @@ var ReferenceHeader Header = Header{
 	FeeInfo:             &FeeInfo{Account: common.HexToAddress("0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"), Amount: *NewU256().SetUint64(0)},
 }
 
+var ReferenceTransaction Transaction = Transaction{
+	Namespace: 12648430,
+	Payload:   []byte{76, 111, 114, 101, 109, 32, 105, 112, 115, 117, 109, 32, 100, 111, 108, 111, 114, 32, 115, 105, 116, 32, 97, 109, 101, 116, 44, 32, 99, 111, 110, 115, 101, 99, 116, 101, 116, 117, 114, 32, 97, 100, 105, 112, 105, 115, 99, 105, 110, 103, 32, 101, 108, 105, 116, 46, 32, 68, 111, 110, 101, 99, 32, 108, 101, 99, 116, 117, 115, 32, 118, 101, 108, 105, 116, 44, 32, 99, 111, 109, 109, 111, 100, 111, 32, 101, 103, 101, 116, 32, 116, 101, 108, 108, 117, 115, 32, 118, 105, 116, 97, 101, 44, 32, 109, 111, 108, 101, 115, 116, 105, 101, 32, 109, 97, 120, 105, 109, 117, 115, 32, 116, 117, 114, 112, 105, 115, 46, 32, 77, 97, 101, 99, 101, 110, 97, 115, 32, 108, 97, 99, 117, 115, 32, 109, 97, 117, 114, 105, 115, 44, 32, 97, 117, 99, 116, 111, 114, 32, 113, 117, 105, 115, 32, 108, 97, 99, 117, 115, 32, 97, 116, 44, 32, 97, 117, 99, 116, 111, 114, 32, 118, 111, 108, 117, 116, 112, 97, 116, 32, 110, 105, 115, 105, 46, 32, 70, 117, 115, 99, 101, 32, 109, 111, 108, 101, 115, 116, 105, 101, 32, 117, 114, 110, 97, 32, 115, 105, 116, 32, 97, 109, 101, 116, 32, 113, 117, 97, 109, 32, 105, 109, 112, 101, 114, 100, 105, 101, 116, 32, 115, 117, 115, 99, 105, 112, 105, 116, 46, 32, 68, 111, 110, 101, 99, 32, 101, 108, 105, 116, 32, 108, 101, 99, 116, 117, 115, 44, 32, 100, 97, 112, 105, 98, 117, 115, 32, 105, 110, 32, 105, 112, 115, 117, 109, 32, 101, 116, 44, 32, 118, 105, 118, 101, 114, 114, 97, 32, 112, 104, 97, 114, 101, 116, 114, 97, 32, 102, 101, 108, 105, 115, 46, 32, 83, 101, 100, 32, 115, 101, 100, 32, 115, 101, 109, 32, 115, 101, 100, 32, 108, 105, 98, 101, 114, 111, 32, 115, 101, 109, 112, 101, 114, 32, 112, 111, 115, 117, 101, 114, 101, 46, 32, 85, 116, 32, 101, 117, 105, 115, 109, 111, 100, 32, 112, 117, 114, 117, 115, 32, 97, 116, 32, 109, 111, 108, 101, 115, 116, 105, 101, 32, 118, 111, 108, 117, 116, 112, 97, 116, 46, 32, 78, 117, 110, 99, 32, 101, 117, 105, 115, 109, 111, 100, 32, 105, 100, 32, 101, 115, 116, 32, 110, 101, 99, 32, 101, 117, 105, 115, 109, 111, 100, 46, 32, 65, 108, 105, 113, 117, 97, 109, 32, 113, 117, 105, 115, 32, 101, 114, 97, 116, 32, 98, 105, 98, 101, 110, 100, 117, 109, 44, 32, 101, 103, 101, 115, 116, 97, 115, 32, 97, 117, 103, 117, 101, 32, 113, 117, 105, 115, 44, 32, 116, 105, 110, 99, 105, 100, 117, 110, 116, 32, 116, 101, 108, 108, 117, 115, 46, 32, 68, 117, 105, 115, 32, 100, 97, 112, 105, 98, 117, 115, 32, 97, 99, 32, 106, 117, 115, 116, 111, 32, 117, 116, 32, 114, 104, 111, 110, 99, 117, 115, 46, 32, 78, 117, 108, 108, 97, 32, 118, 101, 104, 105, 99, 117, 108, 97, 32, 97, 117, 103, 117, 101, 32, 110, 111, 110, 32, 97, 114, 99, 117, 32, 118, 101, 115, 116, 105, 98, 117, 108, 117, 109, 32, 116, 101, 109, 112, 117, 115, 46, 32, 68, 117, 105, 115, 32, 117, 108, 108, 97, 109, 99, 111, 114, 112, 101, 114, 32, 115, 105, 116, 32, 97, 109, 101, 116, 32, 108, 97, 99, 117, 115, 32, 101, 116, 32, 100, 105, 103, 110, 105, 115, 115, 105, 109, 46, 32, 77, 97, 117, 114, 105, 115, 32, 97, 117, 99, 116, 111, 114, 32, 115, 111, 108, 108, 105, 99, 105, 116, 117, 100, 105, 110, 32, 102, 101, 117, 103, 105, 97, 116, 46, 32, 70, 117, 115, 99, 101, 32, 116, 105, 110, 99, 105, 100, 117, 110, 116, 32, 99, 111, 110, 100, 105, 109, 101, 110, 116, 117, 109, 32, 100, 97, 112, 105, 98, 117, 115, 46, 32, 65, 108, 105, 113, 117, 97, 109, 32, 97, 114, 99, 117, 32, 108, 101, 99, 116, 117, 115, 44, 32, 98, 108, 97, 110, 100, 105, 116, 32, 115, 101, 100, 32, 115, 101, 109, 32, 115, 105, 116, 32, 97, 109, 101, 116, 44, 32, 102, 101, 114, 109, 101, 110, 116, 117, 109, 32, 118, 101, 104, 105, 99, 117, 108, 97, 32, 109, 101, 116, 117, 115, 46, 32, 77, 97, 101, 99, 101, 110, 97, 115, 32, 116, 117, 114, 112, 105, 115, 32, 110, 101, 113, 117, 101, 44, 32, 116, 114, 105, 115, 116, 105, 113, 117, 101, 32, 101, 103, 101, 116, 32, 116, 105, 110, 99, 105, 100, 117, 110, 116, 32, 117, 116, 44, 32, 115, 99, 101, 108, 101, 114, 105, 115, 113, 117, 101, 32, 101, 117, 32, 108, 97, 99, 117, 115, 46, 32, 85, 116, 32, 98, 108, 97, 110, 100, 105, 116, 32, 101, 117, 32, 108, 101, 111, 32, 118, 105, 116, 97, 101, 32, 118, 111, 108, 117, 116, 112, 97, 116, 46},
+}
+
 func TestEspressoTypesL1BLockInfoJson(t *testing.T) {
 	data := []byte(removeWhitespace(`{
 		"number": 123,
@@ -81,7 +86,7 @@ func TestEspressoTypesHeaderJson(t *testing.T) {
 			"hash": "0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
 		},
 		"ns_table": {
-			"bytes":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+			"bytes":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 		},
 		"payload_commitment": "HASH~1yS-KEtL3oDZDBJdsW51Pd7zywIiHesBZsTbpOzrxOfu",
 		"block_merkle_tree_root": "MERKLE_COMM~yB4_Aqa35_PoskgTpcCR1oVLh6BUdLHIs7erHKWi-usUAAAAAAAAAAEAAAAAAAAAJg",
@@ -108,14 +113,11 @@ func TestEspressoTypesHeaderJson(t *testing.T) {
 
 func TestEspressoTransactionJson(t *testing.T) {
 	data := []byte(removeWhitespace(`{
-		"vm": 0,
-		"payload": [1,2,3,4,5]
+		"namespace": 12648430,
+		"payload": "TG9yZW0gaXBzdW0gZG9sb3Igc2l0IGFtZXQsIGNvbnNlY3RldHVyIGFkaXBpc2NpbmcgZWxpdC4gRG9uZWMgbGVjdHVzIHZlbGl0LCBjb21tb2RvIGVnZXQgdGVsbHVzIHZpdGFlLCBtb2xlc3RpZSBtYXhpbXVzIHR1cnBpcy4gTWFlY2VuYXMgbGFjdXMgbWF1cmlzLCBhdWN0b3IgcXVpcyBsYWN1cyBhdCwgYXVjdG9yIHZvbHV0cGF0IG5pc2kuIEZ1c2NlIG1vbGVzdGllIHVybmEgc2l0IGFtZXQgcXVhbSBpbXBlcmRpZXQgc3VzY2lwaXQuIERvbmVjIGVsaXQgbGVjdHVzLCBkYXBpYnVzIGluIGlwc3VtIGV0LCB2aXZlcnJhIHBoYXJldHJhIGZlbGlzLiBTZWQgc2VkIHNlbSBzZWQgbGliZXJvIHNlbXBlciBwb3N1ZXJlLiBVdCBldWlzbW9kIHB1cnVzIGF0IG1vbGVzdGllIHZvbHV0cGF0LiBOdW5jIGV1aXNtb2QgaWQgZXN0IG5lYyBldWlzbW9kLiBBbGlxdWFtIHF1aXMgZXJhdCBiaWJlbmR1bSwgZWdlc3RhcyBhdWd1ZSBxdWlzLCB0aW5jaWR1bnQgdGVsbHVzLiBEdWlzIGRhcGlidXMgYWMganVzdG8gdXQgcmhvbmN1cy4gTnVsbGEgdmVoaWN1bGEgYXVndWUgbm9uIGFyY3UgdmVzdGlidWx1bSB0ZW1wdXMuIER1aXMgdWxsYW1jb3JwZXIgc2l0IGFtZXQgbGFjdXMgZXQgZGlnbmlzc2ltLiBNYXVyaXMgYXVjdG9yIHNvbGxpY2l0dWRpbiBmZXVnaWF0LiBGdXNjZSB0aW5jaWR1bnQgY29uZGltZW50dW0gZGFwaWJ1cy4gQWxpcXVhbSBhcmN1IGxlY3R1cywgYmxhbmRpdCBzZWQgc2VtIHNpdCBhbWV0LCBmZXJtZW50dW0gdmVoaWN1bGEgbWV0dXMuIE1hZWNlbmFzIHR1cnBpcyBuZXF1ZSwgdHJpc3RpcXVlIGVnZXQgdGluY2lkdW50IHV0LCBzY2VsZXJpc3F1ZSBldSBsYWN1cy4gVXQgYmxhbmRpdCBldSBsZW8gdml0YWUgdm9sdXRwYXQu"
 	}`))
-	tx := Transaction{
-		Vm:      0,
-		Payload: []byte{1, 2, 3, 4, 5},
-	}
 
+	tx := ReferenceTransaction
 	// Check encoding.
 	encoded, err := json.Marshal(tx)
 	if err != nil {
@@ -130,7 +132,7 @@ func TestEspressoTransactionJson(t *testing.T) {
 	}
 	require.Equal(t, decoded, tx)
 
-	CheckJsonRequiredFields[Transaction](t, data, "vm", "payload")
+	CheckJsonRequiredFields[Transaction](t, data, "namespace", "payload")
 }
 
 // Commitment tests ported from the reference sequencer implementation
@@ -146,6 +148,10 @@ func TestEspressoTypesNsTable(t *testing.T) {
 
 func TestEspressoTypesHeaderCommit(t *testing.T) {
 	require.Equal(t, ReferenceHeader.Commit(), Commitment{10, 91, 108, 15, 144, 22, 84, 196, 88, 160, 240, 149, 162, 42, 255, 79, 202, 148, 222, 162, 83, 35, 24, 185, 168, 24, 242, 90, 239, 111, 175, 232})
+}
+
+func TestEspressoTypesTransaction(t *testing.T) {
+	require.Equal(t, ReferenceTransaction.Commit(), Commitment{239, 188, 78, 127, 214, 247, 253, 27, 70, 194, 164, 59, 255, 51, 143, 122, 226, 81, 75, 72, 153, 192, 94, 196, 38, 37, 127, 55, 51, 175, 226, 226})
 }
 
 func TestEspressoCommitmentFromU256TrailingZero(t *testing.T) {

@@ -87,8 +87,8 @@ func (c *Client) FetchTransactionsInBlock(ctx context.Context, blockHeight uint6
 	// Extract the transactions.
 	var txs []types.Bytes
 	for i, tx := range *res.Transactions {
-		if tx.Vm != namespace {
-			return TransactionsInBlock{}, fmt.Errorf("transaction %d has wrong namespace (%d, expected %d)", i, tx.Vm, namespace)
+		if tx.Namespace != namespace {
+			return TransactionsInBlock{}, fmt.Errorf("transaction %d has wrong namespace (%d, expected %d)", i, tx.Namespace, namespace)
 		}
 		txs = append(txs, tx.Payload)
 	}

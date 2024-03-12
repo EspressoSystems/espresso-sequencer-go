@@ -1,6 +1,7 @@
 package types
 
 import (
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"math/big"
@@ -198,15 +199,22 @@ func (self *NsTable) Commit() Commitment {
 }
 
 type Transaction struct {
-	Vm      uint64 `json:"vm"`
-	Payload Bytes  `json:"payload"`
+	Namespace uint64 `json:"namespace"`
+	Payload   Bytes  `json:"payload"`
+}
+
+func (self *Transaction) Commit() Commitment {
+	return NewRawCommitmentBuilder("Transaction").
+		Uint64Field("namespace", self.Namespace).
+		VarSizeBytes(self.Payload).
+		Finalize()
 }
 
 func (t *Transaction) UnmarshalJSON(b []byte) error {
 	// Parse using pointers so we can distinguish between missing and default fields.
 	type Dec struct {
-		Vm      *uint64 `json:"vm"`
-		Payload *Bytes  `json:"payload"`
+		Namespace *uint64 `json:"namespace"`
+		Payload   *Bytes  `json:"payload"`
 	}
 
 	var dec Dec
@@ -214,10 +222,10 @@ func (t *Transaction) UnmarshalJSON(b []byte) error {
 		return err
 	}
 
-	if dec.Vm == nil {
+	if dec.Namespace == nil {
 		return fmt.Errorf("Field vm of type Transaction is required")
 	}
-	t.Vm = *dec.Vm
+	t.Namespace = *dec.Namespace
 
 	if dec.Payload == nil {
 		return fmt.Errorf("Field payload of type Transaction is required")
@@ -232,31 +240,20 @@ func (t *Transaction) UnmarshalJSON(b []byte) error {
 type Bytes []byte
 
 func (b Bytes) MarshalJSON() ([]byte, error) {
-	// Convert to `int` array, which serializes the way we want.
-	ints := make([]int, len(b))
-	for i := range b {
-		ints[i] = int(b[i])
-	}
-
-	return json.Marshal(ints)
+	s := base64.StdEncoding.EncodeToString(b)
+	return json.Marshal(s)
 }
 
 func (b *Bytes) UnmarshalJSON(in []byte) error {
-	// Parse as `int` array, which deserializes the way we want.
-	var ints []int
-	if err := json.Unmarshal(in, &ints); err != nil {
+	var s string
+	if err := json.Unmarshal(in, &s); err != nil {
 		return err
 	}
-
-	// Convert back to `byte` array.
-	*b = make([]byte, len(ints))
-	for i := range ints {
-		if ints[i] < 0 || 255 < ints[i] {
-			return fmt.Errorf("byte out of range: %d", ints[i])
-		}
-		(*b)[i] = byte(ints[i])
+	bytes, err := base64.StdEncoding.DecodeString(s)
+	if err != nil {
+		return err
 	}
-
+	*b = bytes
 	return nil
 }
 

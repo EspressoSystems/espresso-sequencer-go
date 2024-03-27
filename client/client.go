@@ -10,24 +10,20 @@ import (
 	"strings"
 
 	"github.com/EspressoSystems/espresso-sequencer-go/types"
-
-	"github.com/ethereum/go-ethereum/log"
 )
 
 type Client struct {
 	baseUrl string
 	client  *http.Client
-	log     log.Logger
 }
 
-func NewClient(log log.Logger, url string) *Client {
+func NewClient(url string) *Client {
 	if !strings.HasSuffix(url, "/") {
 		url += "/"
 	}
 	return &Client{
 		baseUrl: url,
 		client:  http.DefaultClient,
-		log:     log,
 	}
 }
 
@@ -130,15 +126,12 @@ type NamespaceResponse struct {
 func (c *Client) get(ctx context.Context, out any, format string, args ...any) error {
 	url := c.baseUrl + fmt.Sprintf(format, args...)
 
-	c.log.Debug("get", "url", url)
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	if err != nil {
-		c.log.Error("failed to build request", "err", err, "url", url)
 		return err
 	}
 	res, err := c.client.Do(req)
 	if err != nil {
-		c.log.Error("error in request", "err", err, "url", url)
 		return err
 	}
 	defer res.Body.Close()
@@ -148,8 +141,7 @@ func (c *Client) get(ctx context.Context, out any, format string, args ...any) e
 		// information about why the request failed. If this call fails, the response will be `nil`,
 		// which is fine to include in the log, so we can ignore errors.
 		body, _ := io.ReadAll(res.Body)
-		c.log.Error("request failed", "err", err, "url", url, "status", res.StatusCode, "response", string(body))
-		return fmt.Errorf("request failed with status %d", res.StatusCode)
+		return fmt.Errorf("request failed with status %d and body %s", res.StatusCode, string(body))
 	}
 
 	// Read the response body into memory before we unmarshal it, rather than passing the io.Reader
@@ -157,13 +149,10 @@ func (c *Client) get(ctx context.Context, out any, format string, args ...any) e
 	// failed.
 	body, err := io.ReadAll(res.Body)
 	if err != nil {
-		c.log.Error("failed to read response body", "err", err, "url", url)
 		return err
 	}
 	if err := json.Unmarshal(body, out); err != nil {
-		c.log.Error("failed to parse body as json", "err", err, "url", url, "response", string(body))
 		return err
 	}
-	c.log.Debug("request completed successfully", "url", url, "res", res, "body", string(body), "out", out)
 	return nil
 }

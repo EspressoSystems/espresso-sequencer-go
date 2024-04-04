@@ -32,11 +32,14 @@ func NewLightClientReader(lightClientAddr common.Address, l1client bind.Contract
 func (l *LightClientReader) ValidatedHeight() (validatedHeight uint64, l1Height uint64, err error) {
 	header, err := l.L1Client.HeaderByNumber(context.Background(), nil)
 	if err != nil {
+		println("error getting header by number")
 		return 0, 0, err
 	}
 
-	state, err := l.LightClient.FinalizedState(&bind.CallOpts{BlockNumber: header.Number})
+	// state, err := l.LightClient.FinalizedState(&bind.CallOpts{BlockNumber: header.Number})
+	state, err := l.LightClient.FinalizedState(&bind.CallOpts{})
 	if err != nil {
+		println("error getting finalized state")
 		return 0, 0, err
 	}
 	return state.BlockHeight, header.Number.Uint64(), nil

@@ -3,6 +3,7 @@ module github.com/EspressoSystems/espresso-sequencer-go
 go 1.21
 
 require (
+	github.com/benbjohnson/clock v1.3.5
 	github.com/ethereum/go-ethereum v1.13.5
 	github.com/sigurn/crc8 v0.0.0-20220107193325-2243fe600f9f
 	github.com/stretchr/testify v1.8.4

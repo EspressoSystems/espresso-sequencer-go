@@ -3,11 +3,20 @@ package lightclient
 import (
 	"context"
 	"math/big"
+	"time"
 
 	"github.com/EspressoSystems/espresso-sequencer-go/types"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
 )
+
+type LightClientReaderInterface interface {
+	ValidatedHeight() (validatedHeight uint64, l1Height uint64, err error)
+	FetchMerkleRootAtL1Block(L1BlockHeight uint64) (types.BlockMerkleRoot, error)
+
+	// A mock function for now
+	IsHotShotAvaliable(maxDriftTime time.Duration) bool
+}
 
 type LightClientReader struct {
 	LightClient Lightclient

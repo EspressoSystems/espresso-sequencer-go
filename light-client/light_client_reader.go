@@ -2,7 +2,6 @@ package lightclient
 
 import (
 	"context"
-	"fmt"
 	"math/big"
 
 	"github.com/EspressoSystems/espresso-sequencer-go/types"

@@ -43,8 +43,7 @@ func (l *LightClientReader) ValidatedHeight() (validatedHeight uint64, l1Height 
 	if err != nil {
 		return 0, 0, err
 	}
-
-	state, err := l.LightClient.FinalizedState(&bind.CallOpts{BlockNumber: header.Number})
+	state, err := l.LightClient.GetFinalizedState(&bind.CallOpts{BlockNumber: header.Number})
 	if err != nil {
 		return 0, 0, err
 	}
@@ -53,7 +52,7 @@ func (l *LightClientReader) ValidatedHeight() (validatedHeight uint64, l1Height 
 
 // Fetch the merkle root at a given L1 checkpoint
 func (l *LightClientReader) FetchMerkleRootAtL1Block(L1BlockHeight uint64) (types.BlockMerkleRoot, error) {
-	state, err := l.LightClient.FinalizedState(&bind.CallOpts{BlockNumber: new(big.Int).SetUint64(L1BlockHeight)})
+	state, err := l.LightClient.GetFinalizedState(&bind.CallOpts{BlockNumber: new(big.Int).SetUint64(L1BlockHeight)})
 	if err != nil {
 		return types.Commitment{}, err
 	}

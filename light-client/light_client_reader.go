@@ -36,8 +36,6 @@ func (l *LightClientReader) ValidatedHeight() (validatedHeight uint64, l1Height 
 		return 0, 0, err
 	}
 	state, err := l.LightClient.GetFinalizedState(&bind.CallOpts{BlockNumber: header.Number})
-	fmt.Printf("%+v\n", state)
-	// state, err := l.LightClient.GetFinalizedState(&bind.CallOpts{})
 	if err != nil {
 		return 0, 0, err
 	}

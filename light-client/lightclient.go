@@ -76,7 +76,7 @@ type LightClientLightClientState struct {
 
 // LightclientMetaData contains all meta data concerning the Lightclient contract.
 var LightclientMetaData = &bind.MetaData{
-	ABI: "[{\"type\":\"constructor\",\"inputs\":[{\"name\":\"genesis\",\"type\":\"tuple\",\"internalType\":\"structLightClient.LightClientState\",\"components\":[{\"name\":\"viewNum\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockHeight\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockCommRoot\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"feeLedgerComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableBlsKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableSchnorrKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableAmountComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"threshold\",\"type\":\"uint256\",\"internalType\":\"uint256\"}]},{\"name\":\"numBlockPerEpoch\",\"type\":\"uint32\",\"internalType\":\"uint32\"}],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"BLOCKS_PER_EPOCH\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint32\",\"internalType\":\"uint32\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"computeStakeTableComm\",\"inputs\":[{\"name\":\"state\",\"type\":\"tuple\",\"internalType\":\"structLightClient.LightClientState\",\"components\":[{\"name\":\"viewNum\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockHeight\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockCommRoot\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"feeLedgerComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableBlsKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableSchnorrKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableAmountComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"threshold\",\"type\":\"uint256\",\"internalType\":\"uint256\"}]}],\"outputs\":[{\"name\":\"\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"}],\"stateMutability\":\"pure\"},{\"type\":\"function\",\"name\":\"currentEpoch\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint64\",\"internalType\":\"uint64\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"finalizedState\",\"inputs\":[],\"outputs\":[{\"name\":\"viewNum\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockHeight\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockCommRoot\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"feeLedgerComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableBlsKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableSchnorrKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableAmountComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"threshold\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"frozenStakeTableCommitment\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"frozenThreshold\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"genesisState\",\"inputs\":[],\"outputs\":[{\"name\":\"viewNum\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockHeight\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockCommRoot\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"feeLedgerComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableBlsKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableSchnorrKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableAmountComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"threshold\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"newFinalizedState\",\"inputs\":[{\"name\":\"newState\",\"type\":\"tuple\",\"internalType\":\"structLightClient.LightClientState\",\"components\":[{\"name\":\"viewNum\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockHeight\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockCommRoot\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"feeLedgerComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableBlsKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableSchnorrKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableAmountComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"threshold\",\"type\":\"uint256\",\"internalType\":\"uint256\"}]},{\"name\":\"proof\",\"type\":\"tuple\",\"internalType\":\"structIPlonkVerifier.PlonkProof\",\"components\":[{\"name\":\"wire0\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"wire1\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"wire2\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"wire3\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"wire4\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"prodPerm\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"split0\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"split1\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"split2\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"split3\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"split4\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"zeta\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"zetaOmega\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"wireEval0\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"wireEval1\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"wireEval2\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"wireEval3\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"wireEval4\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"sigmaEval0\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"sigmaEval1\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"sigmaEval2\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"sigmaEval3\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"prodPermZetaOmegaEval\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"}]}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"votingStakeTableCommitment\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"votingThreshold\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"event\",\"name\":\"EpochChanged\",\"inputs\":[{\"name\":\"\",\"type\":\"uint64\",\"indexed\":false,\"internalType\":\"uint64\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"NewState\",\"inputs\":[{\"name\":\"viewNum\",\"type\":\"uint64\",\"indexed\":true,\"internalType\":\"uint64\"},{\"name\":\"blockHeight\",\"type\":\"uint64\",\"indexed\":true,\"internalType\":\"uint64\"},{\"name\":\"blockCommRoot\",\"type\":\"uint256\",\"indexed\":false,\"internalType\":\"BN254.ScalarField\"}],\"anonymous\":false},{\"type\":\"error\",\"name\":\"InvalidArgs\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"InvalidProof\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"MissingLastBlockForCurrentEpoch\",\"inputs\":[{\"name\":\"expectedBlockHeight\",\"type\":\"uint64\",\"internalType\":\"uint64\"}]},{\"type\":\"error\",\"name\":\"OutdatedState\",\"inputs\":[]}]",
+	ABI: "[{\"type\":\"constructor\",\"inputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"UPGRADE_INTERFACE_VERSION\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"string\",\"internalType\":\"string\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"blocksPerEpoch\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint32\",\"internalType\":\"uint32\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"computeStakeTableComm\",\"inputs\":[{\"name\":\"state\",\"type\":\"tuple\",\"internalType\":\"structLightClient.LightClientState\",\"components\":[{\"name\":\"viewNum\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockHeight\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockCommRoot\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"feeLedgerComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableBlsKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableSchnorrKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableAmountComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"threshold\",\"type\":\"uint256\",\"internalType\":\"uint256\"}]}],\"outputs\":[{\"name\":\"\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"}],\"stateMutability\":\"pure\"},{\"type\":\"function\",\"name\":\"currentEpoch\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint64\",\"internalType\":\"uint64\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"frozenStakeTableCommitment\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"frozenThreshold\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"getFinalizedState\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"tuple\",\"internalType\":\"structLightClient.LightClientState\",\"components\":[{\"name\":\"viewNum\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockHeight\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockCommRoot\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"feeLedgerComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableBlsKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableSchnorrKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableAmountComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"threshold\",\"type\":\"uint256\",\"internalType\":\"uint256\"}]}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"getGenesisState\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"tuple\",\"internalType\":\"structLightClient.LightClientState\",\"components\":[{\"name\":\"viewNum\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockHeight\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockCommRoot\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"feeLedgerComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableBlsKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableSchnorrKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableAmountComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"threshold\",\"type\":\"uint256\",\"internalType\":\"uint256\"}]}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"getVersion\",\"inputs\":[],\"outputs\":[{\"name\":\"majorVersion\",\"type\":\"uint8\",\"internalType\":\"uint8\"},{\"name\":\"minorVersion\",\"type\":\"uint8\",\"internalType\":\"uint8\"},{\"name\":\"patchVersion\",\"type\":\"uint8\",\"internalType\":\"uint8\"}],\"stateMutability\":\"pure\"},{\"type\":\"function\",\"name\":\"initialize\",\"inputs\":[{\"name\":\"genesis\",\"type\":\"tuple\",\"internalType\":\"structLightClient.LightClientState\",\"components\":[{\"name\":\"viewNum\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockHeight\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockCommRoot\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"feeLedgerComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableBlsKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableSchnorrKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableAmountComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"threshold\",\"type\":\"uint256\",\"internalType\":\"uint256\"}]},{\"name\":\"numBlocksPerEpoch\",\"type\":\"uint32\",\"internalType\":\"uint32\"},{\"name\":\"owner\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"newFinalizedState\",\"inputs\":[{\"name\":\"newState\",\"type\":\"tuple\",\"internalType\":\"structLightClient.LightClientState\",\"components\":[{\"name\":\"viewNum\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockHeight\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockCommRoot\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"feeLedgerComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableBlsKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableSchnorrKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableAmountComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"threshold\",\"type\":\"uint256\",\"internalType\":\"uint256\"}]},{\"name\":\"proof\",\"type\":\"tuple\",\"internalType\":\"structIPlonkVerifier.PlonkProof\",\"components\":[{\"name\":\"wire0\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"wire1\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"wire2\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"wire3\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"wire4\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"prodPerm\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"split0\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"split1\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"split2\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"split3\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"split4\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"zeta\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"zetaOmega\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"wireEval0\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"wireEval1\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"wireEval2\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"wireEval3\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"wireEval4\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"sigmaEval0\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"sigmaEval1\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"sigmaEval2\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"sigmaEval3\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"prodPermZetaOmegaEval\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"}]}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"owner\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"proxiableUUID\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"renounceOwnership\",\"inputs\":[],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"states\",\"inputs\":[{\"name\":\"index\",\"type\":\"uint32\",\"internalType\":\"uint32\"}],\"outputs\":[{\"name\":\"viewNum\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockHeight\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockCommRoot\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"feeLedgerComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableBlsKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableSchnorrKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableAmountComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"threshold\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"transferOwnership\",\"inputs\":[{\"name\":\"newOwner\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"upgradeToAndCall\",\"inputs\":[{\"name\":\"newImplementation\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"data\",\"type\":\"bytes\",\"internalType\":\"bytes\"}],\"outputs\":[],\"stateMutability\":\"payable\"},{\"type\":\"function\",\"name\":\"votingStakeTableCommitment\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"votingThreshold\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"event\",\"name\":\"EpochChanged\",\"inputs\":[{\"name\":\"\",\"type\":\"uint64\",\"indexed\":false,\"internalType\":\"uint64\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"Initialized\",\"inputs\":[{\"name\":\"version\",\"type\":\"uint64\",\"indexed\":false,\"internalType\":\"uint64\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"NewState\",\"inputs\":[{\"name\":\"viewNum\",\"type\":\"uint64\",\"indexed\":true,\"internalType\":\"uint64\"},{\"name\":\"blockHeight\",\"type\":\"uint64\",\"indexed\":true,\"internalType\":\"uint64\"},{\"name\":\"blockCommRoot\",\"type\":\"uint256\",\"indexed\":false,\"internalType\":\"BN254.ScalarField\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"OwnershipTransferred\",\"inputs\":[{\"name\":\"previousOwner\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"newOwner\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"Upgrade\",\"inputs\":[{\"name\":\"implementation\",\"type\":\"address\",\"indexed\":false,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"Upgraded\",\"inputs\":[{\"name\":\"implementation\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"error\",\"name\":\"AddressEmptyCode\",\"inputs\":[{\"name\":\"target\",\"type\":\"address\",\"internalType\":\"address\"}]},{\"type\":\"error\",\"name\":\"ERC1967InvalidImplementation\",\"inputs\":[{\"name\":\"implementation\",\"type\":\"address\",\"internalType\":\"address\"}]},{\"type\":\"error\",\"name\":\"ERC1967NonPayable\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"FailedInnerCall\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"InvalidArgs\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"InvalidInitialization\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"InvalidPolyEvalArgs\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"InvalidProof\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"MissingLastBlockForCurrentEpoch\",\"inputs\":[{\"name\":\"expectedBlockHeight\",\"type\":\"uint64\",\"internalType\":\"uint64\"}]},{\"type\":\"error\",\"name\":\"NotInitializing\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"OutdatedState\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"OwnableInvalidOwner\",\"inputs\":[{\"name\":\"owner\",\"type\":\"address\",\"internalType\":\"address\"}]},{\"type\":\"error\",\"name\":\"OwnableUnauthorizedAccount\",\"inputs\":[{\"name\":\"account\",\"type\":\"address\",\"internalType\":\"address\"}]},{\"type\":\"error\",\"name\":\"UUPSUnauthorizedCallContext\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"UUPSUnsupportedProxiableUUID\",\"inputs\":[{\"name\":\"slot\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"}]},{\"type\":\"error\",\"name\":\"UnsupportedDegree\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"WrongPlonkVK\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"WrongStakeTableUsed\",\"inputs\":[]}]",
 }
 
 // LightclientABI is the input ABI used to generate the binding from.
@@ -225,12 +225,43 @@ func (_Lightclient *LightclientTransactorRaw) Transact(opts *bind.TransactOpts, 
 	return _Lightclient.Contract.contract.Transact(opts, method, params...)
 }
 
-// BLOCKSPEREPOCH is a free data retrieval call binding the contract method 0x1f3adc0f.
+// UPGRADEINTERFACEVERSION is a free data retrieval call binding the contract method 0xad3cb1cc.
 //
-// Solidity: function BLOCKS_PER_EPOCH() view returns(uint32)
-func (_Lightclient *LightclientCaller) BLOCKSPEREPOCH(opts *bind.CallOpts) (uint32, error) {
+// Solidity: function UPGRADE_INTERFACE_VERSION() view returns(string)
+func (_Lightclient *LightclientCaller) UPGRADEINTERFACEVERSION(opts *bind.CallOpts) (string, error) {
 	var out []interface{}
-	err := _Lightclient.contract.Call(opts, &out, "BLOCKS_PER_EPOCH")
+	err := _Lightclient.contract.Call(opts, &out, "UPGRADE_INTERFACE_VERSION")
+
+	if err != nil {
+		return *new(string), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(string)).(*string)
+
+	return out0, err
+
+}
+
+// UPGRADEINTERFACEVERSION is a free data retrieval call binding the contract method 0xad3cb1cc.
+//
+// Solidity: function UPGRADE_INTERFACE_VERSION() view returns(string)
+func (_Lightclient *LightclientSession) UPGRADEINTERFACEVERSION() (string, error) {
+	return _Lightclient.Contract.UPGRADEINTERFACEVERSION(&_Lightclient.CallOpts)
+}
+
+// UPGRADEINTERFACEVERSION is a free data retrieval call binding the contract method 0xad3cb1cc.
+//
+// Solidity: function UPGRADE_INTERFACE_VERSION() view returns(string)
+func (_Lightclient *LightclientCallerSession) UPGRADEINTERFACEVERSION() (string, error) {
+	return _Lightclient.Contract.UPGRADEINTERFACEVERSION(&_Lightclient.CallOpts)
+}
+
+// BlocksPerEpoch is a free data retrieval call binding the contract method 0xf0682054.
+//
+// Solidity: function blocksPerEpoch() view returns(uint32)
+func (_Lightclient *LightclientCaller) BlocksPerEpoch(opts *bind.CallOpts) (uint32, error) {
+	var out []interface{}
+	err := _Lightclient.contract.Call(opts, &out, "blocksPerEpoch")
 
 	if err != nil {
 		return *new(uint32), err
@@ -242,18 +273,18 @@ func (_Lightclient *LightclientCaller) BLOCKSPEREPOCH(opts *bind.CallOpts) (uint
 
 }
 
-// BLOCKSPEREPOCH is a free data retrieval call binding the contract method 0x1f3adc0f.
+// BlocksPerEpoch is a free data retrieval call binding the contract method 0xf0682054.
 //
-// Solidity: function BLOCKS_PER_EPOCH() view returns(uint32)
-func (_Lightclient *LightclientSession) BLOCKSPEREPOCH() (uint32, error) {
-	return _Lightclient.Contract.BLOCKSPEREPOCH(&_Lightclient.CallOpts)
+// Solidity: function blocksPerEpoch() view returns(uint32)
+func (_Lightclient *LightclientSession) BlocksPerEpoch() (uint32, error) {
+	return _Lightclient.Contract.BlocksPerEpoch(&_Lightclient.CallOpts)
 }
 
-// BLOCKSPEREPOCH is a free data retrieval call binding the contract method 0x1f3adc0f.
+// BlocksPerEpoch is a free data retrieval call binding the contract method 0xf0682054.
 //
-// Solidity: function BLOCKS_PER_EPOCH() view returns(uint32)
-func (_Lightclient *LightclientCallerSession) BLOCKSPEREPOCH() (uint32, error) {
-	return _Lightclient.Contract.BLOCKSPEREPOCH(&_Lightclient.CallOpts)
+// Solidity: function blocksPerEpoch() view returns(uint32)
+func (_Lightclient *LightclientCallerSession) BlocksPerEpoch() (uint32, error) {
+	return _Lightclient.Contract.BlocksPerEpoch(&_Lightclient.CallOpts)
 }
 
 // ComputeStakeTableComm is a free data retrieval call binding the contract method 0xaa922732.
@@ -318,81 +349,6 @@ func (_Lightclient *LightclientCallerSession) CurrentEpoch() (uint64, error) {
 	return _Lightclient.Contract.CurrentEpoch(&_Lightclient.CallOpts)
 }
 
-// FinalizedState is a free data retrieval call binding the contract method 0x9fdb54a7.
-//
-// Solidity: function finalizedState() view returns(uint64 viewNum, uint64 blockHeight, uint256 blockCommRoot, uint256 feeLedgerComm, uint256 stakeTableBlsKeyComm, uint256 stakeTableSchnorrKeyComm, uint256 stakeTableAmountComm, uint256 threshold)
-func (_Lightclient *LightclientCaller) FinalizedState(opts *bind.CallOpts) (struct {
-	ViewNum                  uint64
-	BlockHeight              uint64
-	BlockCommRoot            *big.Int
-	FeeLedgerComm            *big.Int
-	StakeTableBlsKeyComm     *big.Int
-	StakeTableSchnorrKeyComm *big.Int
-	StakeTableAmountComm     *big.Int
-	Threshold                *big.Int
-}, error) {
-	var out []interface{}
-	err := _Lightclient.contract.Call(opts, &out, "finalizedState")
-
-	outstruct := new(struct {
-		ViewNum                  uint64
-		BlockHeight              uint64
-		BlockCommRoot            *big.Int
-		FeeLedgerComm            *big.Int
-		StakeTableBlsKeyComm     *big.Int
-		StakeTableSchnorrKeyComm *big.Int
-		StakeTableAmountComm     *big.Int
-		Threshold                *big.Int
-	})
-	if err != nil {
-		return *outstruct, err
-	}
-
-	outstruct.ViewNum = *abi.ConvertType(out[0], new(uint64)).(*uint64)
-	outstruct.BlockHeight = *abi.ConvertType(out[1], new(uint64)).(*uint64)
-	outstruct.BlockCommRoot = *abi.ConvertType(out[2], new(*big.Int)).(**big.Int)
-	outstruct.FeeLedgerComm = *abi.ConvertType(out[3], new(*big.Int)).(**big.Int)
-	outstruct.StakeTableBlsKeyComm = *abi.ConvertType(out[4], new(*big.Int)).(**big.Int)
-	outstruct.StakeTableSchnorrKeyComm = *abi.ConvertType(out[5], new(*big.Int)).(**big.Int)
-	outstruct.StakeTableAmountComm = *abi.ConvertType(out[6], new(*big.Int)).(**big.Int)
-	outstruct.Threshold = *abi.ConvertType(out[7], new(*big.Int)).(**big.Int)
-
-	return *outstruct, err
-
-}
-
-// FinalizedState is a free data retrieval call binding the contract method 0x9fdb54a7.
-//
-// Solidity: function finalizedState() view returns(uint64 viewNum, uint64 blockHeight, uint256 blockCommRoot, uint256 feeLedgerComm, uint256 stakeTableBlsKeyComm, uint256 stakeTableSchnorrKeyComm, uint256 stakeTableAmountComm, uint256 threshold)
-func (_Lightclient *LightclientSession) FinalizedState() (struct {
-	ViewNum                  uint64
-	BlockHeight              uint64
-	BlockCommRoot            *big.Int
-	FeeLedgerComm            *big.Int
-	StakeTableBlsKeyComm     *big.Int
-	StakeTableSchnorrKeyComm *big.Int
-	StakeTableAmountComm     *big.Int
-	Threshold                *big.Int
-}, error) {
-	return _Lightclient.Contract.FinalizedState(&_Lightclient.CallOpts)
-}
-
-// FinalizedState is a free data retrieval call binding the contract method 0x9fdb54a7.
-//
-// Solidity: function finalizedState() view returns(uint64 viewNum, uint64 blockHeight, uint256 blockCommRoot, uint256 feeLedgerComm, uint256 stakeTableBlsKeyComm, uint256 stakeTableSchnorrKeyComm, uint256 stakeTableAmountComm, uint256 threshold)
-func (_Lightclient *LightclientCallerSession) FinalizedState() (struct {
-	ViewNum                  uint64
-	BlockHeight              uint64
-	BlockCommRoot            *big.Int
-	FeeLedgerComm            *big.Int
-	StakeTableBlsKeyComm     *big.Int
-	StakeTableSchnorrKeyComm *big.Int
-	StakeTableAmountComm     *big.Int
-	Threshold                *big.Int
-}, error) {
-	return _Lightclient.Contract.FinalizedState(&_Lightclient.CallOpts)
-}
-
 // FrozenStakeTableCommitment is a free data retrieval call binding the contract method 0x382b215a.
 //
 // Solidity: function frozenStakeTableCommitment() view returns(bytes32)
@@ -455,10 +411,184 @@ func (_Lightclient *LightclientCallerSession) FrozenThreshold() (*big.Int, error
 	return _Lightclient.Contract.FrozenThreshold(&_Lightclient.CallOpts)
 }
 
-// GenesisState is a free data retrieval call binding the contract method 0xd24d933d.
+// GetFinalizedState is a free data retrieval call binding the contract method 0x82d07ff3.
 //
-// Solidity: function genesisState() view returns(uint64 viewNum, uint64 blockHeight, uint256 blockCommRoot, uint256 feeLedgerComm, uint256 stakeTableBlsKeyComm, uint256 stakeTableSchnorrKeyComm, uint256 stakeTableAmountComm, uint256 threshold)
-func (_Lightclient *LightclientCaller) GenesisState(opts *bind.CallOpts) (struct {
+// Solidity: function getFinalizedState() view returns((uint64,uint64,uint256,uint256,uint256,uint256,uint256,uint256))
+func (_Lightclient *LightclientCaller) GetFinalizedState(opts *bind.CallOpts) (LightClientLightClientState, error) {
+	var out []interface{}
+	err := _Lightclient.contract.Call(opts, &out, "getFinalizedState")
+
+	if err != nil {
+		return *new(LightClientLightClientState), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(LightClientLightClientState)).(*LightClientLightClientState)
+
+	return out0, err
+
+}
+
+// GetFinalizedState is a free data retrieval call binding the contract method 0x82d07ff3.
+//
+// Solidity: function getFinalizedState() view returns((uint64,uint64,uint256,uint256,uint256,uint256,uint256,uint256))
+func (_Lightclient *LightclientSession) GetFinalizedState() (LightClientLightClientState, error) {
+	return _Lightclient.Contract.GetFinalizedState(&_Lightclient.CallOpts)
+}
+
+// GetFinalizedState is a free data retrieval call binding the contract method 0x82d07ff3.
+//
+// Solidity: function getFinalizedState() view returns((uint64,uint64,uint256,uint256,uint256,uint256,uint256,uint256))
+func (_Lightclient *LightclientCallerSession) GetFinalizedState() (LightClientLightClientState, error) {
+	return _Lightclient.Contract.GetFinalizedState(&_Lightclient.CallOpts)
+}
+
+// GetGenesisState is a free data retrieval call binding the contract method 0x4847ae5d.
+//
+// Solidity: function getGenesisState() view returns((uint64,uint64,uint256,uint256,uint256,uint256,uint256,uint256))
+func (_Lightclient *LightclientCaller) GetGenesisState(opts *bind.CallOpts) (LightClientLightClientState, error) {
+	var out []interface{}
+	err := _Lightclient.contract.Call(opts, &out, "getGenesisState")
+
+	if err != nil {
+		return *new(LightClientLightClientState), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(LightClientLightClientState)).(*LightClientLightClientState)
+
+	return out0, err
+
+}
+
+// GetGenesisState is a free data retrieval call binding the contract method 0x4847ae5d.
+//
+// Solidity: function getGenesisState() view returns((uint64,uint64,uint256,uint256,uint256,uint256,uint256,uint256))
+func (_Lightclient *LightclientSession) GetGenesisState() (LightClientLightClientState, error) {
+	return _Lightclient.Contract.GetGenesisState(&_Lightclient.CallOpts)
+}
+
+// GetGenesisState is a free data retrieval call binding the contract method 0x4847ae5d.
+//
+// Solidity: function getGenesisState() view returns((uint64,uint64,uint256,uint256,uint256,uint256,uint256,uint256))
+func (_Lightclient *LightclientCallerSession) GetGenesisState() (LightClientLightClientState, error) {
+	return _Lightclient.Contract.GetGenesisState(&_Lightclient.CallOpts)
+}
+
+// GetVersion is a free data retrieval call binding the contract method 0x0d8e6e2c.
+//
+// Solidity: function getVersion() pure returns(uint8 majorVersion, uint8 minorVersion, uint8 patchVersion)
+func (_Lightclient *LightclientCaller) GetVersion(opts *bind.CallOpts) (struct {
+	MajorVersion uint8
+	MinorVersion uint8
+	PatchVersion uint8
+}, error) {
+	var out []interface{}
+	err := _Lightclient.contract.Call(opts, &out, "getVersion")
+
+	outstruct := new(struct {
+		MajorVersion uint8
+		MinorVersion uint8
+		PatchVersion uint8
+	})
+	if err != nil {
+		return *outstruct, err
+	}
+
+	outstruct.MajorVersion = *abi.ConvertType(out[0], new(uint8)).(*uint8)
+	outstruct.MinorVersion = *abi.ConvertType(out[1], new(uint8)).(*uint8)
+	outstruct.PatchVersion = *abi.ConvertType(out[2], new(uint8)).(*uint8)
+
+	return *outstruct, err
+
+}
+
+// GetVersion is a free data retrieval call binding the contract method 0x0d8e6e2c.
+//
+// Solidity: function getVersion() pure returns(uint8 majorVersion, uint8 minorVersion, uint8 patchVersion)
+func (_Lightclient *LightclientSession) GetVersion() (struct {
+	MajorVersion uint8
+	MinorVersion uint8
+	PatchVersion uint8
+}, error) {
+	return _Lightclient.Contract.GetVersion(&_Lightclient.CallOpts)
+}
+
+// GetVersion is a free data retrieval call binding the contract method 0x0d8e6e2c.
+//
+// Solidity: function getVersion() pure returns(uint8 majorVersion, uint8 minorVersion, uint8 patchVersion)
+func (_Lightclient *LightclientCallerSession) GetVersion() (struct {
+	MajorVersion uint8
+	MinorVersion uint8
+	PatchVersion uint8
+}, error) {
+	return _Lightclient.Contract.GetVersion(&_Lightclient.CallOpts)
+}
+
+// Owner is a free data retrieval call binding the contract method 0x8da5cb5b.
+//
+// Solidity: function owner() view returns(address)
+func (_Lightclient *LightclientCaller) Owner(opts *bind.CallOpts) (common.Address, error) {
+	var out []interface{}
+	err := _Lightclient.contract.Call(opts, &out, "owner")
+
+	if err != nil {
+		return *new(common.Address), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(common.Address)).(*common.Address)
+
+	return out0, err
+
+}
+
+// Owner is a free data retrieval call binding the contract method 0x8da5cb5b.
+//
+// Solidity: function owner() view returns(address)
+func (_Lightclient *LightclientSession) Owner() (common.Address, error) {
+	return _Lightclient.Contract.Owner(&_Lightclient.CallOpts)
+}
+
+// Owner is a free data retrieval call binding the contract method 0x8da5cb5b.
+//
+// Solidity: function owner() view returns(address)
+func (_Lightclient *LightclientCallerSession) Owner() (common.Address, error) {
+	return _Lightclient.Contract.Owner(&_Lightclient.CallOpts)
+}
+
+// ProxiableUUID is a free data retrieval call binding the contract method 0x52d1902d.
+//
+// Solidity: function proxiableUUID() view returns(bytes32)
+func (_Lightclient *LightclientCaller) ProxiableUUID(opts *bind.CallOpts) ([32]byte, error) {
+	var out []interface{}
+	err := _Lightclient.contract.Call(opts, &out, "proxiableUUID")
+
+	if err != nil {
+		return *new([32]byte), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new([32]byte)).(*[32]byte)
+
+	return out0, err
+
+}
+
+// ProxiableUUID is a free data retrieval call binding the contract method 0x52d1902d.
+//
+// Solidity: function proxiableUUID() view returns(bytes32)
+func (_Lightclient *LightclientSession) ProxiableUUID() ([32]byte, error) {
+	return _Lightclient.Contract.ProxiableUUID(&_Lightclient.CallOpts)
+}
+
+// ProxiableUUID is a free data retrieval call binding the contract method 0x52d1902d.
+//
+// Solidity: function proxiableUUID() view returns(bytes32)
+func (_Lightclient *LightclientCallerSession) ProxiableUUID() ([32]byte, error) {
+	return _Lightclient.Contract.ProxiableUUID(&_Lightclient.CallOpts)
+}
+
+// States is a free data retrieval call binding the contract method 0x7f17baad.
+//
+// Solidity: function states(uint32 index) view returns(uint64 viewNum, uint64 blockHeight, uint256 blockCommRoot, uint256 feeLedgerComm, uint256 stakeTableBlsKeyComm, uint256 stakeTableSchnorrKeyComm, uint256 stakeTableAmountComm, uint256 threshold)
+func (_Lightclient *LightclientCaller) States(opts *bind.CallOpts, index uint32) (struct {
 	ViewNum                  uint64
 	BlockHeight              uint64
 	BlockCommRoot            *big.Int
@@ -469,7 +599,7 @@ func (_Lightclient *LightclientCaller) GenesisState(opts *bind.CallOpts) (struct
 	Threshold                *big.Int
 }, error) {
 	var out []interface{}
-	err := _Lightclient.contract.Call(opts, &out, "genesisState")
+	err := _Lightclient.contract.Call(opts, &out, "states", index)
 
 	outstruct := new(struct {
 		ViewNum                  uint64
@@ -498,10 +628,10 @@ func (_Lightclient *LightclientCaller) GenesisState(opts *bind.CallOpts) (struct
 
 }
 
-// GenesisState is a free data retrieval call binding the contract method 0xd24d933d.
+// States is a free data retrieval call binding the contract method 0x7f17baad.
 //
-// Solidity: function genesisState() view returns(uint64 viewNum, uint64 blockHeight, uint256 blockCommRoot, uint256 feeLedgerComm, uint256 stakeTableBlsKeyComm, uint256 stakeTableSchnorrKeyComm, uint256 stakeTableAmountComm, uint256 threshold)
-func (_Lightclient *LightclientSession) GenesisState() (struct {
+// Solidity: function states(uint32 index) view returns(uint64 viewNum, uint64 blockHeight, uint256 blockCommRoot, uint256 feeLedgerComm, uint256 stakeTableBlsKeyComm, uint256 stakeTableSchnorrKeyComm, uint256 stakeTableAmountComm, uint256 threshold)
+func (_Lightclient *LightclientSession) States(index uint32) (struct {
 	ViewNum                  uint64
 	BlockHeight              uint64
 	BlockCommRoot            *big.Int
@@ -511,13 +641,13 @@ func (_Lightclient *LightclientSession) GenesisState() (struct {
 	StakeTableAmountComm     *big.Int
 	Threshold                *big.Int
 }, error) {
-	return _Lightclient.Contract.GenesisState(&_Lightclient.CallOpts)
+	return _Lightclient.Contract.States(&_Lightclient.CallOpts, index)
 }
 
-// GenesisState is a free data retrieval call binding the contract method 0xd24d933d.
+// States is a free data retrieval call binding the contract method 0x7f17baad.
 //
-// Solidity: function genesisState() view returns(uint64 viewNum, uint64 blockHeight, uint256 blockCommRoot, uint256 feeLedgerComm, uint256 stakeTableBlsKeyComm, uint256 stakeTableSchnorrKeyComm, uint256 stakeTableAmountComm, uint256 threshold)
-func (_Lightclient *LightclientCallerSession) GenesisState() (struct {
+// Solidity: function states(uint32 index) view returns(uint64 viewNum, uint64 blockHeight, uint256 blockCommRoot, uint256 feeLedgerComm, uint256 stakeTableBlsKeyComm, uint256 stakeTableSchnorrKeyComm, uint256 stakeTableAmountComm, uint256 threshold)
+func (_Lightclient *LightclientCallerSession) States(index uint32) (struct {
 	ViewNum                  uint64
 	BlockHeight              uint64
 	BlockCommRoot            *big.Int
@@ -527,7 +657,7 @@ func (_Lightclient *LightclientCallerSession) GenesisState() (struct {
 	StakeTableAmountComm     *big.Int
 	Threshold                *big.Int
 }, error) {
-	return _Lightclient.Contract.GenesisState(&_Lightclient.CallOpts)
+	return _Lightclient.Contract.States(&_Lightclient.CallOpts, index)
 }
 
 // VotingStakeTableCommitment is a free data retrieval call binding the contract method 0x76b6b7cb.
@@ -592,6 +722,27 @@ func (_Lightclient *LightclientCallerSession) VotingThreshold() (*big.Int, error
 	return _Lightclient.Contract.VotingThreshold(&_Lightclient.CallOpts)
 }
 
+// Initialize is a paid mutator transaction binding the contract method 0xa244d596.
+//
+// Solidity: function initialize((uint64,uint64,uint256,uint256,uint256,uint256,uint256,uint256) genesis, uint32 numBlocksPerEpoch, address owner) returns()
+func (_Lightclient *LightclientTransactor) Initialize(opts *bind.TransactOpts, genesis LightClientLightClientState, numBlocksPerEpoch uint32, owner common.Address) (*types.Transaction, error) {
+	return _Lightclient.contract.Transact(opts, "initialize", genesis, numBlocksPerEpoch, owner)
+}
+
+// Initialize is a paid mutator transaction binding the contract method 0xa244d596.
+//
+// Solidity: function initialize((uint64,uint64,uint256,uint256,uint256,uint256,uint256,uint256) genesis, uint32 numBlocksPerEpoch, address owner) returns()
+func (_Lightclient *LightclientSession) Initialize(genesis LightClientLightClientState, numBlocksPerEpoch uint32, owner common.Address) (*types.Transaction, error) {
+	return _Lightclient.Contract.Initialize(&_Lightclient.TransactOpts, genesis, numBlocksPerEpoch, owner)
+}
+
+// Initialize is a paid mutator transaction binding the contract method 0xa244d596.
+//
+// Solidity: function initialize((uint64,uint64,uint256,uint256,uint256,uint256,uint256,uint256) genesis, uint32 numBlocksPerEpoch, address owner) returns()
+func (_Lightclient *LightclientTransactorSession) Initialize(genesis LightClientLightClientState, numBlocksPerEpoch uint32, owner common.Address) (*types.Transaction, error) {
+	return _Lightclient.Contract.Initialize(&_Lightclient.TransactOpts, genesis, numBlocksPerEpoch, owner)
+}
+
 // NewFinalizedState is a paid mutator transaction binding the contract method 0x409939b7.
 //
 // Solidity: function newFinalizedState((uint64,uint64,uint256,uint256,uint256,uint256,uint256,uint256) newState, ((uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256) proof) returns()
@@ -611,6 +762,69 @@ func (_Lightclient *LightclientSession) NewFinalizedState(newState LightClientLi
 // Solidity: function newFinalizedState((uint64,uint64,uint256,uint256,uint256,uint256,uint256,uint256) newState, ((uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256) proof) returns()
 func (_Lightclient *LightclientTransactorSession) NewFinalizedState(newState LightClientLightClientState, proof IPlonkVerifierPlonkProof) (*types.Transaction, error) {
 	return _Lightclient.Contract.NewFinalizedState(&_Lightclient.TransactOpts, newState, proof)
+}
+
+// RenounceOwnership is a paid mutator transaction binding the contract method 0x715018a6.
+//
+// Solidity: function renounceOwnership() returns()
+func (_Lightclient *LightclientTransactor) RenounceOwnership(opts *bind.TransactOpts) (*types.Transaction, error) {
+	return _Lightclient.contract.Transact(opts, "renounceOwnership")
+}
+
+// RenounceOwnership is a paid mutator transaction binding the contract method 0x715018a6.
+//
+// Solidity: function renounceOwnership() returns()
+func (_Lightclient *LightclientSession) RenounceOwnership() (*types.Transaction, error) {
+	return _Lightclient.Contract.RenounceOwnership(&_Lightclient.TransactOpts)
+}
+
+// RenounceOwnership is a paid mutator transaction binding the contract method 0x715018a6.
+//
+// Solidity: function renounceOwnership() returns()
+func (_Lightclient *LightclientTransactorSession) RenounceOwnership() (*types.Transaction, error) {
+	return _Lightclient.Contract.RenounceOwnership(&_Lightclient.TransactOpts)
+}
+
+// TransferOwnership is a paid mutator transaction binding the contract method 0xf2fde38b.
+//
+// Solidity: function transferOwnership(address newOwner) returns()
+func (_Lightclient *LightclientTransactor) TransferOwnership(opts *bind.TransactOpts, newOwner common.Address) (*types.Transaction, error) {
+	return _Lightclient.contract.Transact(opts, "transferOwnership", newOwner)
+}
+
+// TransferOwnership is a paid mutator transaction binding the contract method 0xf2fde38b.
+//
+// Solidity: function transferOwnership(address newOwner) returns()
+func (_Lightclient *LightclientSession) TransferOwnership(newOwner common.Address) (*types.Transaction, error) {
+	return _Lightclient.Contract.TransferOwnership(&_Lightclient.TransactOpts, newOwner)
+}
+
+// TransferOwnership is a paid mutator transaction binding the contract method 0xf2fde38b.
+//
+// Solidity: function transferOwnership(address newOwner) returns()
+func (_Lightclient *LightclientTransactorSession) TransferOwnership(newOwner common.Address) (*types.Transaction, error) {
+	return _Lightclient.Contract.TransferOwnership(&_Lightclient.TransactOpts, newOwner)
+}
+
+// UpgradeToAndCall is a paid mutator transaction binding the contract method 0x4f1ef286.
+//
+// Solidity: function upgradeToAndCall(address newImplementation, bytes data) payable returns()
+func (_Lightclient *LightclientTransactor) UpgradeToAndCall(opts *bind.TransactOpts, newImplementation common.Address, data []byte) (*types.Transaction, error) {
+	return _Lightclient.contract.Transact(opts, "upgradeToAndCall", newImplementation, data)
+}
+
+// UpgradeToAndCall is a paid mutator transaction binding the contract method 0x4f1ef286.
+//
+// Solidity: function upgradeToAndCall(address newImplementation, bytes data) payable returns()
+func (_Lightclient *LightclientSession) UpgradeToAndCall(newImplementation common.Address, data []byte) (*types.Transaction, error) {
+	return _Lightclient.Contract.UpgradeToAndCall(&_Lightclient.TransactOpts, newImplementation, data)
+}
+
+// UpgradeToAndCall is a paid mutator transaction binding the contract method 0x4f1ef286.
+//
+// Solidity: function upgradeToAndCall(address newImplementation, bytes data) payable returns()
+func (_Lightclient *LightclientTransactorSession) UpgradeToAndCall(newImplementation common.Address, data []byte) (*types.Transaction, error) {
+	return _Lightclient.Contract.UpgradeToAndCall(&_Lightclient.TransactOpts, newImplementation, data)
 }
 
 // LightclientEpochChangedIterator is returned from FilterEpochChanged and is used to iterate over the raw logs and unpacked data for EpochChanged events raised by the Lightclient contract.
@@ -741,6 +955,140 @@ func (_Lightclient *LightclientFilterer) WatchEpochChanged(opts *bind.WatchOpts,
 func (_Lightclient *LightclientFilterer) ParseEpochChanged(log types.Log) (*LightclientEpochChanged, error) {
 	event := new(LightclientEpochChanged)
 	if err := _Lightclient.contract.UnpackLog(event, "EpochChanged", log); err != nil {
+		return nil, err
+	}
+	event.Raw = log
+	return event, nil
+}
+
+// LightclientInitializedIterator is returned from FilterInitialized and is used to iterate over the raw logs and unpacked data for Initialized events raised by the Lightclient contract.
+type LightclientInitializedIterator struct {
+	Event *LightclientInitialized // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *LightclientInitializedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(LightclientInitialized)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(LightclientInitialized)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *LightclientInitializedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *LightclientInitializedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// LightclientInitialized represents a Initialized event raised by the Lightclient contract.
+type LightclientInitialized struct {
+	Version uint64
+	Raw     types.Log // Blockchain specific contextual infos
+}
+
+// FilterInitialized is a free log retrieval operation binding the contract event 0xc7f505b2f371ae2175ee4913f4499e1f2633a7b5936321eed1cdaeb6115181d2.
+//
+// Solidity: event Initialized(uint64 version)
+func (_Lightclient *LightclientFilterer) FilterInitialized(opts *bind.FilterOpts) (*LightclientInitializedIterator, error) {
+
+	logs, sub, err := _Lightclient.contract.FilterLogs(opts, "Initialized")
+	if err != nil {
+		return nil, err
+	}
+	return &LightclientInitializedIterator{contract: _Lightclient.contract, event: "Initialized", logs: logs, sub: sub}, nil
+}
+
+// WatchInitialized is a free log subscription operation binding the contract event 0xc7f505b2f371ae2175ee4913f4499e1f2633a7b5936321eed1cdaeb6115181d2.
+//
+// Solidity: event Initialized(uint64 version)
+func (_Lightclient *LightclientFilterer) WatchInitialized(opts *bind.WatchOpts, sink chan<- *LightclientInitialized) (event.Subscription, error) {
+
+	logs, sub, err := _Lightclient.contract.WatchLogs(opts, "Initialized")
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(LightclientInitialized)
+				if err := _Lightclient.contract.UnpackLog(event, "Initialized", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseInitialized is a log parse operation binding the contract event 0xc7f505b2f371ae2175ee4913f4499e1f2633a7b5936321eed1cdaeb6115181d2.
+//
+// Solidity: event Initialized(uint64 version)
+func (_Lightclient *LightclientFilterer) ParseInitialized(log types.Log) (*LightclientInitialized, error) {
+	event := new(LightclientInitialized)
+	if err := _Lightclient.contract.UnpackLog(event, "Initialized", log); err != nil {
 		return nil, err
 	}
 	event.Raw = log
@@ -895,6 +1243,437 @@ func (_Lightclient *LightclientFilterer) WatchNewState(opts *bind.WatchOpts, sin
 func (_Lightclient *LightclientFilterer) ParseNewState(log types.Log) (*LightclientNewState, error) {
 	event := new(LightclientNewState)
 	if err := _Lightclient.contract.UnpackLog(event, "NewState", log); err != nil {
+		return nil, err
+	}
+	event.Raw = log
+	return event, nil
+}
+
+// LightclientOwnershipTransferredIterator is returned from FilterOwnershipTransferred and is used to iterate over the raw logs and unpacked data for OwnershipTransferred events raised by the Lightclient contract.
+type LightclientOwnershipTransferredIterator struct {
+	Event *LightclientOwnershipTransferred // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *LightclientOwnershipTransferredIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(LightclientOwnershipTransferred)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(LightclientOwnershipTransferred)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *LightclientOwnershipTransferredIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *LightclientOwnershipTransferredIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// LightclientOwnershipTransferred represents a OwnershipTransferred event raised by the Lightclient contract.
+type LightclientOwnershipTransferred struct {
+	PreviousOwner common.Address
+	NewOwner      common.Address
+	Raw           types.Log // Blockchain specific contextual infos
+}
+
+// FilterOwnershipTransferred is a free log retrieval operation binding the contract event 0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0.
+//
+// Solidity: event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)
+func (_Lightclient *LightclientFilterer) FilterOwnershipTransferred(opts *bind.FilterOpts, previousOwner []common.Address, newOwner []common.Address) (*LightclientOwnershipTransferredIterator, error) {
+
+	var previousOwnerRule []interface{}
+	for _, previousOwnerItem := range previousOwner {
+		previousOwnerRule = append(previousOwnerRule, previousOwnerItem)
+	}
+	var newOwnerRule []interface{}
+	for _, newOwnerItem := range newOwner {
+		newOwnerRule = append(newOwnerRule, newOwnerItem)
+	}
+
+	logs, sub, err := _Lightclient.contract.FilterLogs(opts, "OwnershipTransferred", previousOwnerRule, newOwnerRule)
+	if err != nil {
+		return nil, err
+	}
+	return &LightclientOwnershipTransferredIterator{contract: _Lightclient.contract, event: "OwnershipTransferred", logs: logs, sub: sub}, nil
+}
+
+// WatchOwnershipTransferred is a free log subscription operation binding the contract event 0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0.
+//
+// Solidity: event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)
+func (_Lightclient *LightclientFilterer) WatchOwnershipTransferred(opts *bind.WatchOpts, sink chan<- *LightclientOwnershipTransferred, previousOwner []common.Address, newOwner []common.Address) (event.Subscription, error) {
+
+	var previousOwnerRule []interface{}
+	for _, previousOwnerItem := range previousOwner {
+		previousOwnerRule = append(previousOwnerRule, previousOwnerItem)
+	}
+	var newOwnerRule []interface{}
+	for _, newOwnerItem := range newOwner {
+		newOwnerRule = append(newOwnerRule, newOwnerItem)
+	}
+
+	logs, sub, err := _Lightclient.contract.WatchLogs(opts, "OwnershipTransferred", previousOwnerRule, newOwnerRule)
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(LightclientOwnershipTransferred)
+				if err := _Lightclient.contract.UnpackLog(event, "OwnershipTransferred", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseOwnershipTransferred is a log parse operation binding the contract event 0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0.
+//
+// Solidity: event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)
+func (_Lightclient *LightclientFilterer) ParseOwnershipTransferred(log types.Log) (*LightclientOwnershipTransferred, error) {
+	event := new(LightclientOwnershipTransferred)
+	if err := _Lightclient.contract.UnpackLog(event, "OwnershipTransferred", log); err != nil {
+		return nil, err
+	}
+	event.Raw = log
+	return event, nil
+}
+
+// LightclientUpgradeIterator is returned from FilterUpgrade and is used to iterate over the raw logs and unpacked data for Upgrade events raised by the Lightclient contract.
+type LightclientUpgradeIterator struct {
+	Event *LightclientUpgrade // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *LightclientUpgradeIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(LightclientUpgrade)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(LightclientUpgrade)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *LightclientUpgradeIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *LightclientUpgradeIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// LightclientUpgrade represents a Upgrade event raised by the Lightclient contract.
+type LightclientUpgrade struct {
+	Implementation common.Address
+	Raw            types.Log // Blockchain specific contextual infos
+}
+
+// FilterUpgrade is a free log retrieval operation binding the contract event 0xf78721226efe9a1bb678189a16d1554928b9f2192e2cb93eeda83b79fa40007d.
+//
+// Solidity: event Upgrade(address implementation)
+func (_Lightclient *LightclientFilterer) FilterUpgrade(opts *bind.FilterOpts) (*LightclientUpgradeIterator, error) {
+
+	logs, sub, err := _Lightclient.contract.FilterLogs(opts, "Upgrade")
+	if err != nil {
+		return nil, err
+	}
+	return &LightclientUpgradeIterator{contract: _Lightclient.contract, event: "Upgrade", logs: logs, sub: sub}, nil
+}
+
+// WatchUpgrade is a free log subscription operation binding the contract event 0xf78721226efe9a1bb678189a16d1554928b9f2192e2cb93eeda83b79fa40007d.
+//
+// Solidity: event Upgrade(address implementation)
+func (_Lightclient *LightclientFilterer) WatchUpgrade(opts *bind.WatchOpts, sink chan<- *LightclientUpgrade) (event.Subscription, error) {
+
+	logs, sub, err := _Lightclient.contract.WatchLogs(opts, "Upgrade")
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(LightclientUpgrade)
+				if err := _Lightclient.contract.UnpackLog(event, "Upgrade", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseUpgrade is a log parse operation binding the contract event 0xf78721226efe9a1bb678189a16d1554928b9f2192e2cb93eeda83b79fa40007d.
+//
+// Solidity: event Upgrade(address implementation)
+func (_Lightclient *LightclientFilterer) ParseUpgrade(log types.Log) (*LightclientUpgrade, error) {
+	event := new(LightclientUpgrade)
+	if err := _Lightclient.contract.UnpackLog(event, "Upgrade", log); err != nil {
+		return nil, err
+	}
+	event.Raw = log
+	return event, nil
+}
+
+// LightclientUpgradedIterator is returned from FilterUpgraded and is used to iterate over the raw logs and unpacked data for Upgraded events raised by the Lightclient contract.
+type LightclientUpgradedIterator struct {
+	Event *LightclientUpgraded // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *LightclientUpgradedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(LightclientUpgraded)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(LightclientUpgraded)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *LightclientUpgradedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *LightclientUpgradedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// LightclientUpgraded represents a Upgraded event raised by the Lightclient contract.
+type LightclientUpgraded struct {
+	Implementation common.Address
+	Raw            types.Log // Blockchain specific contextual infos
+}
+
+// FilterUpgraded is a free log retrieval operation binding the contract event 0xbc7cd75a20ee27fd9adebab32041f755214dbc6bffa90cc0225b39da2e5c2d3b.
+//
+// Solidity: event Upgraded(address indexed implementation)
+func (_Lightclient *LightclientFilterer) FilterUpgraded(opts *bind.FilterOpts, implementation []common.Address) (*LightclientUpgradedIterator, error) {
+
+	var implementationRule []interface{}
+	for _, implementationItem := range implementation {
+		implementationRule = append(implementationRule, implementationItem)
+	}
+
+	logs, sub, err := _Lightclient.contract.FilterLogs(opts, "Upgraded", implementationRule)
+	if err != nil {
+		return nil, err
+	}
+	return &LightclientUpgradedIterator{contract: _Lightclient.contract, event: "Upgraded", logs: logs, sub: sub}, nil
+}
+
+// WatchUpgraded is a free log subscription operation binding the contract event 0xbc7cd75a20ee27fd9adebab32041f755214dbc6bffa90cc0225b39da2e5c2d3b.
+//
+// Solidity: event Upgraded(address indexed implementation)
+func (_Lightclient *LightclientFilterer) WatchUpgraded(opts *bind.WatchOpts, sink chan<- *LightclientUpgraded, implementation []common.Address) (event.Subscription, error) {
+
+	var implementationRule []interface{}
+	for _, implementationItem := range implementation {
+		implementationRule = append(implementationRule, implementationItem)
+	}
+
+	logs, sub, err := _Lightclient.contract.WatchLogs(opts, "Upgraded", implementationRule)
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(LightclientUpgraded)
+				if err := _Lightclient.contract.UnpackLog(event, "Upgraded", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseUpgraded is a log parse operation binding the contract event 0xbc7cd75a20ee27fd9adebab32041f755214dbc6bffa90cc0225b39da2e5c2d3b.
+//
+// Solidity: event Upgraded(address indexed implementation)
+func (_Lightclient *LightclientFilterer) ParseUpgraded(log types.Log) (*LightclientUpgraded, error) {
+	event := new(LightclientUpgraded)
+	if err := _Lightclient.contract.UnpackLog(event, "Upgraded", log); err != nil {
 		return nil, err
 	}
 	event.Raw = log

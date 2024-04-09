@@ -2,6 +2,7 @@ package lightclient
 
 import (
 	"context"
+	"fmt"
 	"math/big"
 
 	"github.com/EspressoSystems/espresso-sequencer-go/types"
@@ -32,14 +33,12 @@ func NewLightClientReader(lightClientAddr common.Address, l1client bind.Contract
 func (l *LightClientReader) ValidatedHeight() (validatedHeight uint64, l1Height uint64, err error) {
 	header, err := l.L1Client.HeaderByNumber(context.Background(), nil)
 	if err != nil {
-		println("error getting header by number")
 		return 0, 0, err
 	}
-
-	// state, err := l.LightClient.FinalizedState(&bind.CallOpts{BlockNumber: header.Number})
-	state, err := l.LightClient.FinalizedState(&bind.CallOpts{})
+	state, err := l.LightClient.GetFinalizedState(&bind.CallOpts{BlockNumber: header.Number})
+	fmt.Printf("%+v\n", state)
+	// state, err := l.LightClient.GetFinalizedState(&bind.CallOpts{})
 	if err != nil {
-		println("error getting finalized state")
 		return 0, 0, err
 	}
 	return state.BlockHeight, header.Number.Uint64(), nil
@@ -47,7 +46,7 @@ func (l *LightClientReader) ValidatedHeight() (validatedHeight uint64, l1Height 
 
 // Fetch the merkle root at a given L1 checkpoint
 func (l *LightClientReader) FetchMerkleRootAtL1Block(L1BlockHeight uint64) (types.BlockMerkleRoot, error) {
-	state, err := l.LightClient.FinalizedState(&bind.CallOpts{BlockNumber: new(big.Int).SetUint64(L1BlockHeight)})
+	state, err := l.LightClient.GetFinalizedState(&bind.CallOpts{BlockNumber: new(big.Int).SetUint64(L1BlockHeight)})
 	if err != nil {
 		return types.Commitment{}, err
 	}

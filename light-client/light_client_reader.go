@@ -15,7 +15,7 @@ type LightClientReaderInterface interface {
 	FetchMerkleRootAtL1Block(L1BlockHeight uint64) (types.BlockMerkleRoot, error)
 
 	// A mock function for now
-	IsHotShotAvaliable(maxDriftTime time.Duration) bool
+	IsHotShotAvailable(maxDriftTime time.Duration) bool
 }
 
 type LightClientReader struct {
@@ -51,8 +51,8 @@ func (l *LightClientReader) ValidatedHeight() (validatedHeight uint64, l1Height 
 }
 
 // Fetch the merkle root at a given L1 checkpoint
-func (l *LightClientReader) FetchMerkleRootAtL1Block(L1BlockHeight uint64) (types.BlockMerkleRoot, error) {
-	state, err := l.LightClient.GetFinalizedState(&bind.CallOpts{BlockNumber: new(big.Int).SetUint64(L1BlockHeight)})
+func (l *LightClientReader) FetchMerkleRootAtL1Block(l1BlockHeight uint64) (types.BlockMerkleRoot, error) {
+	state, err := l.LightClient.GetFinalizedState(&bind.CallOpts{BlockNumber: new(big.Int).SetUint64(l1BlockHeight)})
 	if err != nil {
 		return types.Commitment{}, err
 	}
@@ -61,4 +61,8 @@ func (l *LightClientReader) FetchMerkleRootAtL1Block(L1BlockHeight uint64) (type
 		return types.Commitment{}, err
 	}
 	return root, nil
+}
+
+func (l *LightClientReader) IsHotShotAvailable(t time.Duration) bool {
+	return true
 }

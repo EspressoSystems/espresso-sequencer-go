@@ -312,3 +312,17 @@ func (self *FeeInfo) Commit() Commitment {
 		Uint256Field("amount", &self.Amount).
 		Finalize()
 }
+
+type ChainConfig struct {
+	ChainId      U256   `json:"chain_id"`
+	MaxBlockSize uint64 `json:"max_block_size"`
+	BaseFee      U256   `json:"base_fee"`
+}
+
+func (self *ChainConfig) Commit() Commitment {
+	return NewRawCommitmentBuilder("CHAIN_CONFIG").
+		Uint256Field("chain_id", &self.ChainId).
+		Uint64Field("max_block_size", self.MaxBlockSize).
+		Uint256Field("base_fee", &self.BaseFee).
+		Finalize()
+}

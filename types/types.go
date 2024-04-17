@@ -162,10 +162,7 @@ type NamespaceProof = json.RawMessage
 
 type BlockMerkleRoot = Commitment
 
-type HotShotBlockMerkleProof struct {
-	Proof    json.RawMessage
-	L1Height uint64
-}
+type HotShotBlockMerkleProof json.RawMessage
 
 // Validates a block merkle proof, returning the validated HotShot block height. This is mocked until we have real
 // merkle tree snapshot support.

@@ -59,13 +59,13 @@ func (c *Client) FetchRemainingHeadersForWindow(ctx context.Context, from uint64
 	return res, nil
 }
 
-// TODO: This is a stub for now until we have merkle proof snapshots implemented in the query service
-func (c *Client) FetchBlockMerkleProof(l1Height uint64, hotshotHeight uint64) (types.HotShotBlockMerkleProof, error) {
-	mockProof := `{"proof":[]}`
-	return types.HotShotBlockMerkleProof{
-		Proof:    json.RawMessage(mockProof),
-		L1Height: l1Height,
-	}, nil
+// Fetches a block merkle proof at the snapshot rootHeight for the leaf at the provided HotShot height
+func (c *Client) FetchBlockMerkleProof(ctx context.Context, rootHeight uint64, hotshotHeight uint64) (types.HotShotBlockMerkleProof, error) {
+	var res types.HotShotBlockMerkleProof
+	if err := c.get(ctx, &res, "state/blocks/%d+1/%d", rootHeight, hotshotHeight); err != nil {
+		return types.HotShotBlockMerkleProof{}, err
+	}
+	return res, nil
 }
 
 func (c *Client) FetchTransactionsInBlock(ctx context.Context, blockHeight uint64, namespace uint64) (TransactionsInBlock, error) {

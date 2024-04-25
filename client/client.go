@@ -62,7 +62,7 @@ func (c *Client) FetchRemainingHeadersForWindow(ctx context.Context, from uint64
 // Fetches a block merkle proof at the snapshot rootHeight for the leaf at the provided HotShot height
 func (c *Client) FetchBlockMerkleProof(ctx context.Context, rootHeight uint64, hotshotHeight uint64) (types.HotShotBlockMerkleProof, error) {
 	var res types.HotShotBlockMerkleProof
-	if err := c.get(ctx, &res, "state/blocks/%d/%d", rootHeight+1, hotshotHeight); err != nil {
+	if err := c.get(ctx, &res, "block-state/%d/%d", rootHeight, hotshotHeight); err != nil {
 		return types.HotShotBlockMerkleProof{}, err
 	}
 	return res, nil

@@ -28,15 +28,16 @@ type Header struct {
 func (h *Header) UnmarshalJSON(b []byte) error {
 	// Parse using pointers so we can distinguish between missing and default fields.
 	type Dec struct {
-		Height              *uint64        `json:"height"`
-		Timestamp           *uint64        `json:"timestamp"`
-		L1Head              *uint64        `json:"l1_head"`
-		L1Finalized         *L1BlockInfo   `json:"l1_finalized"           rlp:"nil"`
-		PayloadCommitment   **TaggedBase64 `json:"payload_commitment"`
-		NsTable             **NsTable      `json:"ns_table"`
-		BlockMerkleTreeRoot **TaggedBase64 `json:"block_merkle_tree_root"`
-		FeeMerkleTreeRoot   **TaggedBase64 `json:"fee_merkle_tree_root"`
-		FeeInfo             **FeeInfo      `json:"fee_info"`
+		Height              *uint64          `json:"height"`
+		Timestamp           *uint64          `json:"timestamp"`
+		L1Head              *uint64          `json:"l1_head"`
+		L1Finalized         *L1BlockInfo     `json:"l1_finalized"           rlp:"nil"`
+		PayloadCommitment   **TaggedBase64   `json:"payload_commitment"`
+		NsTable             **NsTable        `json:"ns_table"`
+		BlockMerkleTreeRoot **TaggedBase64   `json:"block_merkle_tree_root"`
+		FeeMerkleTreeRoot   **TaggedBase64   `json:"fee_merkle_tree_root"`
+		FeeInfo             **FeeInfo        `json:"fee_info"`
+		ChainConfig         *json.RawMessage `json:"chain_config"`
 	}
 
 	var dec Dec
@@ -162,7 +163,10 @@ type NamespaceProof = json.RawMessage
 
 type BlockMerkleRoot = Commitment
 
-type HotShotBlockMerkleProof json.RawMessage
+type HotShotBlockMerkleProof struct {
+	Pos   string          `json:"pos"`
+	Proof json.RawMessage `json:"proof"`
+}
 
 // Validates a block merkle proof, returning the validated HotShot block height. This is mocked until we have real
 // merkle tree snapshot support.

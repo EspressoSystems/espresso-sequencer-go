@@ -28,16 +28,16 @@ type Header struct {
 func (h *Header) UnmarshalJSON(b []byte) error {
 	// Parse using pointers so we can distinguish between missing and default fields.
 	type Dec struct {
-		Height              *uint64          `json:"height"`
-		Timestamp           *uint64          `json:"timestamp"`
-		L1Head              *uint64          `json:"l1_head"`
-		L1Finalized         *L1BlockInfo     `json:"l1_finalized"           rlp:"nil"`
-		PayloadCommitment   **TaggedBase64   `json:"payload_commitment"`
-		NsTable             **NsTable        `json:"ns_table"`
-		BlockMerkleTreeRoot **TaggedBase64   `json:"block_merkle_tree_root"`
-		FeeMerkleTreeRoot   **TaggedBase64   `json:"fee_merkle_tree_root"`
-		FeeInfo             **FeeInfo        `json:"fee_info"`
-		ChainConfig         *json.RawMessage `json:"chain_config"`
+		Height              *uint64                 `json:"height"`
+		Timestamp           *uint64                 `json:"timestamp"`
+		L1Head              *uint64                 `json:"l1_head"`
+		L1Finalized         *L1BlockInfo            `json:"l1_finalized"           rlp:"nil"`
+		PayloadCommitment   **TaggedBase64          `json:"payload_commitment"`
+		NsTable             **NsTable               `json:"ns_table"`
+		BlockMerkleTreeRoot **TaggedBase64          `json:"block_merkle_tree_root"`
+		FeeMerkleTreeRoot   **TaggedBase64          `json:"fee_merkle_tree_root"`
+		FeeInfo             **FeeInfo               `json:"fee_info"`
+		ChainConfig         **ResolvableChainConfig `json:"chain_config"`
 	}
 
 	var dec Dec
@@ -107,6 +107,89 @@ func (self *Header) Commit() Commitment {
 		VarSizeField("block_merkle_tree_root", self.BlockMerkleTreeRoot.Value()).
 		VarSizeField("fee_merkle_tree_root", self.FeeMerkleTreeRoot.Value()).
 		Field("fee_info", self.FeeInfo.Commit()).
+		Finalize()
+}
+
+type ResolvableChainConfig struct {
+	EitherChainConfig `json:"chain_config"`
+}
+
+func (self *ResolvableChainConfig) Commit() Commitment {
+	if self.Left != nil {
+		return self.Left.Commit()
+	}
+	// TODO what t do here? Seemingly no way to get the base64 string into a commitment without access to ark deserialize
+}
+
+type EitherChainConfig struct {
+	Left  *ChainConfig   `json:"left"`
+	Right **TaggedBase64 `json:"right"`
+}
+
+func (i *EitherChainConfig) UnmarshalJSON(b []byte) error {
+	type Dec struct {
+		Left  *ChainConfig   `json:"left"`
+		Right **TaggedBase64 `json:"right"`
+	}
+	var dec Dec
+	if err := json.Unmarshal(b, &dec); err != nil {
+		return err
+	}
+	if dec.Left != nil {
+		i.Left = dec.Left
+	}
+
+	if dec.Right != nil {
+		i.Right = dec.Right
+	}
+
+	if i.Left == nil && i.Right == nil {
+		return fmt.Errorf("either Left or Right variant for EitherChainConfig is required")
+	}
+
+	return nil
+}
+
+type ChainConfig struct {
+	ChainId      U256   `json:"chain_id"`
+	MaxBlockSize uint64 `json:"max_block_size"`
+	BaseFee      U256   `json:"base_fee"`
+}
+
+// func (i *ChainConfig) UnmarshalJSON(b []byte) error {
+// 	// Parse using pointers so we can distinguish between missing and default fields.
+// 	type Dec struct {
+// 		ChainId      *U256   `json:"chain_d"`
+// 		MaxBlockSize *uint64 `json:"max_block_size"`
+// 		BaseFee      *U256   `json:"base_fee"`
+// 	}
+// 	var dec Dec
+// 	if err := json.Unmarshal(b, &dec); err != nil {
+// 		return err
+// 	}
+// 	if dec.ChainId == nil {
+// 		return fmt.Errorf("Field number of type ChainId is required")
+// 	}
+// 	i.ChainId = *dec.ChainId
+
+// 	if dec.MaxBlockSize == nil {
+// 		return fmt.Errorf("Field number of type MaxBlockSize is required")
+// 	}
+// 	i.MaxBlockSize = *dec.MaxBlockSize
+
+// 	if dec.BaseFee == nil {
+// 		return fmt.Errorf("Field number of type BaseFee is required")
+// 	}
+// 	i.BaseFee = *dec.BaseFee
+
+// 	return nil
+// }
+
+func (self *ChainConfig) Commit() Commitment {
+	return NewRawCommitmentBuilder("CHAIN_CONFIG").
+		Uint256Field("chain_id", &self.ChainId).
+		Uint64Field("max_block_size", self.MaxBlockSize).
+		Uint256Field("base_fee", &self.BaseFee).
 		Finalize()
 }
 

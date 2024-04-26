@@ -14,29 +14,33 @@ import (
 type TaggedBase64 = tagged_base64.TaggedBase64
 
 type Header struct {
-	Height              uint64        `json:"height"`
-	Timestamp           uint64        `json:"timestamp"`
-	L1Head              uint64        `json:"l1_head"`
-	L1Finalized         *L1BlockInfo  `json:"l1_finalized"           rlp:"nil"`
-	NsTable             *NsTable      `json:"ns_table"`
-	PayloadCommitment   *TaggedBase64 `json:"payload_commitment"`
-	BlockMerkleTreeRoot *TaggedBase64 `json:"block_merkle_tree_root"`
-	FeeMerkleTreeRoot   *TaggedBase64 `json:"fee_merkle_tree_root"`
-	FeeInfo             *FeeInfo      `json:"fee_info"`
+	ChainConfig         *ResolvableChainConfig `json:"chain_config"`
+	Height              uint64                 `json:"height"`
+	Timestamp           uint64                 `json:"timestamp"`
+	L1Head              uint64                 `json:"l1_head"`
+	L1Finalized         *L1BlockInfo           `json:"l1_finalized"           rlp:"nil"`
+	PayloadCommitment   *TaggedBase64          `json:"payload_commitment"`
+	BuilderCommitment   *TaggedBase64          `json:"builder_commitment"`
+	NsTable             *NsTable               `json:"ns_table"`
+	BlockMerkleTreeRoot *TaggedBase64          `json:"block_merkle_tree_root"`
+	FeeMerkleTreeRoot   *TaggedBase64          `json:"fee_merkle_tree_root"`
+	FeeInfo             *FeeInfo               `json:"fee_info"`
 }
 
 func (h *Header) UnmarshalJSON(b []byte) error {
 	// Parse using pointers so we can distinguish between missing and default fields.
 	type Dec struct {
-		Height              *uint64        `json:"height"`
-		Timestamp           *uint64        `json:"timestamp"`
-		L1Head              *uint64        `json:"l1_head"`
-		L1Finalized         *L1BlockInfo   `json:"l1_finalized"           rlp:"nil"`
-		PayloadCommitment   **TaggedBase64 `json:"payload_commitment"`
-		NsTable             **NsTable      `json:"ns_table"`
-		BlockMerkleTreeRoot **TaggedBase64 `json:"block_merkle_tree_root"`
-		FeeMerkleTreeRoot   **TaggedBase64 `json:"fee_merkle_tree_root"`
-		FeeInfo             **FeeInfo      `json:"fee_info"`
+		ChainConfig         **ResolvableChainConfig `json:"chain_config"`
+		Height              *uint64                 `json:"height"`
+		Timestamp           *uint64                 `json:"timestamp"`
+		L1Head              *uint64                 `json:"l1_head"`
+		L1Finalized         *L1BlockInfo            `json:"l1_finalized"           rlp:"nil"`
+		PayloadCommitment   **TaggedBase64          `json:"payload_commitment"`
+		BuilderCommitment   **TaggedBase64          `json:"builder_commitment"`
+		NsTable             **NsTable               `json:"ns_table"`
+		BlockMerkleTreeRoot **TaggedBase64          `json:"block_merkle_tree_root"`
+		FeeMerkleTreeRoot   **TaggedBase64          `json:"fee_merkle_tree_root"`
+		FeeInfo             **FeeInfo               `json:"fee_info"`
 	}
 
 	var dec Dec
@@ -64,6 +68,11 @@ func (h *Header) UnmarshalJSON(b []byte) error {
 	}
 	h.PayloadCommitment = *dec.PayloadCommitment
 
+	if dec.BuilderCommitment == nil {
+		return fmt.Errorf("Field builder_commitment of type Header is required")
+	}
+	h.BuilderCommitment = *dec.BuilderCommitment
+
 	if dec.NsTable == nil {
 		return fmt.Errorf("Field transactions_root of type Header is required")
 	}
@@ -84,6 +93,11 @@ func (h *Header) UnmarshalJSON(b []byte) error {
 	}
 	h.FeeInfo = *dec.FeeInfo
 
+	if dec.ChainConfig == nil {
+		return fmt.Errorf("Field chain_info of type Header is required")
+	}
+	h.ChainConfig = *dec.ChainConfig
+
 	h.L1Finalized = dec.L1Finalized
 	return nil
 }
@@ -96,16 +110,98 @@ func (self *Header) Commit() Commitment {
 	}
 
 	return NewRawCommitmentBuilder("BLOCK").
+		Field("chain_config", self.ChainConfig.Commit()).
 		Uint64Field("height", self.Height).
 		Uint64Field("timestamp", self.Timestamp).
 		Uint64Field("l1_head", self.L1Head).
 		OptionalField("l1_finalized", l1FinalizedComm).
 		ConstantString("payload_commitment").
 		FixedSizeBytes(self.PayloadCommitment.Value()).
+		ConstantString("builder_commitment").
+		FixedSizeBytes(self.BuilderCommitment.Value()).
 		Field("ns_table", self.NsTable.Commit()).
 		VarSizeField("block_merkle_tree_root", self.BlockMerkleTreeRoot.Value()).
 		VarSizeField("fee_merkle_tree_root", self.FeeMerkleTreeRoot.Value()).
 		Field("fee_info", self.FeeInfo.Commit()).
+		Finalize()
+}
+
+type ResolvableChainConfig struct {
+	ChainConfig EitherChainConfig `json:"chain_config"`
+}
+
+func (self *ResolvableChainConfig) Commit() Commitment {
+	config := self.ChainConfig
+	if config.Left != nil {
+		return config.Left.Commit()
+	}
+	if config.Right != nil {
+		right := *config.Right
+		r := (*right).Value()
+		bytes := [32]byte{}
+		copy(bytes[:], r)
+		return Commitment(bytes)
+	}
+
+	// It shouldn't happen
+	return Commitment{}
+}
+
+type EitherChainConfig struct {
+	Left  *ChainConfig   `json:"Left"`
+	Right **TaggedBase64 `json:"Right"`
+}
+
+func (i *EitherChainConfig) UnmarshalJSON(b []byte) error {
+	type Dec struct {
+		Left  *ChainConfig   `json:"Left"`
+		Right **TaggedBase64 `json:"Right"`
+	}
+	var dec Dec
+	if err := json.Unmarshal(b, &dec); err != nil {
+		return err
+	}
+	if dec.Left != nil {
+		i.Left = dec.Left
+	}
+
+	if dec.Right != nil {
+		i.Right = dec.Right
+	}
+
+	if i.Left == nil && i.Right == nil {
+		return fmt.Errorf("either Left or Right variant for EitherChainConfig is required")
+	}
+
+	return nil
+}
+
+func (i *EitherChainConfig) MarshalJSON() ([]byte, error) {
+	type Left struct {
+		Left *ChainConfig `json:"Left"`
+	}
+	type Right struct {
+		Right **TaggedBase64 `json:"Right"`
+	}
+
+	if i.Left != nil {
+		return json.Marshal(Left{Left: i.Left})
+	}
+
+	return json.Marshal(Right{Right: i.Right})
+}
+
+type ChainConfig struct {
+	ChainId      U256   `json:"chain_id"`
+	MaxBlockSize uint64 `json:"max_block_size"`
+	BaseFee      U256   `json:"base_fee"`
+}
+
+func (self *ChainConfig) Commit() Commitment {
+	return NewRawCommitmentBuilder("CHAIN_CONFIG").
+		Uint256Field("chain_id", &self.ChainId).
+		Uint64Field("max_block_size", self.MaxBlockSize).
+		Uint256Field("base_fee", &self.BaseFee).
 		Finalize()
 }
 
@@ -162,7 +258,10 @@ type NamespaceProof = json.RawMessage
 
 type BlockMerkleRoot = Commitment
 
-type HotShotBlockMerkleProof json.RawMessage
+type HotShotBlockMerkleProof struct {
+	Pos   string          `json:"pos"`
+	Proof json.RawMessage `json:"proof"`
+}
 
 // Validates a block merkle proof, returning the validated HotShot block height. This is mocked until we have real
 // merkle tree snapshot support.

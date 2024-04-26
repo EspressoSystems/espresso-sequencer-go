@@ -35,14 +35,6 @@ func (c *Client) FetchLatestBlockHeight(ctx context.Context) (uint64, error) {
 	return res, nil
 }
 
-func (c *Client) FetchHeadersForWindow(ctx context.Context, start uint64, end uint64) (WindowStart, error) {
-	var res WindowStart
-	if err := c.get(ctx, &res, "availability/headers/window/%d/%d", start, end); err != nil {
-		return WindowStart{}, err
-	}
-	return res, nil
-}
-
 func (c *Client) FetchHeaderByHeight(ctx context.Context, blockHeight uint64) (types.Header, error) {
 	var res types.Header
 	if err := c.get(ctx, &res, "availability/header/%d", blockHeight); err != nil {
@@ -51,10 +43,10 @@ func (c *Client) FetchHeaderByHeight(ctx context.Context, blockHeight uint64) (t
 	return res, nil
 }
 
-func (c *Client) FetchRemainingHeadersForWindow(ctx context.Context, from uint64, end uint64) (WindowMore, error) {
-	var res WindowMore
-	if err := c.get(ctx, &res, "availability/headers/window/from/%d/%d", from, end); err != nil {
-		return WindowMore{}, err
+func (c *Client) FetchHeadersByRange(ctx context.Context, from uint64, until uint64) ([]types.Header, error) {
+	var res []types.Header
+	if err := c.get(ctx, &res, "availability/header/%d/%d", from, until); err != nil {
+		return []types.Header{}, err
 	}
 	return res, nil
 }
@@ -102,7 +94,7 @@ func (c *Client) SubmitTransaction(ctx context.Context, tx types.Transaction) er
 		return err
 	}
 
-	request, err := http.NewRequestWithContext(ctx, "POST", c.baseUrl+"submit/submit", bytes.NewBuffer(marshalled))
+	request, err := http.NewRequestWithContext(ctx, "POST", c.baseUrl+"submit", bytes.NewBuffer(marshalled))
 	if err != nil {
 		return err
 	}

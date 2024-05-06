@@ -94,7 +94,7 @@ func (c *Client) SubmitTransaction(ctx context.Context, tx types.Transaction) er
 		return err
 	}
 
-	request, err := http.NewRequestWithContext(ctx, "POST", c.baseUrl+"submit", bytes.NewBuffer(marshalled))
+	request, err := http.NewRequestWithContext(ctx, "POST", c.baseUrl+"submit/submit", bytes.NewBuffer(marshalled))
 	if err != nil {
 		return err
 	}

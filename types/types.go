@@ -353,7 +353,7 @@ func (b *Bytes) UnmarshalJSON(in []byte) error {
 	return nil
 }
 
-// A readable decimal format for U256. Please use the struct `U256“ to initialize
+// A readable decimal format for U256. Please use the struct `U256` to initialize
 // the number first and use the `ToDecimal` to convert.
 type U256Decimal struct {
 	big.Int

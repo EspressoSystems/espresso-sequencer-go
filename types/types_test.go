@@ -32,7 +32,7 @@ var ReferenceNsTable NsTable = NsTable{
 
 var ReferenceChainConfig = &ResolvableChainConfig{
 	EitherChainConfig{
-		Left: &ChainConfig{ChainId: *NewU256().SetUint64(0x8a19), MaxBlockSize: 10240, BaseFee: *NewU256().SetUint64(0)},
+		Left: &ChainConfig{ChainId: *NewU256().SetUint64(0x8a19).ToDecimal(), MaxBlockSize: 10240, BaseFee: *NewU256().SetUint64(0).ToDecimal()},
 	},
 }
 
@@ -52,7 +52,7 @@ var ReferenceHeader Header = Header{
 	NsTable:             &ReferenceNsTable,
 	BlockMerkleTreeRoot: ReferenceBlockMerkleTreeRoot,
 	FeeMerkleTreeRoot:   ReferenceFeeMerkleTreeRoot,
-	FeeInfo:             &FeeInfo{Account: common.HexToAddress("0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"), Amount: *NewU256().SetUint64(0)},
+	FeeInfo:             &FeeInfo{Account: common.HexToAddress("0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"), Amount: *NewU256().SetUint64(0).ToDecimal()},
 }
 
 var ReferenceTransaction Transaction = Transaction{
@@ -86,7 +86,7 @@ func TestEspressoTypesL1BLockInfoJson(t *testing.T) {
 
 func TestEspressoTypesHeaderJson(t *testing.T) {
 	data := []byte(removeWhitespace(`{
-		"chain_config": { "chain_config": { "Left": { "chain_id": "0x8a19", "max_block_size": 10240, "base_fee": "0x0" } } },
+		"chain_config": { "chain_config": { "Left": { "chain_id": "35353", "max_block_size": 10240, "base_fee": "0" } } },
 		"height": 42,
 		"timestamp": 789,
 		"l1_head": 124,
@@ -102,7 +102,7 @@ func TestEspressoTypesHeaderJson(t *testing.T) {
 		},
 		"block_merkle_tree_root": "MERKLE_COMM~yB4_Aqa35_PoskgTpcCR1oVLh6BUdLHIs7erHKWi-usUAAAAAAAAAAEAAAAAAAAAJg",
 		"fee_merkle_tree_root": "MERKLE_COMM~VJ9z239aP9GZDrHp3VxwPd_0l28Hc5KEAB1pFeCIxhYgAAAAAAAAAAIAAAAAAAAAdA",
-		"fee_info":{"account":"0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266","amount":"0x0"}
+		"fee_info":{"account":"0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266","amount":"0"}
 	}`))
 
 	// Check encoding.

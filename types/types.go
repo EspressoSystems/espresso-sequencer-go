@@ -192,17 +192,23 @@ func (i *EitherChainConfig) MarshalJSON() ([]byte, error) {
 }
 
 type ChainConfig struct {
-	ChainId      U256Decimal `json:"chain_id"`
-	MaxBlockSize uint64      `json:"max_block_size"`
-	BaseFee      U256Decimal `json:"base_fee"`
+	ChainId      U256Decimal     `json:"chain_id"`
+	MaxBlockSize U256Decimal     `json:"max_block_size"`
+	BaseFee      U256Decimal     `json:"base_fee"`
+	FeeContract  *common.Address `json:"fee_contract"`
+	FeeRecipient common.Address  `json:"fee_recipient"`
 }
 
 func (self *ChainConfig) Commit() Commitment {
-	return NewRawCommitmentBuilder("CHAIN_CONFIG").
+	builder := NewRawCommitmentBuilder("CHAIN_CONFIG").
 		Uint256Field("chain_id", self.ChainId.ToU256()).
-		Uint64Field("max_block_size", self.MaxBlockSize).
+		Uint64Field("max_block_size", self.MaxBlockSize.Uint64()).
 		Uint256Field("base_fee", self.BaseFee.ToU256()).
-		Finalize()
+		FixedSizeField("fee_recipient", self.FeeRecipient.Bytes())
+	if self.FeeContract == nil {
+		return builder.Finalize()
+	}
+	return builder.Uint64Field("fee_contract", 1).FixedSizeBytes(self.FeeContract.Bytes()).Finalize()
 }
 
 type L1BlockInfo struct {

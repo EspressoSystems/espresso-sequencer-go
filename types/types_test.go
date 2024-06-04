@@ -32,7 +32,13 @@ var ReferenceNsTable NsTable = NsTable{
 
 var ReferenceChainConfig = &ResolvableChainConfig{
 	EitherChainConfig{
-		Left: &ChainConfig{ChainId: *NewU256().SetUint64(0x8a19), MaxBlockSize: 10240, BaseFee: *NewU256().SetUint64(0)},
+		Left: &ChainConfig{
+			ChainId:      *NewU256().SetUint64(0x8a19).ToDecimal(),
+			MaxBlockSize: *NewU256().SetUint64(10240).ToDecimal(),
+			BaseFee:      *NewU256().SetUint64(0).ToDecimal(),
+			FeeContract:  &common.Address{},
+			FeeRecipient: common.Address{},
+		},
 	},
 }
 
@@ -52,7 +58,7 @@ var ReferenceHeader Header = Header{
 	NsTable:             &ReferenceNsTable,
 	BlockMerkleTreeRoot: ReferenceBlockMerkleTreeRoot,
 	FeeMerkleTreeRoot:   ReferenceFeeMerkleTreeRoot,
-	FeeInfo:             &FeeInfo{Account: common.HexToAddress("0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"), Amount: *NewU256().SetUint64(0)},
+	FeeInfo:             &FeeInfo{Account: common.HexToAddress("0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"), Amount: *NewU256().SetUint64(0).ToDecimal()},
 }
 
 var ReferenceTransaction Transaction = Transaction{
@@ -86,7 +92,17 @@ func TestEspressoTypesL1BLockInfoJson(t *testing.T) {
 
 func TestEspressoTypesHeaderJson(t *testing.T) {
 	data := []byte(removeWhitespace(`{
-		"chain_config": { "chain_config": { "Left": { "chain_id": "0x8a19", "max_block_size": 10240, "base_fee": "0x0" } } },
+		"chain_config": {
+			"chain_config": {
+			  "Left": {
+				"chain_id": "35353",
+				"max_block_size": "10240",
+				"base_fee": "0",
+				"fee_contract": "0x0000000000000000000000000000000000000000",
+				"fee_recipient": "0x0000000000000000000000000000000000000000"
+			  }
+			}
+		},
 		"height": 42,
 		"timestamp": 789,
 		"l1_head": 124,
@@ -102,7 +118,7 @@ func TestEspressoTypesHeaderJson(t *testing.T) {
 		},
 		"block_merkle_tree_root": "MERKLE_COMM~yB4_Aqa35_PoskgTpcCR1oVLh6BUdLHIs7erHKWi-usUAAAAAAAAAAEAAAAAAAAAJg",
 		"fee_merkle_tree_root": "MERKLE_COMM~VJ9z239aP9GZDrHp3VxwPd_0l28Hc5KEAB1pFeCIxhYgAAAAAAAAAAIAAAAAAAAAdA",
-		"fee_info":{"account":"0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266","amount":"0x0"}
+		"fee_info":{"account":"0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266","amount":"0"}
 	}`))
 
 	// Check encoding.
@@ -158,7 +174,7 @@ func TestEspressoTypesNsTable(t *testing.T) {
 }
 
 func TestEspressoTypesHeaderCommit(t *testing.T) {
-	require.Equal(t, ReferenceHeader.Commit(), Commitment{211, 66, 18, 166, 237, 163, 29, 181, 195, 235, 63, 129, 192, 201, 48, 71, 136, 163, 25, 216, 20, 74, 133, 203, 167, 253, 163, 33, 43, 102, 168, 26})
+	require.Equal(t, ReferenceHeader.Commit(), Commitment{108, 66, 152, 60, 96, 143, 195, 17, 58, 161, 229, 97, 42, 65, 218, 52, 73, 30, 164, 118, 5, 26, 70, 222, 184, 71, 228, 1, 92, 215, 177, 152})
 }
 
 func TestEspressoTypesTransaction(t *testing.T) {

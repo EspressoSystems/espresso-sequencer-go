@@ -192,17 +192,23 @@ func (i *EitherChainConfig) MarshalJSON() ([]byte, error) {
 }
 
 type ChainConfig struct {
-	ChainId      U256   `json:"chain_id"`
-	MaxBlockSize uint64 `json:"max_block_size"`
-	BaseFee      U256   `json:"base_fee"`
+	ChainId      U256Decimal     `json:"chain_id"`
+	MaxBlockSize U256Decimal     `json:"max_block_size"`
+	BaseFee      U256Decimal     `json:"base_fee"`
+	FeeContract  *common.Address `json:"fee_contract"`
+	FeeRecipient common.Address  `json:"fee_recipient"`
 }
 
 func (self *ChainConfig) Commit() Commitment {
-	return NewRawCommitmentBuilder("CHAIN_CONFIG").
-		Uint256Field("chain_id", &self.ChainId).
-		Uint64Field("max_block_size", self.MaxBlockSize).
-		Uint256Field("base_fee", &self.BaseFee).
-		Finalize()
+	builder := NewRawCommitmentBuilder("CHAIN_CONFIG").
+		Uint256Field("chain_id", self.ChainId.ToU256()).
+		Uint64Field("max_block_size", self.MaxBlockSize.Uint64()).
+		Uint256Field("base_fee", self.BaseFee.ToU256()).
+		FixedSizeField("fee_recipient", self.FeeRecipient.Bytes())
+	if self.FeeContract == nil {
+		return builder.Finalize()
+	}
+	return builder.Uint64Field("fee_contract", 1).FixedSizeBytes(self.FeeContract.Bytes()).Finalize()
 }
 
 type L1BlockInfo struct {
@@ -353,6 +359,31 @@ func (b *Bytes) UnmarshalJSON(in []byte) error {
 	return nil
 }
 
+// A readable decimal format for U256. Please use the struct `U256` to initialize
+// the number first and use the `ToDecimal` to convert.
+type U256Decimal struct {
+	big.Int
+}
+
+func (i U256Decimal) MarshalJSON() ([]byte, error) {
+	return json.Marshal(i.Text(10))
+}
+
+func (i *U256Decimal) UnmarshalJSON(in []byte) error {
+	var s string
+	if err := json.Unmarshal(in, &s); err != nil {
+		return err
+	}
+	if _, err := fmt.Sscanf(s, "%d", &i.Int); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (i *U256Decimal) ToU256() *U256 {
+	return &U256{i.Int}
+}
+
 // A BigInt type which serializes to JSON a a hex string. This ensures compatibility with the
 // Espresso APIs.
 type U256 struct {
@@ -397,14 +428,18 @@ func (i *U256) UnmarshalJSON(in []byte) error {
 	return nil
 }
 
+func (i *U256) ToDecimal() *U256Decimal {
+	return &U256Decimal{i.Int}
+}
+
 type FeeInfo struct {
 	Account common.Address `json:"account"`
-	Amount  U256           `json:"amount"`
+	Amount  U256Decimal    `json:"amount"`
 }
 
 func (self *FeeInfo) Commit() Commitment {
 	return NewRawCommitmentBuilder("FEE_INFO").
 		FixedSizeField("account", self.Account.Bytes()).
-		Uint256Field("amount", &self.Amount).
+		Uint256Field("amount", self.Amount.ToU256()).
 		Finalize()
 }

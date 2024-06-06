@@ -12,7 +12,7 @@ import (
 
 type LightClientReaderInterface interface {
 	ValidatedHeight() (validatedHeight uint64, l1Height uint64, err error)
-	FetchMerkleRootAtL1Block(L1BlockHeight uint64) (types.BlockMerkleRoot, error)
+	FetchMerkleRoot(hotShotHeight uint64, opts bind.CallOpts) (types.BlockMerkleSnapshot, error)
 
 	// A mock function for now
 	IsHotShotAvailable(maxDriftTime time.Duration) bool
@@ -50,17 +50,21 @@ func (l *LightClientReader) ValidatedHeight() (validatedHeight uint64, l1Height 
 	return state.BlockHeight, header.Number.Uint64(), nil
 }
 
-// Fetch the merkle root at a given L1 checkpoint
-func (l *LightClientReader) FetchMerkleRootAtL1Block(l1BlockHeight uint64) (types.BlockMerkleRoot, error) {
-	state, err := l.LightClient.GetFinalizedState(&bind.CallOpts{BlockNumber: new(big.Int).SetUint64(l1BlockHeight)})
+// Fetch the merkle root at the first light client snapshot that proves the provided hotshot leaf height.
+// CallOpt included as a parameter in case validators need to fetch historical merkle roots if they are catching up.
+func (l *LightClientReader) FetchMerkleRoot(hotShotHeight uint64, opts *bind.CallOpts) (types.BlockMerkleSnapshot, error) {
+	snapshot, err := l.LightClient.GetHotShotCommitment(opts, new(big.Int).SetUint64(hotShotHeight))
 	if err != nil {
-		return types.Commitment{}, err
+		return types.BlockMerkleSnapshot{}, err
 	}
-	root, err := types.CommitmentFromUint256(types.NewU256().SetBigInt(state.BlockCommRoot))
+	root, err := types.CommitmentFromUint256(types.NewU256().SetBigInt(snapshot.BlockCommRoot))
 	if err != nil {
-		return types.Commitment{}, err
+		return types.BlockMerkleSnapshot{}, err
 	}
-	return root, nil
+	return types.BlockMerkleSnapshot{
+		Root:   root,
+		Height: snapshot.BlockHeight,
+	}, nil
 }
 
 func (l *LightClientReader) IsHotShotAvailable(t time.Duration) bool {

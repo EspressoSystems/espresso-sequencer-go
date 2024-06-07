@@ -262,6 +262,11 @@ type NsTable struct {
 
 type NamespaceProof = json.RawMessage
 
+type BlockMerkleSnapshot struct {
+	Root   BlockMerkleRoot
+	Height uint64
+}
+
 type BlockMerkleRoot = Commitment
 
 type HotShotBlockMerkleProof struct {

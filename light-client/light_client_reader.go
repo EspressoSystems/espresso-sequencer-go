@@ -3,19 +3,19 @@ package lightclient
 import (
 	"context"
 	"math/big"
-	"time"
 
 	"github.com/EspressoSystems/espresso-sequencer-go/types"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
 )
 
+var _ LightClientReaderInterface = (*LightClientReader)(nil)
+
 type LightClientReaderInterface interface {
 	ValidatedHeight() (validatedHeight uint64, l1Height uint64, err error)
-	FetchMerkleRoot(hotShotHeight uint64, opts bind.CallOpts) (types.BlockMerkleSnapshot, error)
+	FetchMerkleRoot(hotShotHeight uint64, opts *bind.CallOpts) (types.BlockMerkleSnapshot, error)
 
-	// A mock function for now
-	IsHotShotAvailable(maxDriftTime time.Duration) bool
+	IsHotShotLive(delayThreshold uint64) (bool, error)
 }
 
 type LightClientReader struct {
@@ -67,6 +67,11 @@ func (l *LightClientReader) FetchMerkleRoot(hotShotHeight uint64, opts *bind.Cal
 	}, nil
 }
 
-func (l *LightClientReader) IsHotShotAvailable(t time.Duration) bool {
-	return true
+func (l *LightClientReader) IsHotShotLive(delayThreshold uint64) (bool, error) {
+	header, err := l.L1Client.HeaderByNumber(context.Background(), nil)
+	if err != nil {
+		return false, err
+	}
+	threshold := new(big.Int).SetUint64(delayThreshold)
+	return l.LightClient.LagOverEscapeHatchThreshold(&bind.CallOpts{}, header.Number, threshold)
 }

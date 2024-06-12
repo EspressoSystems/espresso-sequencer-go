@@ -65,9 +65,7 @@ func (c *Client) FetchTransactionsInBlock(ctx context.Context, blockHeight uint6
 	if err := c.get(ctx, &res, "availability/block/%d/namespace/%d", blockHeight, namespace); err != nil {
 		return TransactionsInBlock{}, err
 	}
-	if res.Proof == nil {
-		return TransactionsInBlock{}, fmt.Errorf("field proof of type NamespaceResponse is required")
-	}
+
 	if res.Transactions == nil {
 		return TransactionsInBlock{}, fmt.Errorf("field transactions of type NamespaceResponse is required")
 	}
@@ -79,6 +77,14 @@ func (c *Client) FetchTransactionsInBlock(ctx context.Context, blockHeight uint6
 			return TransactionsInBlock{}, fmt.Errorf("transaction %d has wrong namespace (%d, expected %d)", i, tx.Namespace, namespace)
 		}
 		txs = append(txs, tx.Payload)
+	}
+
+	if len(txs) > 0 && res.Proof == nil {
+		return TransactionsInBlock{}, fmt.Errorf("field proof of type NamespaceResponse is required")
+	}
+
+	if res.Proof == nil {
+		return TransactionsInBlock{Transactions: txs, Proof: nil}, nil
 	}
 
 	return TransactionsInBlock{

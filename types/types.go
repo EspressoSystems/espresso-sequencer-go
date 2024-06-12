@@ -13,6 +13,8 @@ import (
 
 type TaggedBase64 = tagged_base64.TaggedBase64
 
+type VidCommon = json.RawMessage
+
 type Header struct {
 	ChainConfig         *ResolvableChainConfig `json:"chain_config"`
 	Height              uint64                 `json:"height"`

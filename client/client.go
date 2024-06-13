@@ -28,11 +28,11 @@ func NewClient(url string) *Client {
 }
 
 func (c *Client) FetchVidCommonByHeight(ctx context.Context, blockHeight uint64) (types.VidCommon, error) {
-	var res types.VidCommon
+	var res types.VidCommonQueryData
 	if err := c.get(ctx, &res, "availability/vid/common/%d", blockHeight); err != nil {
 		return types.VidCommon{}, err
 	}
-	return res, nil
+	return res.Common, nil
 }
 
 func (c *Client) FetchLatestBlockHeight(ctx context.Context) (uint64, error) {

@@ -26,7 +26,8 @@ type TransactionsInBlock struct {
 	// The transactions.
 	Transactions []types.Bytes `json:"transactions"`
 	// A proof that these are all the transactions in the block with the requested namespace.
-	Proof types.NamespaceProof `json:"proof"`
+	Proof     types.NamespaceProof `json:"proof"`
+	VidCommon types.VidCommon      `json:"vidCommon"`
 }
 
 func (t *TransactionsInBlock) UnmarshalJSON(b []byte) error {

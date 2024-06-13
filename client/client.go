@@ -27,6 +27,14 @@ func NewClient(url string) *Client {
 	}
 }
 
+func (c *Client) FetchVidCommonByHeight(ctx context.Context, blockHeight uint64) (types.VidCommon, error) {
+	var res types.VidCommonQueryData
+	if err := c.get(ctx, &res, "availability/vid/common/%d", blockHeight); err != nil {
+		return types.VidCommon{}, err
+	}
+	return res.Common, nil
+}
+
 func (c *Client) FetchLatestBlockHeight(ctx context.Context) (uint64, error) {
 	var res uint64
 	if err := c.get(ctx, &res, "status/block-height"); err != nil {
@@ -65,9 +73,7 @@ func (c *Client) FetchTransactionsInBlock(ctx context.Context, blockHeight uint6
 	if err := c.get(ctx, &res, "availability/block/%d/namespace/%d", blockHeight, namespace); err != nil {
 		return TransactionsInBlock{}, err
 	}
-	if res.Proof == nil {
-		return TransactionsInBlock{}, fmt.Errorf("field proof of type NamespaceResponse is required")
-	}
+
 	if res.Transactions == nil {
 		return TransactionsInBlock{}, fmt.Errorf("field transactions of type NamespaceResponse is required")
 	}
@@ -81,9 +87,23 @@ func (c *Client) FetchTransactionsInBlock(ctx context.Context, blockHeight uint6
 		txs = append(txs, tx.Payload)
 	}
 
+	if len(txs) > 0 && res.Proof == nil {
+		return TransactionsInBlock{}, fmt.Errorf("field proof of type NamespaceResponse is required")
+	}
+
+	if res.Proof == nil {
+		return TransactionsInBlock{}, nil
+	}
+
+	vidCommon, err := c.FetchVidCommonByHeight(ctx, blockHeight)
+	if err != nil {
+		return TransactionsInBlock{}, err
+	}
+
 	return TransactionsInBlock{
 		Transactions: txs,
 		Proof:        *res.Proof,
+		VidCommon:    vidCommon,
 	}, nil
 
 }

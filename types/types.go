@@ -13,6 +13,15 @@ import (
 
 type TaggedBase64 = tagged_base64.TaggedBase64
 
+type VidCommon = json.RawMessage
+
+type VidCommonQueryData struct {
+	Height      uint64        `json:"height"`
+	BlockHash   *TaggedBase64 `json:"block_hash"`
+	PayloadHash *TaggedBase64 `json:"payload_hash"`
+	Common      VidCommon     `json:"common"`
+}
+
 type Header struct {
 	ChainConfig         *ResolvableChainConfig `json:"chain_config"`
 	Height              uint64                 `json:"height"`

@@ -92,12 +92,18 @@ func (c *Client) FetchTransactionsInBlock(ctx context.Context, blockHeight uint6
 	}
 
 	if res.Proof == nil {
-		return TransactionsInBlock{Transactions: txs, Proof: nil}, nil
+		return TransactionsInBlock{}, nil
+	}
+
+	vidCommon, err := c.FetchVidCommonByHeight(ctx, blockHeight)
+	if err != nil {
+		return TransactionsInBlock{}, err
 	}
 
 	return TransactionsInBlock{
 		Transactions: txs,
 		Proof:        *res.Proof,
+		VidCommon:    vidCommon,
 	}, nil
 
 }

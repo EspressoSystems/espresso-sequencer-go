@@ -279,7 +279,6 @@ type BlockMerkleSnapshot struct {
 type BlockMerkleRoot = Commitment
 
 type HotShotBlockMerkleProof struct {
-	Pos   string          `json:"pos"`
 	Proof json.RawMessage `json:"proof"`
 }
 

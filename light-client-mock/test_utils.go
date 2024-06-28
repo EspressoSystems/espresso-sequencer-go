@@ -1,26 +1,48 @@
 package lightclientmock
 
 import (
+	"context"
+	"math/big"
 	"testing"
 
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
 )
 
-func FreezeFinalizedState(t *testing.T, client bind.ContractBackend, address common.Address, txOpts *bind.TransactOpts) error {
-	mockLightClient, err := NewLightclientmock(address, client)
-
-	if err != nil {
-		return err
-	}
-	state, err := mockLightClient.GetFinalizedState(nil)
-
+func FreezeL1Height(t *testing.T, client bind.ContractBackend, contractAddress common.Address, txOpts *bind.TransactOpts) error {
+	mockLightClient, err := NewLightclientmock(contractAddress, client)
 	if err != nil {
 		return err
 	}
 
-	state.BlockHeight += 1
+	header, err := client.HeaderByNumber(context.Background(), nil)
+	if err != nil {
+		return err
+	}
 
-	mockLightClient.SetFinalizedState(txOpts, state)
+	_, err = mockLightClient.SetHotShotDownSince(txOpts, header.Number)
+	if err != nil {
+		return err
+	}
+
 	return nil
+}
+
+func IsHotShotLive(t *testing.T, client bind.ContractBackend, contractAddress common.Address, threshold uint64) (bool, error) {
+	mockLightClient, err := NewLightclientmock(contractAddress, client)
+	if err != nil {
+		return false, err
+	}
+
+	header, err := client.HeaderByNumber(context.Background(), nil)
+	if err != nil {
+		return false, err
+	}
+
+	isDown, err := mockLightClient.LagOverEscapeHatchThreshold(nil, header.Number, new(big.Int).SetUint64(threshold))
+	if err != nil {
+		return false, err
+	}
+
+	return !isDown, nil
 }

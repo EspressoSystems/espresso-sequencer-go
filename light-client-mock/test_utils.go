@@ -1,3 +1,4 @@
+// This file contains functions that help people interact with light client mock contract.
 package lightclientmock
 
 import (
@@ -26,6 +27,16 @@ func FreezeL1Height(t *testing.T, client bind.ContractBackend, contractAddress c
 	}
 
 	return nil
+}
+
+func UnfreezeL1Height(t *testing.T, client bind.ContractBackend, contractAddress common.Address, txOpts *bind.TransactOpts) error {
+	mockLightClient, err := NewLightclientmock(contractAddress, client)
+	if err != nil {
+		return err
+	}
+	_, err = mockLightClient.SetHotShotUp(txOpts)
+
+	return err
 }
 
 func IsHotShotLive(t *testing.T, client bind.ContractBackend, contractAddress common.Address, threshold uint64) (bool, error) {

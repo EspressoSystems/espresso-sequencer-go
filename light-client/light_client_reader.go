@@ -73,5 +73,9 @@ func (l *LightClientReader) IsHotShotLive(delayThreshold uint64) (bool, error) {
 		return false, err
 	}
 	threshold := new(big.Int).SetUint64(delayThreshold)
-	return l.LightClient.LagOverEscapeHatchThreshold(&bind.CallOpts{}, header.Number, threshold)
+	isDown, err := l.LightClient.LagOverEscapeHatchThreshold(&bind.CallOpts{}, header.Number, threshold)
+	if err != nil {
+		return false, err
+	}
+	return !isDown, nil
 }

@@ -491,7 +491,7 @@ func GetDummyHeader() Header {
 				},
 			},
 		},
-		Height:    42,
+		Height:    0,
 		Timestamp: 789,
 		L1Head:    124,
 		NsTable: &NsTable{

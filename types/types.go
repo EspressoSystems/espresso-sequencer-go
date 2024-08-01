@@ -22,6 +22,15 @@ type VidCommonQueryData struct {
 	Common      VidCommon     `json:"common"`
 }
 
+type TransactionQueryData struct {
+	Transaction Transaction     `json:"transaction"`
+	Hash        *TaggedBase64   `json:"hash"`
+	Index       uint64          `json:"index"`
+	Proof       json.RawMessage `json:"proof"`
+	BlockHash   *TaggedBase64   `json:"block_hash"`
+	BlockHeight uint64          `json:"block_height"`
+}
+
 type Header struct {
 	ChainConfig         *ResolvableChainConfig `json:"chain_config"`
 	Height              uint64                 `json:"height"`

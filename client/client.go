@@ -12,6 +12,9 @@ import (
 	"github.com/EspressoSystems/espresso-sequencer-go/types"
 )
 
+var _ QueryService = (*Client)(nil)
+var _ SubmitAPI = (*Client)(nil)
+
 type Client struct {
 	baseUrl string
 	client  *http.Client
@@ -55,6 +58,17 @@ func (c *Client) FetchHeadersByRange(ctx context.Context, from uint64, until uin
 	var res []types.Header
 	if err := c.get(ctx, &res, "availability/header/%d/%d", from, until); err != nil {
 		return []types.Header{}, err
+	}
+	return res, nil
+}
+
+func (c *Client) FetchTransactionByHash(ctx context.Context, hash *types.TaggedBase64) (types.TransactionQueryData, error) {
+	if hash == nil {
+		return types.TransactionQueryData{}, fmt.Errorf("hash is nil")
+	}
+	var res types.TransactionQueryData
+	if err := c.get(ctx, &res, "availability/transaction/hash/%s", hash.String()); err != nil {
+		return types.TransactionQueryData{}, err
 	}
 	return res, nil
 }
@@ -108,26 +122,36 @@ func (c *Client) FetchTransactionsInBlock(ctx context.Context, blockHeight uint6
 
 }
 
-func (c *Client) SubmitTransaction(ctx context.Context, tx types.Transaction) error {
+func (c *Client) SubmitTransaction(ctx context.Context, tx types.Transaction) (*types.TaggedBase64, error) {
 	marshalled, err := json.Marshal(tx)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	request, err := http.NewRequestWithContext(ctx, "POST", c.baseUrl+"submit/submit", bytes.NewBuffer(marshalled))
 	if err != nil {
-		return err
+		return nil, err
 	}
 	request.Header.Set("Content-Type", "application/json")
 	response, err := c.client.Do(request)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer response.Body.Close()
 	if response.StatusCode != 200 {
-		return fmt.Errorf("received unexpected status code: %v", response.StatusCode)
+		return nil, fmt.Errorf("received unexpected status code: %v", response.StatusCode)
 	}
-	return nil
+
+	body, err := io.ReadAll(response.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	var hash types.TaggedBase64
+	if err := json.Unmarshal(body, &hash); err != nil {
+		return nil, err
+	}
+	return &hash, nil
 }
 
 type NamespaceResponse struct {

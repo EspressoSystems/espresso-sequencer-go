@@ -16,9 +16,11 @@ type QueryService interface {
 	FetchHeaderByHeight(ctx context.Context, height uint64) (types.Header, error)
 	// Get the headers starting from the given :from up until the given :until
 	FetchHeadersByRange(ctx context.Context, from uint64, until uint64) ([]types.Header, error)
-	// Get the transactions belonging to the given namespace in the block with the given header,
+	// Get the transactions belonging to the given namespace at the block height,
 	// along with a proof that these are all such transactions.
-	FetchTransactionsInBlock(ctx context.Context, header *types.Header, namespace uint64) (TransactionsInBlock, error)
+	FetchTransactionsInBlock(ctx context.Context, blockHeight uint64, namespace uint64) (TransactionsInBlock, error)
+	// Get the transaction by its hash.
+	FetchTransactionByHash(ctx context.Context, hash *types.TaggedBase64) (types.TransactionQueryData, error)
 }
 
 // Response to `FetchTransactionsInBlock`

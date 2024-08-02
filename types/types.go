@@ -22,6 +22,15 @@ type VidCommonQueryData struct {
 	Common      VidCommon     `json:"common"`
 }
 
+type TransactionQueryData struct {
+	Transaction Transaction     `json:"transaction"`
+	Hash        *TaggedBase64   `json:"hash"`
+	Index       uint64          `json:"index"`
+	Proof       json.RawMessage `json:"proof"`
+	BlockHash   *TaggedBase64   `json:"block_hash"`
+	BlockHeight uint64          `json:"block_height"`
+}
+
 type Header struct {
 	ChainConfig         *ResolvableChainConfig `json:"chain_config"`
 	Height              uint64                 `json:"height"`
@@ -455,4 +464,44 @@ func (self *FeeInfo) Commit() Commitment {
 		FixedSizeField("account", self.Account.Bytes()).
 		Uint256Field("amount", self.Amount.ToU256()).
 		Finalize()
+}
+
+// For some intricate reasons, rollups need to build a dummy header as a placeholder. However, an empty Header can be serialized
+// but can not be deserialized because of the checks. Thus we provide this dummy header as a workaround.
+func GetDummyHeader() Header {
+	var payloadCommitment, _ = tagged_base64.Parse("HASH~1yS-KEtL3oDZDBJdsW51Pd7zywIiHesBZsTbpOzrxOfu")
+	var builderCommitment, _ = tagged_base64.Parse("BUILDER_COMMITMENT~1yS-KEtL3oDZDBJdsW51Pd7zywIiHesBZsTbpOzrxOdZ")
+	var blockMerkleTreeRoot, _ = tagged_base64.Parse("MERKLE_COMM~yB4_Aqa35_PoskgTpcCR1oVLh6BUdLHIs7erHKWi-usUAAAAAAAAAAEAAAAAAAAAJg")
+	var feeMerkleTreeRoot, _ = tagged_base64.Parse("MERKLE_COMM~VJ9z239aP9GZDrHp3VxwPd_0l28Hc5KEAB1pFeCIxhYgAAAAAAAAAAIAAAAAAAAAdA")
+	var blockInfo = L1BlockInfo{
+		Number:    123,
+		Timestamp: *NewU256().SetUint64(0x456),
+		Hash:      common.Hash{0x01, 0x23, 0x45, 0x67, 0x89, 0xab, 0xcd, 0xef, 0x01, 0x23, 0x45, 0x67, 0x89, 0xab, 0xcd, 0xef, 0x01, 0x23, 0x45, 0x67, 0x89, 0xab, 0xcd, 0xef, 0x01, 0x23, 0x45, 0x67, 0x89, 0xab, 0xcd, 0xef},
+	}
+
+	return Header{
+		ChainConfig: &ResolvableChainConfig{
+			EitherChainConfig{
+				Left: &ChainConfig{
+					ChainId:      *NewU256().SetUint64(0x8a19).ToDecimal(),
+					MaxBlockSize: *NewU256().SetUint64(10240).ToDecimal(),
+					BaseFee:      *NewU256().SetUint64(0).ToDecimal(),
+					FeeContract:  &common.Address{},
+					FeeRecipient: common.Address{},
+				},
+			},
+		},
+		Height:    0,
+		Timestamp: 789,
+		L1Head:    124,
+		NsTable: &NsTable{
+			Bytes: []byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		},
+		BlockMerkleTreeRoot: blockMerkleTreeRoot,
+		FeeMerkleTreeRoot:   feeMerkleTreeRoot,
+		BuilderCommitment:   builderCommitment,
+		PayloadCommitment:   payloadCommitment,
+		FeeInfo:             &FeeInfo{Account: common.HexToAddress("0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"), Amount: *NewU256().SetUint64(0).ToDecimal()},
+		L1Finalized:         &blockInfo,
+	}
 }

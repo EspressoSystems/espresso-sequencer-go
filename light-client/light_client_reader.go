@@ -16,6 +16,7 @@ type LightClientReaderInterface interface {
 	FetchMerkleRoot(hotShotHeight uint64, opts *bind.CallOpts) (types.BlockMerkleSnapshot, error)
 
 	IsHotShotLive(delayThreshold uint64) (bool, error)
+	IsHotShotLiveAtHeight(height, delayThreshold uint64) (bool, error)
 }
 
 type LightClientReader struct {
@@ -74,6 +75,16 @@ func (l *LightClientReader) IsHotShotLive(delayThreshold uint64) (bool, error) {
 	}
 	threshold := new(big.Int).SetUint64(delayThreshold)
 	isDown, err := l.LightClient.LagOverEscapeHatchThreshold(&bind.CallOpts{}, header.Number, threshold)
+	if err != nil {
+		return false, err
+	}
+	return !isDown, nil
+}
+
+func (l *LightClientReader) IsHotShotLiveAtHeight(h, delayThreshold uint64) (bool, error) {
+	threshold := new(big.Int).SetUint64(delayThreshold)
+	height := new(big.Int).SetUint64(h)
+	isDown, err := l.LightClient.LagOverEscapeHatchThreshold(&bind.CallOpts{}, height, threshold)
 	if err != nil {
 		return false, err
 	}

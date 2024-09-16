@@ -13,7 +13,7 @@ var _ LightClientReaderInterface = (*LightClientReader)(nil)
 
 type LightClientReaderInterface interface {
 	ValidatedHeight() (validatedHeight uint64, l1Height uint64, err error)
-	FetchMerkleRoot(hotShotHeight uint64, opts *bind.CallOpts) (types.BlockMerkleSnapshot, error)
+	FetchMerkleRoot(hotShotHeight uint64, opts *bind.CallOpts) (types.BlockMerkleRoot, error)
 
 	IsHotShotLive(delayThreshold uint64) (bool, error)
 	IsHotShotLiveAtHeight(height, delayThreshold uint64) (bool, error)
@@ -44,7 +44,7 @@ func (l *LightClientReader) ValidatedHeight() (validatedHeight uint64, l1Height 
 	if err != nil {
 		return 0, 0, err
 	}
-	state, err := l.LightClient.GetFinalizedState(&bind.CallOpts{BlockNumber: header.Number})
+	state, err := l.LightClient.FinalizedState(&bind.CallOpts{BlockNumber: header.Number})
 	if err != nil {
 		return 0, 0, err
 	}
@@ -53,19 +53,16 @@ func (l *LightClientReader) ValidatedHeight() (validatedHeight uint64, l1Height 
 
 // Fetch the merkle root at the first light client snapshot that proves the provided hotshot leaf height.
 // CallOpt included as a parameter in case validators need to fetch historical merkle roots if they are catching up.
-func (l *LightClientReader) FetchMerkleRoot(hotShotHeight uint64, opts *bind.CallOpts) (types.BlockMerkleSnapshot, error) {
-	snapshot, err := l.LightClient.GetHotShotCommitment(opts, new(big.Int).SetUint64(hotShotHeight))
+func (l *LightClientReader) FetchMerkleRoot(hotShotHeight uint64, opts *bind.CallOpts) (types.BlockMerkleRoot, error) {
+	root, err := l.LightClient.GetHotShotCommitment(opts, new(big.Int).SetUint64(hotShotHeight))
 	if err != nil {
-		return types.BlockMerkleSnapshot{}, err
+		return types.BlockMerkleRoot{}, err
 	}
-	root, err := types.CommitmentFromUint256(types.NewU256().SetBigInt(snapshot.BlockCommRoot))
+	comm, err := types.CommitmentFromUint256(types.NewU256().SetBigInt(root))
 	if err != nil {
-		return types.BlockMerkleSnapshot{}, err
+		return types.BlockMerkleRoot{}, err
 	}
-	return types.BlockMerkleSnapshot{
-		Root:   root,
-		Height: snapshot.BlockHeight,
-	}, nil
+	return comm, nil
 }
 
 func (l *LightClientReader) IsHotShotLive(delayThreshold uint64) (bool, error) {

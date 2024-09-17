@@ -44,7 +44,7 @@ func (l *LightClientReader) ValidatedHeight() (validatedHeight uint64, l1Height 
 	if err != nil {
 		return 0, 0, err
 	}
-	state, err := l.LightClient.GetFinalizedState(&bind.CallOpts{BlockNumber: header.Number})
+	state, err := l.LightClient.FinalizedState(&bind.CallOpts{BlockNumber: header.Number})
 	if err != nil {
 		return 0, 0, err
 	}
@@ -58,13 +58,13 @@ func (l *LightClientReader) FetchMerkleRoot(hotShotHeight uint64, opts *bind.Cal
 	if err != nil {
 		return types.BlockMerkleSnapshot{}, err
 	}
-	root, err := types.CommitmentFromUint256(types.NewU256().SetBigInt(snapshot.BlockCommRoot))
+	root, err := types.CommitmentFromUint256(types.NewU256().SetBigInt(snapshot.HotShotBlockCommRoot))
 	if err != nil {
 		return types.BlockMerkleSnapshot{}, err
 	}
 	return types.BlockMerkleSnapshot{
 		Root:   root,
-		Height: snapshot.BlockHeight,
+		Height: snapshot.HotshotBlockHeight,
 	}, nil
 }
 

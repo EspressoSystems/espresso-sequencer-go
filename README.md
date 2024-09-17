@@ -8,7 +8,7 @@ sequencer.
 ## Development
 
 - Obtain code:
-    
+
         git clone git@github.com:EspressoSystems/espresso-sequencer-go
         git submodule update --init --recursive
 
@@ -22,5 +22,4 @@ sequencer.
 
 ## Generating contract bindings
 
-    just bind-hotshot
     just bind-light-client

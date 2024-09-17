@@ -62,27 +62,32 @@ type IPlonkVerifierPlonkProof struct {
 	ProdPermZetaOmegaEval *big.Int
 }
 
-// LightClientHotShotCommitment is an auto generated low-level Go binding around an user-defined struct.
-type LightClientHotShotCommitment struct {
+// LightClientLightClientState is an auto generated low-level Go binding around an user-defined struct.
+type LightClientLightClientState struct {
+	ViewNum       uint64
 	BlockHeight   uint64
 	BlockCommRoot *big.Int
 }
 
-// LightClientLightClientState is an auto generated low-level Go binding around an user-defined struct.
-type LightClientLightClientState struct {
-	ViewNum                  uint64
-	BlockHeight              uint64
-	BlockCommRoot            *big.Int
-	FeeLedgerComm            *big.Int
-	StakeTableBlsKeyComm     *big.Int
-	StakeTableSchnorrKeyComm *big.Int
-	StakeTableAmountComm     *big.Int
-	Threshold                *big.Int
+// LightClientStakeTableState is an auto generated low-level Go binding around an user-defined struct.
+type LightClientStakeTableState struct {
+	Threshold      *big.Int
+	BlsKeyComm     *big.Int
+	SchnorrKeyComm *big.Int
+	AmountComm     *big.Int
+}
+
+// LightClientStateHistoryCommitment is an auto generated low-level Go binding around an user-defined struct.
+type LightClientStateHistoryCommitment struct {
+	L1BlockHeight        uint64
+	L1BlockTimestamp     uint64
+	HotShotBlockHeight   uint64
+	HotShotBlockCommRoot *big.Int
 }
 
 // LightclientmockMetaData contains all meta data concerning the Lightclientmock contract.
 var LightclientmockMetaData = &bind.MetaData{
-	ABI: "[{\"type\":\"constructor\",\"inputs\":[{\"name\":\"genesis\",\"type\":\"tuple\",\"internalType\":\"structLightClient.LightClientState\",\"components\":[{\"name\":\"viewNum\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockHeight\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockCommRoot\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"feeLedgerComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableBlsKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableSchnorrKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableAmountComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"threshold\",\"type\":\"uint256\",\"internalType\":\"uint256\"}]},{\"name\":\"numBlockPerEpoch\",\"type\":\"uint32\",\"internalType\":\"uint32\"}],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"UPGRADE_INTERFACE_VERSION\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"string\",\"internalType\":\"string\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"blocksPerEpoch\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint32\",\"internalType\":\"uint32\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"computeStakeTableComm\",\"inputs\":[{\"name\":\"state\",\"type\":\"tuple\",\"internalType\":\"structLightClient.LightClientState\",\"components\":[{\"name\":\"viewNum\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockHeight\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockCommRoot\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"feeLedgerComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableBlsKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableSchnorrKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableAmountComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"threshold\",\"type\":\"uint256\",\"internalType\":\"uint256\"}]}],\"outputs\":[{\"name\":\"\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"}],\"stateMutability\":\"pure\"},{\"type\":\"function\",\"name\":\"currentEpoch\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint64\",\"internalType\":\"uint64\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"disablePermissionedProverMode\",\"inputs\":[],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"frozenStakeTableCommitment\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"frozenThreshold\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"getFinalizedState\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"tuple\",\"internalType\":\"structLightClient.LightClientState\",\"components\":[{\"name\":\"viewNum\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockHeight\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockCommRoot\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"feeLedgerComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableBlsKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableSchnorrKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableAmountComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"threshold\",\"type\":\"uint256\",\"internalType\":\"uint256\"}]}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"getGenesisState\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"tuple\",\"internalType\":\"structLightClient.LightClientState\",\"components\":[{\"name\":\"viewNum\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockHeight\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockCommRoot\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"feeLedgerComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableBlsKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableSchnorrKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableAmountComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"threshold\",\"type\":\"uint256\",\"internalType\":\"uint256\"}]}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"getHotShotBlockCommitmentsCount\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"getHotShotCommitment\",\"inputs\":[{\"name\":\"hotShotBlockHeight\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"outputs\":[{\"name\":\"\",\"type\":\"tuple\",\"internalType\":\"structLightClient.HotShotCommitment\",\"components\":[{\"name\":\"blockHeight\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockCommRoot\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"}]}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"getStateUpdateBlockNumbersCount\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"getVersion\",\"inputs\":[],\"outputs\":[{\"name\":\"majorVersion\",\"type\":\"uint8\",\"internalType\":\"uint8\"},{\"name\":\"minorVersion\",\"type\":\"uint8\",\"internalType\":\"uint8\"},{\"name\":\"patchVersion\",\"type\":\"uint8\",\"internalType\":\"uint8\"}],\"stateMutability\":\"pure\"},{\"type\":\"function\",\"name\":\"hotShotCommitments\",\"inputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"outputs\":[{\"name\":\"blockHeight\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockCommRoot\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"initialize\",\"inputs\":[{\"name\":\"genesis\",\"type\":\"tuple\",\"internalType\":\"structLightClient.LightClientState\",\"components\":[{\"name\":\"viewNum\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockHeight\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockCommRoot\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"feeLedgerComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableBlsKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableSchnorrKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableAmountComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"threshold\",\"type\":\"uint256\",\"internalType\":\"uint256\"}]},{\"name\":\"numBlocksPerEpoch\",\"type\":\"uint32\",\"internalType\":\"uint32\"},{\"name\":\"owner\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"lagOverEscapeHatchThreshold\",\"inputs\":[{\"name\":\"blockNumber\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"threshold\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"outputs\":[{\"name\":\"\",\"type\":\"bool\",\"internalType\":\"bool\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"newFinalizedState\",\"inputs\":[{\"name\":\"newState\",\"type\":\"tuple\",\"internalType\":\"structLightClient.LightClientState\",\"components\":[{\"name\":\"viewNum\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockHeight\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockCommRoot\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"feeLedgerComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableBlsKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableSchnorrKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableAmountComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"threshold\",\"type\":\"uint256\",\"internalType\":\"uint256\"}]},{\"name\":\"proof\",\"type\":\"tuple\",\"internalType\":\"structIPlonkVerifier.PlonkProof\",\"components\":[{\"name\":\"wire0\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"wire1\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"wire2\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"wire3\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"wire4\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"prodPerm\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"split0\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"split1\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"split2\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"split3\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"split4\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"zeta\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"zetaOmega\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"wireEval0\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"wireEval1\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"wireEval2\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"wireEval3\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"wireEval4\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"sigmaEval0\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"sigmaEval1\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"sigmaEval2\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"sigmaEval3\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"prodPermZetaOmegaEval\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"}]}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"owner\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"permissionedProver\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"permissionedProverEnabled\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"bool\",\"internalType\":\"bool\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"proxiableUUID\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"renounceOwnership\",\"inputs\":[],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"setCurrentEpoch\",\"inputs\":[{\"name\":\"newEpoch\",\"type\":\"uint64\",\"internalType\":\"uint64\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"setFinalizedState\",\"inputs\":[{\"name\":\"state\",\"type\":\"tuple\",\"internalType\":\"structLightClient.LightClientState\",\"components\":[{\"name\":\"viewNum\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockHeight\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockCommRoot\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"feeLedgerComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableBlsKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableSchnorrKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableAmountComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"threshold\",\"type\":\"uint256\",\"internalType\":\"uint256\"}]}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"setHotShotCommitments\",\"inputs\":[{\"name\":\"values\",\"type\":\"tuple[]\",\"internalType\":\"structLightClient.HotShotCommitment[]\",\"components\":[{\"name\":\"blockHeight\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockCommRoot\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"}]}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"setHotShotDownSince\",\"inputs\":[{\"name\":\"l1Height\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"setHotShotUp\",\"inputs\":[],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"setPermissionedProver\",\"inputs\":[{\"name\":\"prover\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"setStateUpdateBlockNumbers\",\"inputs\":[{\"name\":\"values\",\"type\":\"uint256[]\",\"internalType\":\"uint256[]\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"stateUpdateBlockNumbers\",\"inputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"states\",\"inputs\":[{\"name\":\"index\",\"type\":\"uint32\",\"internalType\":\"uint32\"}],\"outputs\":[{\"name\":\"viewNum\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockHeight\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockCommRoot\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"feeLedgerComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableBlsKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableSchnorrKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"stakeTableAmountComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"threshold\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"transferOwnership\",\"inputs\":[{\"name\":\"newOwner\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"upgradeToAndCall\",\"inputs\":[{\"name\":\"newImplementation\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"data\",\"type\":\"bytes\",\"internalType\":\"bytes\"}],\"outputs\":[],\"stateMutability\":\"payable\"},{\"type\":\"function\",\"name\":\"votingStakeTableCommitment\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"votingThreshold\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"event\",\"name\":\"EpochChanged\",\"inputs\":[{\"name\":\"\",\"type\":\"uint64\",\"indexed\":false,\"internalType\":\"uint64\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"Initialized\",\"inputs\":[{\"name\":\"version\",\"type\":\"uint64\",\"indexed\":false,\"internalType\":\"uint64\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"NewState\",\"inputs\":[{\"name\":\"viewNum\",\"type\":\"uint64\",\"indexed\":true,\"internalType\":\"uint64\"},{\"name\":\"blockHeight\",\"type\":\"uint64\",\"indexed\":true,\"internalType\":\"uint64\"},{\"name\":\"blockCommRoot\",\"type\":\"uint256\",\"indexed\":false,\"internalType\":\"BN254.ScalarField\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"OwnershipTransferred\",\"inputs\":[{\"name\":\"previousOwner\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"newOwner\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"PermissionedProverNotRequired\",\"inputs\":[],\"anonymous\":false},{\"type\":\"event\",\"name\":\"PermissionedProverRequired\",\"inputs\":[{\"name\":\"permissionedProver\",\"type\":\"address\",\"indexed\":false,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"Upgrade\",\"inputs\":[{\"name\":\"implementation\",\"type\":\"address\",\"indexed\":false,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"Upgraded\",\"inputs\":[{\"name\":\"implementation\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"error\",\"name\":\"AddressEmptyCode\",\"inputs\":[{\"name\":\"target\",\"type\":\"address\",\"internalType\":\"address\"}]},{\"type\":\"error\",\"name\":\"ERC1967InvalidImplementation\",\"inputs\":[{\"name\":\"implementation\",\"type\":\"address\",\"internalType\":\"address\"}]},{\"type\":\"error\",\"name\":\"ERC1967NonPayable\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"FailedInnerCall\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"InsufficientSnapshotHistory\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"InvalidAddress\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"InvalidArgs\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"InvalidHotShotBlockForCommitmentCheck\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"InvalidInitialization\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"InvalidPolyEvalArgs\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"InvalidProof\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"MissingLastBlockForCurrentEpoch\",\"inputs\":[{\"name\":\"expectedBlockHeight\",\"type\":\"uint64\",\"internalType\":\"uint64\"}]},{\"type\":\"error\",\"name\":\"NoChangeRequired\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"NotInitializing\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"OutdatedState\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"OwnableInvalidOwner\",\"inputs\":[{\"name\":\"owner\",\"type\":\"address\",\"internalType\":\"address\"}]},{\"type\":\"error\",\"name\":\"OwnableUnauthorizedAccount\",\"inputs\":[{\"name\":\"account\",\"type\":\"address\",\"internalType\":\"address\"}]},{\"type\":\"error\",\"name\":\"PermissionedProverNotSet\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"ProverNotPermissioned\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"UUPSUnauthorizedCallContext\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"UUPSUnsupportedProxiableUUID\",\"inputs\":[{\"name\":\"slot\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"}]},{\"type\":\"error\",\"name\":\"UnsupportedDegree\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"WrongPlonkVK\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"WrongStakeTableUsed\",\"inputs\":[]}]",
+	ABI: "[{\"type\":\"constructor\",\"inputs\":[{\"name\":\"genesis\",\"type\":\"tuple\",\"internalType\":\"structLightClient.LightClientState\",\"components\":[{\"name\":\"viewNum\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockHeight\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockCommRoot\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"}]},{\"name\":\"genesisStakeTableState\",\"type\":\"tuple\",\"internalType\":\"structLightClient.StakeTableState\",\"components\":[{\"name\":\"threshold\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"blsKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"schnorrKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"amountComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"}]},{\"name\":\"maxHistorySeconds\",\"type\":\"uint32\",\"internalType\":\"uint32\"}],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"UPGRADE_INTERFACE_VERSION\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"string\",\"internalType\":\"string\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"disablePermissionedProverMode\",\"inputs\":[],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"finalizedState\",\"inputs\":[],\"outputs\":[{\"name\":\"viewNum\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockHeight\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockCommRoot\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"genesisStakeTableState\",\"inputs\":[],\"outputs\":[{\"name\":\"threshold\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"blsKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"schnorrKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"amountComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"genesisState\",\"inputs\":[],\"outputs\":[{\"name\":\"viewNum\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockHeight\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockCommRoot\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"getHotShotCommitment\",\"inputs\":[{\"name\":\"hotShotBlockHeight\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"outputs\":[{\"name\":\"hotShotBlockCommRoot\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"hotshotBlockHeight\",\"type\":\"uint64\",\"internalType\":\"uint64\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"getStateHistoryCount\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"getVersion\",\"inputs\":[],\"outputs\":[{\"name\":\"majorVersion\",\"type\":\"uint8\",\"internalType\":\"uint8\"},{\"name\":\"minorVersion\",\"type\":\"uint8\",\"internalType\":\"uint8\"},{\"name\":\"patchVersion\",\"type\":\"uint8\",\"internalType\":\"uint8\"}],\"stateMutability\":\"pure\"},{\"type\":\"function\",\"name\":\"initialize\",\"inputs\":[{\"name\":\"_genesis\",\"type\":\"tuple\",\"internalType\":\"structLightClient.LightClientState\",\"components\":[{\"name\":\"viewNum\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockHeight\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockCommRoot\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"}]},{\"name\":\"_genesisStakeTableState\",\"type\":\"tuple\",\"internalType\":\"structLightClient.StakeTableState\",\"components\":[{\"name\":\"threshold\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"blsKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"schnorrKeyComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"amountComm\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"}]},{\"name\":\"_stateHistoryRetentionPeriod\",\"type\":\"uint32\",\"internalType\":\"uint32\"},{\"name\":\"owner\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"isPermissionedProverEnabled\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"bool\",\"internalType\":\"bool\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"lagOverEscapeHatchThreshold\",\"inputs\":[{\"name\":\"blockNumber\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"threshold\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"outputs\":[{\"name\":\"\",\"type\":\"bool\",\"internalType\":\"bool\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"newFinalizedState\",\"inputs\":[{\"name\":\"newState\",\"type\":\"tuple\",\"internalType\":\"structLightClient.LightClientState\",\"components\":[{\"name\":\"viewNum\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockHeight\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockCommRoot\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"}]},{\"name\":\"proof\",\"type\":\"tuple\",\"internalType\":\"structIPlonkVerifier.PlonkProof\",\"components\":[{\"name\":\"wire0\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"wire1\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"wire2\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"wire3\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"wire4\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"prodPerm\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"split0\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"split1\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"split2\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"split3\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"split4\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"zeta\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"zetaOmega\",\"type\":\"tuple\",\"internalType\":\"structBN254.G1Point\",\"components\":[{\"name\":\"x\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"},{\"name\":\"y\",\"type\":\"uint256\",\"internalType\":\"BN254.BaseField\"}]},{\"name\":\"wireEval0\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"wireEval1\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"wireEval2\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"wireEval3\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"wireEval4\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"sigmaEval0\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"sigmaEval1\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"sigmaEval2\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"sigmaEval3\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"},{\"name\":\"prodPermZetaOmegaEval\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"}]}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"owner\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"permissionedProver\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"proxiableUUID\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"renounceOwnership\",\"inputs\":[],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"setFinalizedState\",\"inputs\":[{\"name\":\"state\",\"type\":\"tuple\",\"internalType\":\"structLightClient.LightClientState\",\"components\":[{\"name\":\"viewNum\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockHeight\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"blockCommRoot\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"}]}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"setHotShotDownSince\",\"inputs\":[{\"name\":\"l1Height\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"setHotShotUp\",\"inputs\":[],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"setPermissionedProver\",\"inputs\":[{\"name\":\"prover\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"setStateHistory\",\"inputs\":[{\"name\":\"_stateHistoryCommitments\",\"type\":\"tuple[]\",\"internalType\":\"structLightClient.StateHistoryCommitment[]\",\"components\":[{\"name\":\"l1BlockHeight\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"l1BlockTimestamp\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"hotShotBlockHeight\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"hotShotBlockCommRoot\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"}]}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"setstateHistoryRetentionPeriod\",\"inputs\":[{\"name\":\"historySeconds\",\"type\":\"uint32\",\"internalType\":\"uint32\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"stateHistoryCommitments\",\"inputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"outputs\":[{\"name\":\"l1BlockHeight\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"l1BlockTimestamp\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"hotShotBlockHeight\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"hotShotBlockCommRoot\",\"type\":\"uint256\",\"internalType\":\"BN254.ScalarField\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"stateHistoryFirstIndex\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint64\",\"internalType\":\"uint64\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"stateHistoryRetentionPeriod\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint32\",\"internalType\":\"uint32\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"transferOwnership\",\"inputs\":[{\"name\":\"newOwner\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"upgradeToAndCall\",\"inputs\":[{\"name\":\"newImplementation\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"data\",\"type\":\"bytes\",\"internalType\":\"bytes\"}],\"outputs\":[],\"stateMutability\":\"payable\"},{\"type\":\"event\",\"name\":\"Initialized\",\"inputs\":[{\"name\":\"version\",\"type\":\"uint64\",\"indexed\":false,\"internalType\":\"uint64\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"NewState\",\"inputs\":[{\"name\":\"viewNum\",\"type\":\"uint64\",\"indexed\":true,\"internalType\":\"uint64\"},{\"name\":\"blockHeight\",\"type\":\"uint64\",\"indexed\":true,\"internalType\":\"uint64\"},{\"name\":\"blockCommRoot\",\"type\":\"uint256\",\"indexed\":false,\"internalType\":\"BN254.ScalarField\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"OwnershipTransferred\",\"inputs\":[{\"name\":\"previousOwner\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"newOwner\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"PermissionedProverNotRequired\",\"inputs\":[],\"anonymous\":false},{\"type\":\"event\",\"name\":\"PermissionedProverRequired\",\"inputs\":[{\"name\":\"permissionedProver\",\"type\":\"address\",\"indexed\":false,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"Upgrade\",\"inputs\":[{\"name\":\"implementation\",\"type\":\"address\",\"indexed\":false,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"Upgraded\",\"inputs\":[{\"name\":\"implementation\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"error\",\"name\":\"AddressEmptyCode\",\"inputs\":[{\"name\":\"target\",\"type\":\"address\",\"internalType\":\"address\"}]},{\"type\":\"error\",\"name\":\"ERC1967InvalidImplementation\",\"inputs\":[{\"name\":\"implementation\",\"type\":\"address\",\"internalType\":\"address\"}]},{\"type\":\"error\",\"name\":\"ERC1967NonPayable\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"FailedInnerCall\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"InsufficientSnapshotHistory\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"InvalidAddress\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"InvalidArgs\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"InvalidHotShotBlockForCommitmentCheck\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"InvalidInitialization\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"InvalidMaxStateHistory\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"InvalidProof\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"NoChangeRequired\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"NotInitializing\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"OutdatedState\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"OwnableInvalidOwner\",\"inputs\":[{\"name\":\"owner\",\"type\":\"address\",\"internalType\":\"address\"}]},{\"type\":\"error\",\"name\":\"OwnableUnauthorizedAccount\",\"inputs\":[{\"name\":\"account\",\"type\":\"address\",\"internalType\":\"address\"}]},{\"type\":\"error\",\"name\":\"ProverNotPermissioned\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"UUPSUnauthorizedCallContext\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"UUPSUnsupportedProxiableUUID\",\"inputs\":[{\"name\":\"slot\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"}]},{\"type\":\"error\",\"name\":\"WrongStakeTableUsed\",\"inputs\":[]}]",
 }
 
 // LightclientmockABI is the input ABI used to generate the binding from.
@@ -262,291 +267,212 @@ func (_Lightclientmock *LightclientmockCallerSession) UPGRADEINTERFACEVERSION() 
 	return _Lightclientmock.Contract.UPGRADEINTERFACEVERSION(&_Lightclientmock.CallOpts)
 }
 
-// BlocksPerEpoch is a free data retrieval call binding the contract method 0xf0682054.
+// FinalizedState is a free data retrieval call binding the contract method 0x9fdb54a7.
 //
-// Solidity: function blocksPerEpoch() view returns(uint32)
-func (_Lightclientmock *LightclientmockCaller) BlocksPerEpoch(opts *bind.CallOpts) (uint32, error) {
+// Solidity: function finalizedState() view returns(uint64 viewNum, uint64 blockHeight, uint256 blockCommRoot)
+func (_Lightclientmock *LightclientmockCaller) FinalizedState(opts *bind.CallOpts) (struct {
+	ViewNum       uint64
+	BlockHeight   uint64
+	BlockCommRoot *big.Int
+}, error) {
 	var out []interface{}
-	err := _Lightclientmock.contract.Call(opts, &out, "blocksPerEpoch")
+	err := _Lightclientmock.contract.Call(opts, &out, "finalizedState")
 
+	outstruct := new(struct {
+		ViewNum       uint64
+		BlockHeight   uint64
+		BlockCommRoot *big.Int
+	})
 	if err != nil {
-		return *new(uint32), err
+		return *outstruct, err
 	}
 
-	out0 := *abi.ConvertType(out[0], new(uint32)).(*uint32)
+	outstruct.ViewNum = *abi.ConvertType(out[0], new(uint64)).(*uint64)
+	outstruct.BlockHeight = *abi.ConvertType(out[1], new(uint64)).(*uint64)
+	outstruct.BlockCommRoot = *abi.ConvertType(out[2], new(*big.Int)).(**big.Int)
 
-	return out0, err
+	return *outstruct, err
 
 }
 
-// BlocksPerEpoch is a free data retrieval call binding the contract method 0xf0682054.
+// FinalizedState is a free data retrieval call binding the contract method 0x9fdb54a7.
 //
-// Solidity: function blocksPerEpoch() view returns(uint32)
-func (_Lightclientmock *LightclientmockSession) BlocksPerEpoch() (uint32, error) {
-	return _Lightclientmock.Contract.BlocksPerEpoch(&_Lightclientmock.CallOpts)
+// Solidity: function finalizedState() view returns(uint64 viewNum, uint64 blockHeight, uint256 blockCommRoot)
+func (_Lightclientmock *LightclientmockSession) FinalizedState() (struct {
+	ViewNum       uint64
+	BlockHeight   uint64
+	BlockCommRoot *big.Int
+}, error) {
+	return _Lightclientmock.Contract.FinalizedState(&_Lightclientmock.CallOpts)
 }
 
-// BlocksPerEpoch is a free data retrieval call binding the contract method 0xf0682054.
+// FinalizedState is a free data retrieval call binding the contract method 0x9fdb54a7.
 //
-// Solidity: function blocksPerEpoch() view returns(uint32)
-func (_Lightclientmock *LightclientmockCallerSession) BlocksPerEpoch() (uint32, error) {
-	return _Lightclientmock.Contract.BlocksPerEpoch(&_Lightclientmock.CallOpts)
+// Solidity: function finalizedState() view returns(uint64 viewNum, uint64 blockHeight, uint256 blockCommRoot)
+func (_Lightclientmock *LightclientmockCallerSession) FinalizedState() (struct {
+	ViewNum       uint64
+	BlockHeight   uint64
+	BlockCommRoot *big.Int
+}, error) {
+	return _Lightclientmock.Contract.FinalizedState(&_Lightclientmock.CallOpts)
 }
 
-// ComputeStakeTableComm is a free data retrieval call binding the contract method 0xaa922732.
+// GenesisStakeTableState is a free data retrieval call binding the contract method 0x426d3194.
 //
-// Solidity: function computeStakeTableComm((uint64,uint64,uint256,uint256,uint256,uint256,uint256,uint256) state) pure returns(bytes32)
-func (_Lightclientmock *LightclientmockCaller) ComputeStakeTableComm(opts *bind.CallOpts, state LightClientLightClientState) ([32]byte, error) {
+// Solidity: function genesisStakeTableState() view returns(uint256 threshold, uint256 blsKeyComm, uint256 schnorrKeyComm, uint256 amountComm)
+func (_Lightclientmock *LightclientmockCaller) GenesisStakeTableState(opts *bind.CallOpts) (struct {
+	Threshold      *big.Int
+	BlsKeyComm     *big.Int
+	SchnorrKeyComm *big.Int
+	AmountComm     *big.Int
+}, error) {
 	var out []interface{}
-	err := _Lightclientmock.contract.Call(opts, &out, "computeStakeTableComm", state)
+	err := _Lightclientmock.contract.Call(opts, &out, "genesisStakeTableState")
 
+	outstruct := new(struct {
+		Threshold      *big.Int
+		BlsKeyComm     *big.Int
+		SchnorrKeyComm *big.Int
+		AmountComm     *big.Int
+	})
 	if err != nil {
-		return *new([32]byte), err
+		return *outstruct, err
 	}
 
-	out0 := *abi.ConvertType(out[0], new([32]byte)).(*[32]byte)
+	outstruct.Threshold = *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+	outstruct.BlsKeyComm = *abi.ConvertType(out[1], new(*big.Int)).(**big.Int)
+	outstruct.SchnorrKeyComm = *abi.ConvertType(out[2], new(*big.Int)).(**big.Int)
+	outstruct.AmountComm = *abi.ConvertType(out[3], new(*big.Int)).(**big.Int)
 
-	return out0, err
+	return *outstruct, err
 
 }
 
-// ComputeStakeTableComm is a free data retrieval call binding the contract method 0xaa922732.
+// GenesisStakeTableState is a free data retrieval call binding the contract method 0x426d3194.
 //
-// Solidity: function computeStakeTableComm((uint64,uint64,uint256,uint256,uint256,uint256,uint256,uint256) state) pure returns(bytes32)
-func (_Lightclientmock *LightclientmockSession) ComputeStakeTableComm(state LightClientLightClientState) ([32]byte, error) {
-	return _Lightclientmock.Contract.ComputeStakeTableComm(&_Lightclientmock.CallOpts, state)
+// Solidity: function genesisStakeTableState() view returns(uint256 threshold, uint256 blsKeyComm, uint256 schnorrKeyComm, uint256 amountComm)
+func (_Lightclientmock *LightclientmockSession) GenesisStakeTableState() (struct {
+	Threshold      *big.Int
+	BlsKeyComm     *big.Int
+	SchnorrKeyComm *big.Int
+	AmountComm     *big.Int
+}, error) {
+	return _Lightclientmock.Contract.GenesisStakeTableState(&_Lightclientmock.CallOpts)
 }
 
-// ComputeStakeTableComm is a free data retrieval call binding the contract method 0xaa922732.
+// GenesisStakeTableState is a free data retrieval call binding the contract method 0x426d3194.
 //
-// Solidity: function computeStakeTableComm((uint64,uint64,uint256,uint256,uint256,uint256,uint256,uint256) state) pure returns(bytes32)
-func (_Lightclientmock *LightclientmockCallerSession) ComputeStakeTableComm(state LightClientLightClientState) ([32]byte, error) {
-	return _Lightclientmock.Contract.ComputeStakeTableComm(&_Lightclientmock.CallOpts, state)
+// Solidity: function genesisStakeTableState() view returns(uint256 threshold, uint256 blsKeyComm, uint256 schnorrKeyComm, uint256 amountComm)
+func (_Lightclientmock *LightclientmockCallerSession) GenesisStakeTableState() (struct {
+	Threshold      *big.Int
+	BlsKeyComm     *big.Int
+	SchnorrKeyComm *big.Int
+	AmountComm     *big.Int
+}, error) {
+	return _Lightclientmock.Contract.GenesisStakeTableState(&_Lightclientmock.CallOpts)
 }
 
-// CurrentEpoch is a free data retrieval call binding the contract method 0x76671808.
+// GenesisState is a free data retrieval call binding the contract method 0xd24d933d.
 //
-// Solidity: function currentEpoch() view returns(uint64)
-func (_Lightclientmock *LightclientmockCaller) CurrentEpoch(opts *bind.CallOpts) (uint64, error) {
+// Solidity: function genesisState() view returns(uint64 viewNum, uint64 blockHeight, uint256 blockCommRoot)
+func (_Lightclientmock *LightclientmockCaller) GenesisState(opts *bind.CallOpts) (struct {
+	ViewNum       uint64
+	BlockHeight   uint64
+	BlockCommRoot *big.Int
+}, error) {
 	var out []interface{}
-	err := _Lightclientmock.contract.Call(opts, &out, "currentEpoch")
+	err := _Lightclientmock.contract.Call(opts, &out, "genesisState")
 
+	outstruct := new(struct {
+		ViewNum       uint64
+		BlockHeight   uint64
+		BlockCommRoot *big.Int
+	})
 	if err != nil {
-		return *new(uint64), err
+		return *outstruct, err
 	}
 
-	out0 := *abi.ConvertType(out[0], new(uint64)).(*uint64)
+	outstruct.ViewNum = *abi.ConvertType(out[0], new(uint64)).(*uint64)
+	outstruct.BlockHeight = *abi.ConvertType(out[1], new(uint64)).(*uint64)
+	outstruct.BlockCommRoot = *abi.ConvertType(out[2], new(*big.Int)).(**big.Int)
 
-	return out0, err
-
-}
-
-// CurrentEpoch is a free data retrieval call binding the contract method 0x76671808.
-//
-// Solidity: function currentEpoch() view returns(uint64)
-func (_Lightclientmock *LightclientmockSession) CurrentEpoch() (uint64, error) {
-	return _Lightclientmock.Contract.CurrentEpoch(&_Lightclientmock.CallOpts)
-}
-
-// CurrentEpoch is a free data retrieval call binding the contract method 0x76671808.
-//
-// Solidity: function currentEpoch() view returns(uint64)
-func (_Lightclientmock *LightclientmockCallerSession) CurrentEpoch() (uint64, error) {
-	return _Lightclientmock.Contract.CurrentEpoch(&_Lightclientmock.CallOpts)
-}
-
-// FrozenStakeTableCommitment is a free data retrieval call binding the contract method 0x382b215a.
-//
-// Solidity: function frozenStakeTableCommitment() view returns(bytes32)
-func (_Lightclientmock *LightclientmockCaller) FrozenStakeTableCommitment(opts *bind.CallOpts) ([32]byte, error) {
-	var out []interface{}
-	err := _Lightclientmock.contract.Call(opts, &out, "frozenStakeTableCommitment")
-
-	if err != nil {
-		return *new([32]byte), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new([32]byte)).(*[32]byte)
-
-	return out0, err
+	return *outstruct, err
 
 }
 
-// FrozenStakeTableCommitment is a free data retrieval call binding the contract method 0x382b215a.
+// GenesisState is a free data retrieval call binding the contract method 0xd24d933d.
 //
-// Solidity: function frozenStakeTableCommitment() view returns(bytes32)
-func (_Lightclientmock *LightclientmockSession) FrozenStakeTableCommitment() ([32]byte, error) {
-	return _Lightclientmock.Contract.FrozenStakeTableCommitment(&_Lightclientmock.CallOpts)
+// Solidity: function genesisState() view returns(uint64 viewNum, uint64 blockHeight, uint256 blockCommRoot)
+func (_Lightclientmock *LightclientmockSession) GenesisState() (struct {
+	ViewNum       uint64
+	BlockHeight   uint64
+	BlockCommRoot *big.Int
+}, error) {
+	return _Lightclientmock.Contract.GenesisState(&_Lightclientmock.CallOpts)
 }
 
-// FrozenStakeTableCommitment is a free data retrieval call binding the contract method 0x382b215a.
+// GenesisState is a free data retrieval call binding the contract method 0xd24d933d.
 //
-// Solidity: function frozenStakeTableCommitment() view returns(bytes32)
-func (_Lightclientmock *LightclientmockCallerSession) FrozenStakeTableCommitment() ([32]byte, error) {
-	return _Lightclientmock.Contract.FrozenStakeTableCommitment(&_Lightclientmock.CallOpts)
-}
-
-// FrozenThreshold is a free data retrieval call binding the contract method 0xca6fe855.
-//
-// Solidity: function frozenThreshold() view returns(uint256)
-func (_Lightclientmock *LightclientmockCaller) FrozenThreshold(opts *bind.CallOpts) (*big.Int, error) {
-	var out []interface{}
-	err := _Lightclientmock.contract.Call(opts, &out, "frozenThreshold")
-
-	if err != nil {
-		return *new(*big.Int), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
-
-	return out0, err
-
-}
-
-// FrozenThreshold is a free data retrieval call binding the contract method 0xca6fe855.
-//
-// Solidity: function frozenThreshold() view returns(uint256)
-func (_Lightclientmock *LightclientmockSession) FrozenThreshold() (*big.Int, error) {
-	return _Lightclientmock.Contract.FrozenThreshold(&_Lightclientmock.CallOpts)
-}
-
-// FrozenThreshold is a free data retrieval call binding the contract method 0xca6fe855.
-//
-// Solidity: function frozenThreshold() view returns(uint256)
-func (_Lightclientmock *LightclientmockCallerSession) FrozenThreshold() (*big.Int, error) {
-	return _Lightclientmock.Contract.FrozenThreshold(&_Lightclientmock.CallOpts)
-}
-
-// GetFinalizedState is a free data retrieval call binding the contract method 0x82d07ff3.
-//
-// Solidity: function getFinalizedState() view returns((uint64,uint64,uint256,uint256,uint256,uint256,uint256,uint256))
-func (_Lightclientmock *LightclientmockCaller) GetFinalizedState(opts *bind.CallOpts) (LightClientLightClientState, error) {
-	var out []interface{}
-	err := _Lightclientmock.contract.Call(opts, &out, "getFinalizedState")
-
-	if err != nil {
-		return *new(LightClientLightClientState), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new(LightClientLightClientState)).(*LightClientLightClientState)
-
-	return out0, err
-
-}
-
-// GetFinalizedState is a free data retrieval call binding the contract method 0x82d07ff3.
-//
-// Solidity: function getFinalizedState() view returns((uint64,uint64,uint256,uint256,uint256,uint256,uint256,uint256))
-func (_Lightclientmock *LightclientmockSession) GetFinalizedState() (LightClientLightClientState, error) {
-	return _Lightclientmock.Contract.GetFinalizedState(&_Lightclientmock.CallOpts)
-}
-
-// GetFinalizedState is a free data retrieval call binding the contract method 0x82d07ff3.
-//
-// Solidity: function getFinalizedState() view returns((uint64,uint64,uint256,uint256,uint256,uint256,uint256,uint256))
-func (_Lightclientmock *LightclientmockCallerSession) GetFinalizedState() (LightClientLightClientState, error) {
-	return _Lightclientmock.Contract.GetFinalizedState(&_Lightclientmock.CallOpts)
-}
-
-// GetGenesisState is a free data retrieval call binding the contract method 0x4847ae5d.
-//
-// Solidity: function getGenesisState() view returns((uint64,uint64,uint256,uint256,uint256,uint256,uint256,uint256))
-func (_Lightclientmock *LightclientmockCaller) GetGenesisState(opts *bind.CallOpts) (LightClientLightClientState, error) {
-	var out []interface{}
-	err := _Lightclientmock.contract.Call(opts, &out, "getGenesisState")
-
-	if err != nil {
-		return *new(LightClientLightClientState), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new(LightClientLightClientState)).(*LightClientLightClientState)
-
-	return out0, err
-
-}
-
-// GetGenesisState is a free data retrieval call binding the contract method 0x4847ae5d.
-//
-// Solidity: function getGenesisState() view returns((uint64,uint64,uint256,uint256,uint256,uint256,uint256,uint256))
-func (_Lightclientmock *LightclientmockSession) GetGenesisState() (LightClientLightClientState, error) {
-	return _Lightclientmock.Contract.GetGenesisState(&_Lightclientmock.CallOpts)
-}
-
-// GetGenesisState is a free data retrieval call binding the contract method 0x4847ae5d.
-//
-// Solidity: function getGenesisState() view returns((uint64,uint64,uint256,uint256,uint256,uint256,uint256,uint256))
-func (_Lightclientmock *LightclientmockCallerSession) GetGenesisState() (LightClientLightClientState, error) {
-	return _Lightclientmock.Contract.GetGenesisState(&_Lightclientmock.CallOpts)
-}
-
-// GetHotShotBlockCommitmentsCount is a free data retrieval call binding the contract method 0x54646085.
-//
-// Solidity: function getHotShotBlockCommitmentsCount() view returns(uint256)
-func (_Lightclientmock *LightclientmockCaller) GetHotShotBlockCommitmentsCount(opts *bind.CallOpts) (*big.Int, error) {
-	var out []interface{}
-	err := _Lightclientmock.contract.Call(opts, &out, "getHotShotBlockCommitmentsCount")
-
-	if err != nil {
-		return *new(*big.Int), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
-
-	return out0, err
-
-}
-
-// GetHotShotBlockCommitmentsCount is a free data retrieval call binding the contract method 0x54646085.
-//
-// Solidity: function getHotShotBlockCommitmentsCount() view returns(uint256)
-func (_Lightclientmock *LightclientmockSession) GetHotShotBlockCommitmentsCount() (*big.Int, error) {
-	return _Lightclientmock.Contract.GetHotShotBlockCommitmentsCount(&_Lightclientmock.CallOpts)
-}
-
-// GetHotShotBlockCommitmentsCount is a free data retrieval call binding the contract method 0x54646085.
-//
-// Solidity: function getHotShotBlockCommitmentsCount() view returns(uint256)
-func (_Lightclientmock *LightclientmockCallerSession) GetHotShotBlockCommitmentsCount() (*big.Int, error) {
-	return _Lightclientmock.Contract.GetHotShotBlockCommitmentsCount(&_Lightclientmock.CallOpts)
+// Solidity: function genesisState() view returns(uint64 viewNum, uint64 blockHeight, uint256 blockCommRoot)
+func (_Lightclientmock *LightclientmockCallerSession) GenesisState() (struct {
+	ViewNum       uint64
+	BlockHeight   uint64
+	BlockCommRoot *big.Int
+}, error) {
+	return _Lightclientmock.Contract.GenesisState(&_Lightclientmock.CallOpts)
 }
 
 // GetHotShotCommitment is a free data retrieval call binding the contract method 0x8584d23f.
 //
-// Solidity: function getHotShotCommitment(uint256 hotShotBlockHeight) view returns((uint64,uint256))
-func (_Lightclientmock *LightclientmockCaller) GetHotShotCommitment(opts *bind.CallOpts, hotShotBlockHeight *big.Int) (LightClientHotShotCommitment, error) {
+// Solidity: function getHotShotCommitment(uint256 hotShotBlockHeight) view returns(uint256 hotShotBlockCommRoot, uint64 hotshotBlockHeight)
+func (_Lightclientmock *LightclientmockCaller) GetHotShotCommitment(opts *bind.CallOpts, hotShotBlockHeight *big.Int) (struct {
+	HotShotBlockCommRoot *big.Int
+	HotshotBlockHeight   uint64
+}, error) {
 	var out []interface{}
 	err := _Lightclientmock.contract.Call(opts, &out, "getHotShotCommitment", hotShotBlockHeight)
 
+	outstruct := new(struct {
+		HotShotBlockCommRoot *big.Int
+		HotshotBlockHeight   uint64
+	})
 	if err != nil {
-		return *new(LightClientHotShotCommitment), err
+		return *outstruct, err
 	}
 
-	out0 := *abi.ConvertType(out[0], new(LightClientHotShotCommitment)).(*LightClientHotShotCommitment)
+	outstruct.HotShotBlockCommRoot = *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+	outstruct.HotshotBlockHeight = *abi.ConvertType(out[1], new(uint64)).(*uint64)
 
-	return out0, err
+	return *outstruct, err
 
 }
 
 // GetHotShotCommitment is a free data retrieval call binding the contract method 0x8584d23f.
 //
-// Solidity: function getHotShotCommitment(uint256 hotShotBlockHeight) view returns((uint64,uint256))
-func (_Lightclientmock *LightclientmockSession) GetHotShotCommitment(hotShotBlockHeight *big.Int) (LightClientHotShotCommitment, error) {
+// Solidity: function getHotShotCommitment(uint256 hotShotBlockHeight) view returns(uint256 hotShotBlockCommRoot, uint64 hotshotBlockHeight)
+func (_Lightclientmock *LightclientmockSession) GetHotShotCommitment(hotShotBlockHeight *big.Int) (struct {
+	HotShotBlockCommRoot *big.Int
+	HotshotBlockHeight   uint64
+}, error) {
 	return _Lightclientmock.Contract.GetHotShotCommitment(&_Lightclientmock.CallOpts, hotShotBlockHeight)
 }
 
 // GetHotShotCommitment is a free data retrieval call binding the contract method 0x8584d23f.
 //
-// Solidity: function getHotShotCommitment(uint256 hotShotBlockHeight) view returns((uint64,uint256))
-func (_Lightclientmock *LightclientmockCallerSession) GetHotShotCommitment(hotShotBlockHeight *big.Int) (LightClientHotShotCommitment, error) {
+// Solidity: function getHotShotCommitment(uint256 hotShotBlockHeight) view returns(uint256 hotShotBlockCommRoot, uint64 hotshotBlockHeight)
+func (_Lightclientmock *LightclientmockCallerSession) GetHotShotCommitment(hotShotBlockHeight *big.Int) (struct {
+	HotShotBlockCommRoot *big.Int
+	HotshotBlockHeight   uint64
+}, error) {
 	return _Lightclientmock.Contract.GetHotShotCommitment(&_Lightclientmock.CallOpts, hotShotBlockHeight)
 }
 
-// GetStateUpdateBlockNumbersCount is a free data retrieval call binding the contract method 0x7053fc51.
+// GetStateHistoryCount is a free data retrieval call binding the contract method 0xf9e50d19.
 //
-// Solidity: function getStateUpdateBlockNumbersCount() view returns(uint256)
-func (_Lightclientmock *LightclientmockCaller) GetStateUpdateBlockNumbersCount(opts *bind.CallOpts) (*big.Int, error) {
+// Solidity: function getStateHistoryCount() view returns(uint256)
+func (_Lightclientmock *LightclientmockCaller) GetStateHistoryCount(opts *bind.CallOpts) (*big.Int, error) {
 	var out []interface{}
-	err := _Lightclientmock.contract.Call(opts, &out, "getStateUpdateBlockNumbersCount")
+	err := _Lightclientmock.contract.Call(opts, &out, "getStateHistoryCount")
 
 	if err != nil {
 		return *new(*big.Int), err
@@ -558,18 +484,18 @@ func (_Lightclientmock *LightclientmockCaller) GetStateUpdateBlockNumbersCount(o
 
 }
 
-// GetStateUpdateBlockNumbersCount is a free data retrieval call binding the contract method 0x7053fc51.
+// GetStateHistoryCount is a free data retrieval call binding the contract method 0xf9e50d19.
 //
-// Solidity: function getStateUpdateBlockNumbersCount() view returns(uint256)
-func (_Lightclientmock *LightclientmockSession) GetStateUpdateBlockNumbersCount() (*big.Int, error) {
-	return _Lightclientmock.Contract.GetStateUpdateBlockNumbersCount(&_Lightclientmock.CallOpts)
+// Solidity: function getStateHistoryCount() view returns(uint256)
+func (_Lightclientmock *LightclientmockSession) GetStateHistoryCount() (*big.Int, error) {
+	return _Lightclientmock.Contract.GetStateHistoryCount(&_Lightclientmock.CallOpts)
 }
 
-// GetStateUpdateBlockNumbersCount is a free data retrieval call binding the contract method 0x7053fc51.
+// GetStateHistoryCount is a free data retrieval call binding the contract method 0xf9e50d19.
 //
-// Solidity: function getStateUpdateBlockNumbersCount() view returns(uint256)
-func (_Lightclientmock *LightclientmockCallerSession) GetStateUpdateBlockNumbersCount() (*big.Int, error) {
-	return _Lightclientmock.Contract.GetStateUpdateBlockNumbersCount(&_Lightclientmock.CallOpts)
+// Solidity: function getStateHistoryCount() view returns(uint256)
+func (_Lightclientmock *LightclientmockCallerSession) GetStateHistoryCount() (*big.Int, error) {
+	return _Lightclientmock.Contract.GetStateHistoryCount(&_Lightclientmock.CallOpts)
 }
 
 // GetVersion is a free data retrieval call binding the contract method 0x0d8e6e2c.
@@ -622,49 +548,35 @@ func (_Lightclientmock *LightclientmockCallerSession) GetVersion() (struct {
 	return _Lightclientmock.Contract.GetVersion(&_Lightclientmock.CallOpts)
 }
 
-// HotShotCommitments is a free data retrieval call binding the contract method 0xdb13b60a.
+// IsPermissionedProverEnabled is a free data retrieval call binding the contract method 0x826e41fc.
 //
-// Solidity: function hotShotCommitments(uint256 ) view returns(uint64 blockHeight, uint256 blockCommRoot)
-func (_Lightclientmock *LightclientmockCaller) HotShotCommitments(opts *bind.CallOpts, arg0 *big.Int) (struct {
-	BlockHeight   uint64
-	BlockCommRoot *big.Int
-}, error) {
+// Solidity: function isPermissionedProverEnabled() view returns(bool)
+func (_Lightclientmock *LightclientmockCaller) IsPermissionedProverEnabled(opts *bind.CallOpts) (bool, error) {
 	var out []interface{}
-	err := _Lightclientmock.contract.Call(opts, &out, "hotShotCommitments", arg0)
+	err := _Lightclientmock.contract.Call(opts, &out, "isPermissionedProverEnabled")
 
-	outstruct := new(struct {
-		BlockHeight   uint64
-		BlockCommRoot *big.Int
-	})
 	if err != nil {
-		return *outstruct, err
+		return *new(bool), err
 	}
 
-	outstruct.BlockHeight = *abi.ConvertType(out[0], new(uint64)).(*uint64)
-	outstruct.BlockCommRoot = *abi.ConvertType(out[1], new(*big.Int)).(**big.Int)
+	out0 := *abi.ConvertType(out[0], new(bool)).(*bool)
 
-	return *outstruct, err
+	return out0, err
 
 }
 
-// HotShotCommitments is a free data retrieval call binding the contract method 0xdb13b60a.
+// IsPermissionedProverEnabled is a free data retrieval call binding the contract method 0x826e41fc.
 //
-// Solidity: function hotShotCommitments(uint256 ) view returns(uint64 blockHeight, uint256 blockCommRoot)
-func (_Lightclientmock *LightclientmockSession) HotShotCommitments(arg0 *big.Int) (struct {
-	BlockHeight   uint64
-	BlockCommRoot *big.Int
-}, error) {
-	return _Lightclientmock.Contract.HotShotCommitments(&_Lightclientmock.CallOpts, arg0)
+// Solidity: function isPermissionedProverEnabled() view returns(bool)
+func (_Lightclientmock *LightclientmockSession) IsPermissionedProverEnabled() (bool, error) {
+	return _Lightclientmock.Contract.IsPermissionedProverEnabled(&_Lightclientmock.CallOpts)
 }
 
-// HotShotCommitments is a free data retrieval call binding the contract method 0xdb13b60a.
+// IsPermissionedProverEnabled is a free data retrieval call binding the contract method 0x826e41fc.
 //
-// Solidity: function hotShotCommitments(uint256 ) view returns(uint64 blockHeight, uint256 blockCommRoot)
-func (_Lightclientmock *LightclientmockCallerSession) HotShotCommitments(arg0 *big.Int) (struct {
-	BlockHeight   uint64
-	BlockCommRoot *big.Int
-}, error) {
-	return _Lightclientmock.Contract.HotShotCommitments(&_Lightclientmock.CallOpts, arg0)
+// Solidity: function isPermissionedProverEnabled() view returns(bool)
+func (_Lightclientmock *LightclientmockCallerSession) IsPermissionedProverEnabled() (bool, error) {
+	return _Lightclientmock.Contract.IsPermissionedProverEnabled(&_Lightclientmock.CallOpts)
 }
 
 // LagOverEscapeHatchThreshold is a free data retrieval call binding the contract method 0xe0303301.
@@ -760,37 +672,6 @@ func (_Lightclientmock *LightclientmockCallerSession) PermissionedProver() (comm
 	return _Lightclientmock.Contract.PermissionedProver(&_Lightclientmock.CallOpts)
 }
 
-// PermissionedProverEnabled is a free data retrieval call binding the contract method 0xbd32519a.
-//
-// Solidity: function permissionedProverEnabled() view returns(bool)
-func (_Lightclientmock *LightclientmockCaller) PermissionedProverEnabled(opts *bind.CallOpts) (bool, error) {
-	var out []interface{}
-	err := _Lightclientmock.contract.Call(opts, &out, "permissionedProverEnabled")
-
-	if err != nil {
-		return *new(bool), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new(bool)).(*bool)
-
-	return out0, err
-
-}
-
-// PermissionedProverEnabled is a free data retrieval call binding the contract method 0xbd32519a.
-//
-// Solidity: function permissionedProverEnabled() view returns(bool)
-func (_Lightclientmock *LightclientmockSession) PermissionedProverEnabled() (bool, error) {
-	return _Lightclientmock.Contract.PermissionedProverEnabled(&_Lightclientmock.CallOpts)
-}
-
-// PermissionedProverEnabled is a free data retrieval call binding the contract method 0xbd32519a.
-//
-// Solidity: function permissionedProverEnabled() view returns(bool)
-func (_Lightclientmock *LightclientmockCallerSession) PermissionedProverEnabled() (bool, error) {
-	return _Lightclientmock.Contract.PermissionedProverEnabled(&_Lightclientmock.CallOpts)
-}
-
 // ProxiableUUID is a free data retrieval call binding the contract method 0x52d1902d.
 //
 // Solidity: function proxiableUUID() view returns(bytes32)
@@ -822,172 +703,121 @@ func (_Lightclientmock *LightclientmockCallerSession) ProxiableUUID() ([32]byte,
 	return _Lightclientmock.Contract.ProxiableUUID(&_Lightclientmock.CallOpts)
 }
 
-// StateUpdateBlockNumbers is a free data retrieval call binding the contract method 0xa51e6fea.
+// StateHistoryCommitments is a free data retrieval call binding the contract method 0x02b592f3.
 //
-// Solidity: function stateUpdateBlockNumbers(uint256 ) view returns(uint256)
-func (_Lightclientmock *LightclientmockCaller) StateUpdateBlockNumbers(opts *bind.CallOpts, arg0 *big.Int) (*big.Int, error) {
-	var out []interface{}
-	err := _Lightclientmock.contract.Call(opts, &out, "stateUpdateBlockNumbers", arg0)
-
-	if err != nil {
-		return *new(*big.Int), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
-
-	return out0, err
-
-}
-
-// StateUpdateBlockNumbers is a free data retrieval call binding the contract method 0xa51e6fea.
-//
-// Solidity: function stateUpdateBlockNumbers(uint256 ) view returns(uint256)
-func (_Lightclientmock *LightclientmockSession) StateUpdateBlockNumbers(arg0 *big.Int) (*big.Int, error) {
-	return _Lightclientmock.Contract.StateUpdateBlockNumbers(&_Lightclientmock.CallOpts, arg0)
-}
-
-// StateUpdateBlockNumbers is a free data retrieval call binding the contract method 0xa51e6fea.
-//
-// Solidity: function stateUpdateBlockNumbers(uint256 ) view returns(uint256)
-func (_Lightclientmock *LightclientmockCallerSession) StateUpdateBlockNumbers(arg0 *big.Int) (*big.Int, error) {
-	return _Lightclientmock.Contract.StateUpdateBlockNumbers(&_Lightclientmock.CallOpts, arg0)
-}
-
-// States is a free data retrieval call binding the contract method 0x7f17baad.
-//
-// Solidity: function states(uint32 index) view returns(uint64 viewNum, uint64 blockHeight, uint256 blockCommRoot, uint256 feeLedgerComm, uint256 stakeTableBlsKeyComm, uint256 stakeTableSchnorrKeyComm, uint256 stakeTableAmountComm, uint256 threshold)
-func (_Lightclientmock *LightclientmockCaller) States(opts *bind.CallOpts, index uint32) (struct {
-	ViewNum                  uint64
-	BlockHeight              uint64
-	BlockCommRoot            *big.Int
-	FeeLedgerComm            *big.Int
-	StakeTableBlsKeyComm     *big.Int
-	StakeTableSchnorrKeyComm *big.Int
-	StakeTableAmountComm     *big.Int
-	Threshold                *big.Int
+// Solidity: function stateHistoryCommitments(uint256 ) view returns(uint64 l1BlockHeight, uint64 l1BlockTimestamp, uint64 hotShotBlockHeight, uint256 hotShotBlockCommRoot)
+func (_Lightclientmock *LightclientmockCaller) StateHistoryCommitments(opts *bind.CallOpts, arg0 *big.Int) (struct {
+	L1BlockHeight        uint64
+	L1BlockTimestamp     uint64
+	HotShotBlockHeight   uint64
+	HotShotBlockCommRoot *big.Int
 }, error) {
 	var out []interface{}
-	err := _Lightclientmock.contract.Call(opts, &out, "states", index)
+	err := _Lightclientmock.contract.Call(opts, &out, "stateHistoryCommitments", arg0)
 
 	outstruct := new(struct {
-		ViewNum                  uint64
-		BlockHeight              uint64
-		BlockCommRoot            *big.Int
-		FeeLedgerComm            *big.Int
-		StakeTableBlsKeyComm     *big.Int
-		StakeTableSchnorrKeyComm *big.Int
-		StakeTableAmountComm     *big.Int
-		Threshold                *big.Int
+		L1BlockHeight        uint64
+		L1BlockTimestamp     uint64
+		HotShotBlockHeight   uint64
+		HotShotBlockCommRoot *big.Int
 	})
 	if err != nil {
 		return *outstruct, err
 	}
 
-	outstruct.ViewNum = *abi.ConvertType(out[0], new(uint64)).(*uint64)
-	outstruct.BlockHeight = *abi.ConvertType(out[1], new(uint64)).(*uint64)
-	outstruct.BlockCommRoot = *abi.ConvertType(out[2], new(*big.Int)).(**big.Int)
-	outstruct.FeeLedgerComm = *abi.ConvertType(out[3], new(*big.Int)).(**big.Int)
-	outstruct.StakeTableBlsKeyComm = *abi.ConvertType(out[4], new(*big.Int)).(**big.Int)
-	outstruct.StakeTableSchnorrKeyComm = *abi.ConvertType(out[5], new(*big.Int)).(**big.Int)
-	outstruct.StakeTableAmountComm = *abi.ConvertType(out[6], new(*big.Int)).(**big.Int)
-	outstruct.Threshold = *abi.ConvertType(out[7], new(*big.Int)).(**big.Int)
+	outstruct.L1BlockHeight = *abi.ConvertType(out[0], new(uint64)).(*uint64)
+	outstruct.L1BlockTimestamp = *abi.ConvertType(out[1], new(uint64)).(*uint64)
+	outstruct.HotShotBlockHeight = *abi.ConvertType(out[2], new(uint64)).(*uint64)
+	outstruct.HotShotBlockCommRoot = *abi.ConvertType(out[3], new(*big.Int)).(**big.Int)
 
 	return *outstruct, err
 
 }
 
-// States is a free data retrieval call binding the contract method 0x7f17baad.
+// StateHistoryCommitments is a free data retrieval call binding the contract method 0x02b592f3.
 //
-// Solidity: function states(uint32 index) view returns(uint64 viewNum, uint64 blockHeight, uint256 blockCommRoot, uint256 feeLedgerComm, uint256 stakeTableBlsKeyComm, uint256 stakeTableSchnorrKeyComm, uint256 stakeTableAmountComm, uint256 threshold)
-func (_Lightclientmock *LightclientmockSession) States(index uint32) (struct {
-	ViewNum                  uint64
-	BlockHeight              uint64
-	BlockCommRoot            *big.Int
-	FeeLedgerComm            *big.Int
-	StakeTableBlsKeyComm     *big.Int
-	StakeTableSchnorrKeyComm *big.Int
-	StakeTableAmountComm     *big.Int
-	Threshold                *big.Int
+// Solidity: function stateHistoryCommitments(uint256 ) view returns(uint64 l1BlockHeight, uint64 l1BlockTimestamp, uint64 hotShotBlockHeight, uint256 hotShotBlockCommRoot)
+func (_Lightclientmock *LightclientmockSession) StateHistoryCommitments(arg0 *big.Int) (struct {
+	L1BlockHeight        uint64
+	L1BlockTimestamp     uint64
+	HotShotBlockHeight   uint64
+	HotShotBlockCommRoot *big.Int
 }, error) {
-	return _Lightclientmock.Contract.States(&_Lightclientmock.CallOpts, index)
+	return _Lightclientmock.Contract.StateHistoryCommitments(&_Lightclientmock.CallOpts, arg0)
 }
 
-// States is a free data retrieval call binding the contract method 0x7f17baad.
+// StateHistoryCommitments is a free data retrieval call binding the contract method 0x02b592f3.
 //
-// Solidity: function states(uint32 index) view returns(uint64 viewNum, uint64 blockHeight, uint256 blockCommRoot, uint256 feeLedgerComm, uint256 stakeTableBlsKeyComm, uint256 stakeTableSchnorrKeyComm, uint256 stakeTableAmountComm, uint256 threshold)
-func (_Lightclientmock *LightclientmockCallerSession) States(index uint32) (struct {
-	ViewNum                  uint64
-	BlockHeight              uint64
-	BlockCommRoot            *big.Int
-	FeeLedgerComm            *big.Int
-	StakeTableBlsKeyComm     *big.Int
-	StakeTableSchnorrKeyComm *big.Int
-	StakeTableAmountComm     *big.Int
-	Threshold                *big.Int
+// Solidity: function stateHistoryCommitments(uint256 ) view returns(uint64 l1BlockHeight, uint64 l1BlockTimestamp, uint64 hotShotBlockHeight, uint256 hotShotBlockCommRoot)
+func (_Lightclientmock *LightclientmockCallerSession) StateHistoryCommitments(arg0 *big.Int) (struct {
+	L1BlockHeight        uint64
+	L1BlockTimestamp     uint64
+	HotShotBlockHeight   uint64
+	HotShotBlockCommRoot *big.Int
 }, error) {
-	return _Lightclientmock.Contract.States(&_Lightclientmock.CallOpts, index)
+	return _Lightclientmock.Contract.StateHistoryCommitments(&_Lightclientmock.CallOpts, arg0)
 }
 
-// VotingStakeTableCommitment is a free data retrieval call binding the contract method 0x76b6b7cb.
+// StateHistoryFirstIndex is a free data retrieval call binding the contract method 0x2f79889d.
 //
-// Solidity: function votingStakeTableCommitment() view returns(bytes32)
-func (_Lightclientmock *LightclientmockCaller) VotingStakeTableCommitment(opts *bind.CallOpts) ([32]byte, error) {
+// Solidity: function stateHistoryFirstIndex() view returns(uint64)
+func (_Lightclientmock *LightclientmockCaller) StateHistoryFirstIndex(opts *bind.CallOpts) (uint64, error) {
 	var out []interface{}
-	err := _Lightclientmock.contract.Call(opts, &out, "votingStakeTableCommitment")
+	err := _Lightclientmock.contract.Call(opts, &out, "stateHistoryFirstIndex")
 
 	if err != nil {
-		return *new([32]byte), err
+		return *new(uint64), err
 	}
 
-	out0 := *abi.ConvertType(out[0], new([32]byte)).(*[32]byte)
+	out0 := *abi.ConvertType(out[0], new(uint64)).(*uint64)
 
 	return out0, err
 
 }
 
-// VotingStakeTableCommitment is a free data retrieval call binding the contract method 0x76b6b7cb.
+// StateHistoryFirstIndex is a free data retrieval call binding the contract method 0x2f79889d.
 //
-// Solidity: function votingStakeTableCommitment() view returns(bytes32)
-func (_Lightclientmock *LightclientmockSession) VotingStakeTableCommitment() ([32]byte, error) {
-	return _Lightclientmock.Contract.VotingStakeTableCommitment(&_Lightclientmock.CallOpts)
+// Solidity: function stateHistoryFirstIndex() view returns(uint64)
+func (_Lightclientmock *LightclientmockSession) StateHistoryFirstIndex() (uint64, error) {
+	return _Lightclientmock.Contract.StateHistoryFirstIndex(&_Lightclientmock.CallOpts)
 }
 
-// VotingStakeTableCommitment is a free data retrieval call binding the contract method 0x76b6b7cb.
+// StateHistoryFirstIndex is a free data retrieval call binding the contract method 0x2f79889d.
 //
-// Solidity: function votingStakeTableCommitment() view returns(bytes32)
-func (_Lightclientmock *LightclientmockCallerSession) VotingStakeTableCommitment() ([32]byte, error) {
-	return _Lightclientmock.Contract.VotingStakeTableCommitment(&_Lightclientmock.CallOpts)
+// Solidity: function stateHistoryFirstIndex() view returns(uint64)
+func (_Lightclientmock *LightclientmockCallerSession) StateHistoryFirstIndex() (uint64, error) {
+	return _Lightclientmock.Contract.StateHistoryFirstIndex(&_Lightclientmock.CallOpts)
 }
 
-// VotingThreshold is a free data retrieval call binding the contract method 0x62827733.
+// StateHistoryRetentionPeriod is a free data retrieval call binding the contract method 0xc23b9e9e.
 //
-// Solidity: function votingThreshold() view returns(uint256)
-func (_Lightclientmock *LightclientmockCaller) VotingThreshold(opts *bind.CallOpts) (*big.Int, error) {
+// Solidity: function stateHistoryRetentionPeriod() view returns(uint32)
+func (_Lightclientmock *LightclientmockCaller) StateHistoryRetentionPeriod(opts *bind.CallOpts) (uint32, error) {
 	var out []interface{}
-	err := _Lightclientmock.contract.Call(opts, &out, "votingThreshold")
+	err := _Lightclientmock.contract.Call(opts, &out, "stateHistoryRetentionPeriod")
 
 	if err != nil {
-		return *new(*big.Int), err
+		return *new(uint32), err
 	}
 
-	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+	out0 := *abi.ConvertType(out[0], new(uint32)).(*uint32)
 
 	return out0, err
 
 }
 
-// VotingThreshold is a free data retrieval call binding the contract method 0x62827733.
+// StateHistoryRetentionPeriod is a free data retrieval call binding the contract method 0xc23b9e9e.
 //
-// Solidity: function votingThreshold() view returns(uint256)
-func (_Lightclientmock *LightclientmockSession) VotingThreshold() (*big.Int, error) {
-	return _Lightclientmock.Contract.VotingThreshold(&_Lightclientmock.CallOpts)
+// Solidity: function stateHistoryRetentionPeriod() view returns(uint32)
+func (_Lightclientmock *LightclientmockSession) StateHistoryRetentionPeriod() (uint32, error) {
+	return _Lightclientmock.Contract.StateHistoryRetentionPeriod(&_Lightclientmock.CallOpts)
 }
 
-// VotingThreshold is a free data retrieval call binding the contract method 0x62827733.
+// StateHistoryRetentionPeriod is a free data retrieval call binding the contract method 0xc23b9e9e.
 //
-// Solidity: function votingThreshold() view returns(uint256)
-func (_Lightclientmock *LightclientmockCallerSession) VotingThreshold() (*big.Int, error) {
-	return _Lightclientmock.Contract.VotingThreshold(&_Lightclientmock.CallOpts)
+// Solidity: function stateHistoryRetentionPeriod() view returns(uint32)
+func (_Lightclientmock *LightclientmockCallerSession) StateHistoryRetentionPeriod() (uint32, error) {
+	return _Lightclientmock.Contract.StateHistoryRetentionPeriod(&_Lightclientmock.CallOpts)
 }
 
 // DisablePermissionedProverMode is a paid mutator transaction binding the contract method 0x69cc6a04.
@@ -1011,44 +841,44 @@ func (_Lightclientmock *LightclientmockTransactorSession) DisablePermissionedPro
 	return _Lightclientmock.Contract.DisablePermissionedProverMode(&_Lightclientmock.TransactOpts)
 }
 
-// Initialize is a paid mutator transaction binding the contract method 0xa244d596.
+// Initialize is a paid mutator transaction binding the contract method 0x9baa3cc9.
 //
-// Solidity: function initialize((uint64,uint64,uint256,uint256,uint256,uint256,uint256,uint256) genesis, uint32 numBlocksPerEpoch, address owner) returns()
-func (_Lightclientmock *LightclientmockTransactor) Initialize(opts *bind.TransactOpts, genesis LightClientLightClientState, numBlocksPerEpoch uint32, owner common.Address) (*types.Transaction, error) {
-	return _Lightclientmock.contract.Transact(opts, "initialize", genesis, numBlocksPerEpoch, owner)
+// Solidity: function initialize((uint64,uint64,uint256) _genesis, (uint256,uint256,uint256,uint256) _genesisStakeTableState, uint32 _stateHistoryRetentionPeriod, address owner) returns()
+func (_Lightclientmock *LightclientmockTransactor) Initialize(opts *bind.TransactOpts, _genesis LightClientLightClientState, _genesisStakeTableState LightClientStakeTableState, _stateHistoryRetentionPeriod uint32, owner common.Address) (*types.Transaction, error) {
+	return _Lightclientmock.contract.Transact(opts, "initialize", _genesis, _genesisStakeTableState, _stateHistoryRetentionPeriod, owner)
 }
 
-// Initialize is a paid mutator transaction binding the contract method 0xa244d596.
+// Initialize is a paid mutator transaction binding the contract method 0x9baa3cc9.
 //
-// Solidity: function initialize((uint64,uint64,uint256,uint256,uint256,uint256,uint256,uint256) genesis, uint32 numBlocksPerEpoch, address owner) returns()
-func (_Lightclientmock *LightclientmockSession) Initialize(genesis LightClientLightClientState, numBlocksPerEpoch uint32, owner common.Address) (*types.Transaction, error) {
-	return _Lightclientmock.Contract.Initialize(&_Lightclientmock.TransactOpts, genesis, numBlocksPerEpoch, owner)
+// Solidity: function initialize((uint64,uint64,uint256) _genesis, (uint256,uint256,uint256,uint256) _genesisStakeTableState, uint32 _stateHistoryRetentionPeriod, address owner) returns()
+func (_Lightclientmock *LightclientmockSession) Initialize(_genesis LightClientLightClientState, _genesisStakeTableState LightClientStakeTableState, _stateHistoryRetentionPeriod uint32, owner common.Address) (*types.Transaction, error) {
+	return _Lightclientmock.Contract.Initialize(&_Lightclientmock.TransactOpts, _genesis, _genesisStakeTableState, _stateHistoryRetentionPeriod, owner)
 }
 
-// Initialize is a paid mutator transaction binding the contract method 0xa244d596.
+// Initialize is a paid mutator transaction binding the contract method 0x9baa3cc9.
 //
-// Solidity: function initialize((uint64,uint64,uint256,uint256,uint256,uint256,uint256,uint256) genesis, uint32 numBlocksPerEpoch, address owner) returns()
-func (_Lightclientmock *LightclientmockTransactorSession) Initialize(genesis LightClientLightClientState, numBlocksPerEpoch uint32, owner common.Address) (*types.Transaction, error) {
-	return _Lightclientmock.Contract.Initialize(&_Lightclientmock.TransactOpts, genesis, numBlocksPerEpoch, owner)
+// Solidity: function initialize((uint64,uint64,uint256) _genesis, (uint256,uint256,uint256,uint256) _genesisStakeTableState, uint32 _stateHistoryRetentionPeriod, address owner) returns()
+func (_Lightclientmock *LightclientmockTransactorSession) Initialize(_genesis LightClientLightClientState, _genesisStakeTableState LightClientStakeTableState, _stateHistoryRetentionPeriod uint32, owner common.Address) (*types.Transaction, error) {
+	return _Lightclientmock.Contract.Initialize(&_Lightclientmock.TransactOpts, _genesis, _genesisStakeTableState, _stateHistoryRetentionPeriod, owner)
 }
 
-// NewFinalizedState is a paid mutator transaction binding the contract method 0x409939b7.
+// NewFinalizedState is a paid mutator transaction binding the contract method 0x2063d4f7.
 //
-// Solidity: function newFinalizedState((uint64,uint64,uint256,uint256,uint256,uint256,uint256,uint256) newState, ((uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256) proof) returns()
+// Solidity: function newFinalizedState((uint64,uint64,uint256) newState, ((uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256) proof) returns()
 func (_Lightclientmock *LightclientmockTransactor) NewFinalizedState(opts *bind.TransactOpts, newState LightClientLightClientState, proof IPlonkVerifierPlonkProof) (*types.Transaction, error) {
 	return _Lightclientmock.contract.Transact(opts, "newFinalizedState", newState, proof)
 }
 
-// NewFinalizedState is a paid mutator transaction binding the contract method 0x409939b7.
+// NewFinalizedState is a paid mutator transaction binding the contract method 0x2063d4f7.
 //
-// Solidity: function newFinalizedState((uint64,uint64,uint256,uint256,uint256,uint256,uint256,uint256) newState, ((uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256) proof) returns()
+// Solidity: function newFinalizedState((uint64,uint64,uint256) newState, ((uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256) proof) returns()
 func (_Lightclientmock *LightclientmockSession) NewFinalizedState(newState LightClientLightClientState, proof IPlonkVerifierPlonkProof) (*types.Transaction, error) {
 	return _Lightclientmock.Contract.NewFinalizedState(&_Lightclientmock.TransactOpts, newState, proof)
 }
 
-// NewFinalizedState is a paid mutator transaction binding the contract method 0x409939b7.
+// NewFinalizedState is a paid mutator transaction binding the contract method 0x2063d4f7.
 //
-// Solidity: function newFinalizedState((uint64,uint64,uint256,uint256,uint256,uint256,uint256,uint256) newState, ((uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256) proof) returns()
+// Solidity: function newFinalizedState((uint64,uint64,uint256) newState, ((uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),(uint256,uint256),uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256) proof) returns()
 func (_Lightclientmock *LightclientmockTransactorSession) NewFinalizedState(newState LightClientLightClientState, proof IPlonkVerifierPlonkProof) (*types.Transaction, error) {
 	return _Lightclientmock.Contract.NewFinalizedState(&_Lightclientmock.TransactOpts, newState, proof)
 }
@@ -1074,67 +904,25 @@ func (_Lightclientmock *LightclientmockTransactorSession) RenounceOwnership() (*
 	return _Lightclientmock.Contract.RenounceOwnership(&_Lightclientmock.TransactOpts)
 }
 
-// SetCurrentEpoch is a paid mutator transaction binding the contract method 0x3949d1e9.
+// SetFinalizedState is a paid mutator transaction binding the contract method 0xb5adea3c.
 //
-// Solidity: function setCurrentEpoch(uint64 newEpoch) returns()
-func (_Lightclientmock *LightclientmockTransactor) SetCurrentEpoch(opts *bind.TransactOpts, newEpoch uint64) (*types.Transaction, error) {
-	return _Lightclientmock.contract.Transact(opts, "setCurrentEpoch", newEpoch)
-}
-
-// SetCurrentEpoch is a paid mutator transaction binding the contract method 0x3949d1e9.
-//
-// Solidity: function setCurrentEpoch(uint64 newEpoch) returns()
-func (_Lightclientmock *LightclientmockSession) SetCurrentEpoch(newEpoch uint64) (*types.Transaction, error) {
-	return _Lightclientmock.Contract.SetCurrentEpoch(&_Lightclientmock.TransactOpts, newEpoch)
-}
-
-// SetCurrentEpoch is a paid mutator transaction binding the contract method 0x3949d1e9.
-//
-// Solidity: function setCurrentEpoch(uint64 newEpoch) returns()
-func (_Lightclientmock *LightclientmockTransactorSession) SetCurrentEpoch(newEpoch uint64) (*types.Transaction, error) {
-	return _Lightclientmock.Contract.SetCurrentEpoch(&_Lightclientmock.TransactOpts, newEpoch)
-}
-
-// SetFinalizedState is a paid mutator transaction binding the contract method 0x202a0adb.
-//
-// Solidity: function setFinalizedState((uint64,uint64,uint256,uint256,uint256,uint256,uint256,uint256) state) returns()
+// Solidity: function setFinalizedState((uint64,uint64,uint256) state) returns()
 func (_Lightclientmock *LightclientmockTransactor) SetFinalizedState(opts *bind.TransactOpts, state LightClientLightClientState) (*types.Transaction, error) {
 	return _Lightclientmock.contract.Transact(opts, "setFinalizedState", state)
 }
 
-// SetFinalizedState is a paid mutator transaction binding the contract method 0x202a0adb.
+// SetFinalizedState is a paid mutator transaction binding the contract method 0xb5adea3c.
 //
-// Solidity: function setFinalizedState((uint64,uint64,uint256,uint256,uint256,uint256,uint256,uint256) state) returns()
+// Solidity: function setFinalizedState((uint64,uint64,uint256) state) returns()
 func (_Lightclientmock *LightclientmockSession) SetFinalizedState(state LightClientLightClientState) (*types.Transaction, error) {
 	return _Lightclientmock.Contract.SetFinalizedState(&_Lightclientmock.TransactOpts, state)
 }
 
-// SetFinalizedState is a paid mutator transaction binding the contract method 0x202a0adb.
+// SetFinalizedState is a paid mutator transaction binding the contract method 0xb5adea3c.
 //
-// Solidity: function setFinalizedState((uint64,uint64,uint256,uint256,uint256,uint256,uint256,uint256) state) returns()
+// Solidity: function setFinalizedState((uint64,uint64,uint256) state) returns()
 func (_Lightclientmock *LightclientmockTransactorSession) SetFinalizedState(state LightClientLightClientState) (*types.Transaction, error) {
 	return _Lightclientmock.Contract.SetFinalizedState(&_Lightclientmock.TransactOpts, state)
-}
-
-// SetHotShotCommitments is a paid mutator transaction binding the contract method 0x530ca78f.
-//
-// Solidity: function setHotShotCommitments((uint64,uint256)[] values) returns()
-func (_Lightclientmock *LightclientmockTransactor) SetHotShotCommitments(opts *bind.TransactOpts, values []LightClientHotShotCommitment) (*types.Transaction, error) {
-	return _Lightclientmock.contract.Transact(opts, "setHotShotCommitments", values)
-}
-
-// SetHotShotCommitments is a paid mutator transaction binding the contract method 0x530ca78f.
-//
-// Solidity: function setHotShotCommitments((uint64,uint256)[] values) returns()
-func (_Lightclientmock *LightclientmockSession) SetHotShotCommitments(values []LightClientHotShotCommitment) (*types.Transaction, error) {
-	return _Lightclientmock.Contract.SetHotShotCommitments(&_Lightclientmock.TransactOpts, values)
-}
-
-// SetHotShotCommitments is a paid mutator transaction binding the contract method 0x530ca78f.
-//
-// Solidity: function setHotShotCommitments((uint64,uint256)[] values) returns()
-func (_Lightclientmock *LightclientmockTransactorSession) SetHotShotCommitments(values []LightClientHotShotCommitment) (*types.Transaction, error) {
-	return _Lightclientmock.Contract.SetHotShotCommitments(&_Lightclientmock.TransactOpts, values)
 }
 
 // SetHotShotDownSince is a paid mutator transaction binding the contract method 0x2d52aad6.
@@ -1200,25 +988,46 @@ func (_Lightclientmock *LightclientmockTransactorSession) SetPermissionedProver(
 	return _Lightclientmock.Contract.SetPermissionedProver(&_Lightclientmock.TransactOpts, prover)
 }
 
-// SetStateUpdateBlockNumbers is a paid mutator transaction binding the contract method 0x3919340f.
+// SetStateHistory is a paid mutator transaction binding the contract method 0xf5676160.
 //
-// Solidity: function setStateUpdateBlockNumbers(uint256[] values) returns()
-func (_Lightclientmock *LightclientmockTransactor) SetStateUpdateBlockNumbers(opts *bind.TransactOpts, values []*big.Int) (*types.Transaction, error) {
-	return _Lightclientmock.contract.Transact(opts, "setStateUpdateBlockNumbers", values)
+// Solidity: function setStateHistory((uint64,uint64,uint64,uint256)[] _stateHistoryCommitments) returns()
+func (_Lightclientmock *LightclientmockTransactor) SetStateHistory(opts *bind.TransactOpts, _stateHistoryCommitments []LightClientStateHistoryCommitment) (*types.Transaction, error) {
+	return _Lightclientmock.contract.Transact(opts, "setStateHistory", _stateHistoryCommitments)
 }
 
-// SetStateUpdateBlockNumbers is a paid mutator transaction binding the contract method 0x3919340f.
+// SetStateHistory is a paid mutator transaction binding the contract method 0xf5676160.
 //
-// Solidity: function setStateUpdateBlockNumbers(uint256[] values) returns()
-func (_Lightclientmock *LightclientmockSession) SetStateUpdateBlockNumbers(values []*big.Int) (*types.Transaction, error) {
-	return _Lightclientmock.Contract.SetStateUpdateBlockNumbers(&_Lightclientmock.TransactOpts, values)
+// Solidity: function setStateHistory((uint64,uint64,uint64,uint256)[] _stateHistoryCommitments) returns()
+func (_Lightclientmock *LightclientmockSession) SetStateHistory(_stateHistoryCommitments []LightClientStateHistoryCommitment) (*types.Transaction, error) {
+	return _Lightclientmock.Contract.SetStateHistory(&_Lightclientmock.TransactOpts, _stateHistoryCommitments)
 }
 
-// SetStateUpdateBlockNumbers is a paid mutator transaction binding the contract method 0x3919340f.
+// SetStateHistory is a paid mutator transaction binding the contract method 0xf5676160.
 //
-// Solidity: function setStateUpdateBlockNumbers(uint256[] values) returns()
-func (_Lightclientmock *LightclientmockTransactorSession) SetStateUpdateBlockNumbers(values []*big.Int) (*types.Transaction, error) {
-	return _Lightclientmock.Contract.SetStateUpdateBlockNumbers(&_Lightclientmock.TransactOpts, values)
+// Solidity: function setStateHistory((uint64,uint64,uint64,uint256)[] _stateHistoryCommitments) returns()
+func (_Lightclientmock *LightclientmockTransactorSession) SetStateHistory(_stateHistoryCommitments []LightClientStateHistoryCommitment) (*types.Transaction, error) {
+	return _Lightclientmock.Contract.SetStateHistory(&_Lightclientmock.TransactOpts, _stateHistoryCommitments)
+}
+
+// SetstateHistoryRetentionPeriod is a paid mutator transaction binding the contract method 0x96c1ca61.
+//
+// Solidity: function setstateHistoryRetentionPeriod(uint32 historySeconds) returns()
+func (_Lightclientmock *LightclientmockTransactor) SetstateHistoryRetentionPeriod(opts *bind.TransactOpts, historySeconds uint32) (*types.Transaction, error) {
+	return _Lightclientmock.contract.Transact(opts, "setstateHistoryRetentionPeriod", historySeconds)
+}
+
+// SetstateHistoryRetentionPeriod is a paid mutator transaction binding the contract method 0x96c1ca61.
+//
+// Solidity: function setstateHistoryRetentionPeriod(uint32 historySeconds) returns()
+func (_Lightclientmock *LightclientmockSession) SetstateHistoryRetentionPeriod(historySeconds uint32) (*types.Transaction, error) {
+	return _Lightclientmock.Contract.SetstateHistoryRetentionPeriod(&_Lightclientmock.TransactOpts, historySeconds)
+}
+
+// SetstateHistoryRetentionPeriod is a paid mutator transaction binding the contract method 0x96c1ca61.
+//
+// Solidity: function setstateHistoryRetentionPeriod(uint32 historySeconds) returns()
+func (_Lightclientmock *LightclientmockTransactorSession) SetstateHistoryRetentionPeriod(historySeconds uint32) (*types.Transaction, error) {
+	return _Lightclientmock.Contract.SetstateHistoryRetentionPeriod(&_Lightclientmock.TransactOpts, historySeconds)
 }
 
 // TransferOwnership is a paid mutator transaction binding the contract method 0xf2fde38b.
@@ -1261,140 +1070,6 @@ func (_Lightclientmock *LightclientmockSession) UpgradeToAndCall(newImplementati
 // Solidity: function upgradeToAndCall(address newImplementation, bytes data) payable returns()
 func (_Lightclientmock *LightclientmockTransactorSession) UpgradeToAndCall(newImplementation common.Address, data []byte) (*types.Transaction, error) {
 	return _Lightclientmock.Contract.UpgradeToAndCall(&_Lightclientmock.TransactOpts, newImplementation, data)
-}
-
-// LightclientmockEpochChangedIterator is returned from FilterEpochChanged and is used to iterate over the raw logs and unpacked data for EpochChanged events raised by the Lightclientmock contract.
-type LightclientmockEpochChangedIterator struct {
-	Event *LightclientmockEpochChanged // Event containing the contract specifics and raw log
-
-	contract *bind.BoundContract // Generic contract to use for unpacking event data
-	event    string              // Event name to use for unpacking event data
-
-	logs chan types.Log        // Log channel receiving the found contract events
-	sub  ethereum.Subscription // Subscription for errors, completion and termination
-	done bool                  // Whether the subscription completed delivering logs
-	fail error                 // Occurred error to stop iteration
-}
-
-// Next advances the iterator to the subsequent event, returning whether there
-// are any more events found. In case of a retrieval or parsing error, false is
-// returned and Error() can be queried for the exact failure.
-func (it *LightclientmockEpochChangedIterator) Next() bool {
-	// If the iterator failed, stop iterating
-	if it.fail != nil {
-		return false
-	}
-	// If the iterator completed, deliver directly whatever's available
-	if it.done {
-		select {
-		case log := <-it.logs:
-			it.Event = new(LightclientmockEpochChanged)
-			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
-				it.fail = err
-				return false
-			}
-			it.Event.Raw = log
-			return true
-
-		default:
-			return false
-		}
-	}
-	// Iterator still in progress, wait for either a data or an error event
-	select {
-	case log := <-it.logs:
-		it.Event = new(LightclientmockEpochChanged)
-		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
-			it.fail = err
-			return false
-		}
-		it.Event.Raw = log
-		return true
-
-	case err := <-it.sub.Err():
-		it.done = true
-		it.fail = err
-		return it.Next()
-	}
-}
-
-// Error returns any retrieval or parsing error occurred during filtering.
-func (it *LightclientmockEpochChangedIterator) Error() error {
-	return it.fail
-}
-
-// Close terminates the iteration process, releasing any pending underlying
-// resources.
-func (it *LightclientmockEpochChangedIterator) Close() error {
-	it.sub.Unsubscribe()
-	return nil
-}
-
-// LightclientmockEpochChanged represents a EpochChanged event raised by the Lightclientmock contract.
-type LightclientmockEpochChanged struct {
-	Arg0 uint64
-	Raw  types.Log // Blockchain specific contextual infos
-}
-
-// FilterEpochChanged is a free log retrieval operation binding the contract event 0xdb3558259e039d7e50e816b9dcce30fb114d8a9c86eca5ab14b60194d6945d3f.
-//
-// Solidity: event EpochChanged(uint64 arg0)
-func (_Lightclientmock *LightclientmockFilterer) FilterEpochChanged(opts *bind.FilterOpts) (*LightclientmockEpochChangedIterator, error) {
-
-	logs, sub, err := _Lightclientmock.contract.FilterLogs(opts, "EpochChanged")
-	if err != nil {
-		return nil, err
-	}
-	return &LightclientmockEpochChangedIterator{contract: _Lightclientmock.contract, event: "EpochChanged", logs: logs, sub: sub}, nil
-}
-
-// WatchEpochChanged is a free log subscription operation binding the contract event 0xdb3558259e039d7e50e816b9dcce30fb114d8a9c86eca5ab14b60194d6945d3f.
-//
-// Solidity: event EpochChanged(uint64 arg0)
-func (_Lightclientmock *LightclientmockFilterer) WatchEpochChanged(opts *bind.WatchOpts, sink chan<- *LightclientmockEpochChanged) (event.Subscription, error) {
-
-	logs, sub, err := _Lightclientmock.contract.WatchLogs(opts, "EpochChanged")
-	if err != nil {
-		return nil, err
-	}
-	return event.NewSubscription(func(quit <-chan struct{}) error {
-		defer sub.Unsubscribe()
-		for {
-			select {
-			case log := <-logs:
-				// New log arrived, parse the event and forward to the user
-				event := new(LightclientmockEpochChanged)
-				if err := _Lightclientmock.contract.UnpackLog(event, "EpochChanged", log); err != nil {
-					return err
-				}
-				event.Raw = log
-
-				select {
-				case sink <- event:
-				case err := <-sub.Err():
-					return err
-				case <-quit:
-					return nil
-				}
-			case err := <-sub.Err():
-				return err
-			case <-quit:
-				return nil
-			}
-		}
-	}), nil
-}
-
-// ParseEpochChanged is a log parse operation binding the contract event 0xdb3558259e039d7e50e816b9dcce30fb114d8a9c86eca5ab14b60194d6945d3f.
-//
-// Solidity: event EpochChanged(uint64 arg0)
-func (_Lightclientmock *LightclientmockFilterer) ParseEpochChanged(log types.Log) (*LightclientmockEpochChanged, error) {
-	event := new(LightclientmockEpochChanged)
-	if err := _Lightclientmock.contract.UnpackLog(event, "EpochChanged", log); err != nil {
-		return nil, err
-	}
-	event.Raw = log
-	return event, nil
 }
 
 // LightclientmockInitializedIterator is returned from FilterInitialized and is used to iterate over the raw logs and unpacked data for Initialized events raised by the Lightclientmock contract.

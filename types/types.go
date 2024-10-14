@@ -66,6 +66,8 @@ func (h *Header) UnmarshalJSON(b []byte) error {
 		return err
 	}
 
+	fmt.Printf("dec: %v", dec)
+
 	if dec.Height == nil {
 		return fmt.Errorf("Field height of type Header is required")
 	}

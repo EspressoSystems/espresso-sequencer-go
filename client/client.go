@@ -188,7 +188,7 @@ func (c *Client) get(ctx context.Context, out any, format string, args ...any) e
 		return err
 	}
 	if err := json.Unmarshal(body, out); err != nil {
-		return err
+		return fmt.Errorf("request failed with body %s and error %v", string(body), err)
 	}
 	return nil
 }

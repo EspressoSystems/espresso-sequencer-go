@@ -1,0 +1,32 @@
+{
+    "chain_config": {
+        "chain_config": {
+            "Left": {
+                "chain_id": "35353",
+                "max_block_size": "10240",
+                "base_fee": "0",
+                "fee_contract": "0x0000000000000000000000000000000000000000",
+                "fee_recipient": "0x0000000000000000000000000000000000000000"
+            }
+        }
+    },
+    "height": 42,
+    "timestamp": 789,
+    "l1_head": 124,
+    "l1_finalized": {
+        "number": 123,
+        "timestamp": "0x456",
+        "hash": "0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+    },
+    "payload_commitment": "HASH~1yS-KEtL3oDZDBJdsW51Pd7zywIiHesBZsTbpOzrxOfu",
+    "builder_commitment": "BUILDER_COMMITMENT~1yS-KEtL3oDZDBJdsW51Pd7zywIiHesBZsTbpOzrxOdZ",
+    "ns_table": {
+        "bytes": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    "block_merkle_tree_root": "MERKLE_COMM~yB4_Aqa35_PoskgTpcCR1oVLh6BUdLHIs7erHKWi-usUAAAAAAAAAAEAAAAAAAAAJg",
+    "fee_merkle_tree_root": "MERKLE_COMM~VJ9z239aP9GZDrHp3VxwPd_0l28Hc5KEAB1pFeCIxhYgAAAAAAAAAAIAAAAAAAAAdA",
+    "fee_info": {
+        "account": "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266",
+        "amount": "0"
+    }
+}

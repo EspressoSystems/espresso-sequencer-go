@@ -1,0 +1,55 @@
+{
+    "version": {
+        "Version": {
+            "major": 0,
+            "minor": 3
+        }
+    },
+    "fields": {
+        "chain_config": {
+            "chain_config": {
+                "Left": {
+                    "chain_id": "35353",
+                    "max_block_size": "30720",
+                    "base_fee": "0",
+                    "fee_contract": null,
+                    "fee_recipient": "0x0000000000000000000000000000000000000000",
+                    "bid_recipient": null
+                }
+            }
+        },
+        "height": 1,
+        "timestamp": 1729487756,
+        "l1_head": 1,
+        "l1_finalized": {
+            "number": 0,
+            "timestamp": "0x6715e38a",
+            "hash": "0xa39fa85a927497ef24651e5204518301eb6902cf8b46810f3df83436e1058fb6"
+        },
+        "payload_commitment": "HASH~L80VG4KV6LO_jsZO3hc1I0F5YKjbbLxWnemiWkWPkTU5",
+        "builder_commitment": "BUILDER_COMMITMENT~tEvs0rxqOiMCvfe2R0omNNaphSlUiEDrb2q0IZpRcgA_",
+        "ns_table": {
+            "bytes": "AAAAAA=="
+        },
+        "block_merkle_tree_root": "MERKLE_COMM~MxGB414y0zLa37w2mTkwWoVuKQaZP8cCNK-dRsChm3cgAAAAAAAAAAEAAAAAAAAAww",
+        "fee_merkle_tree_root": "MERKLE_COMM~XZo7X2To_xdKCieITCYOQyB3jDcOVsIcY_mFbZlH6NAUAAAAAAAAAAEAAAAAAAAArw",
+        "fee_info": [
+            {
+                "account": "0xb0cfa4e5893107e2995974ef032957752bb526e9",
+                "amount": "0"
+            }
+        ],
+        "builder_signature": [
+            {
+                "r": "0x1ed4ce0884520709271535bbef06a114ea47236935148ee724fd6bb33c693b96",
+                "s": "0x66c2148840fd27b97639eac03e309781e824baae6dd5aface1f356184f676fc3",
+                "v": 27
+            }
+        ],
+        "auction_results": {
+            "view_number": 0,
+            "winning_bids": [],
+            "reserve_bids": []
+        }
+    }
+}

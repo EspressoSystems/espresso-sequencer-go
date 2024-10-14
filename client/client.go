@@ -46,18 +46,18 @@ func (c *Client) FetchLatestBlockHeight(ctx context.Context) (uint64, error) {
 	return res, nil
 }
 
-func (c *Client) FetchHeaderByHeight(ctx context.Context, blockHeight uint64) (types.Header, error) {
-	var res types.Header
+func (c *Client) FetchHeaderByHeight(ctx context.Context, blockHeight uint64) (types.HeaderImpl, error) {
+	var res types.HeaderImpl
 	if err := c.get(ctx, &res, "availability/header/%d", blockHeight); err != nil {
-		return types.Header{}, err
+		return types.HeaderImpl{}, err
 	}
 	return res, nil
 }
 
-func (c *Client) FetchHeadersByRange(ctx context.Context, from uint64, until uint64) ([]types.Header, error) {
-	var res []types.Header
+func (c *Client) FetchHeadersByRange(ctx context.Context, from uint64, until uint64) ([]types.HeaderImpl, error) {
+	var res []types.HeaderImpl
 	if err := c.get(ctx, &res, "availability/header/%d/%d", from, until); err != nil {
-		return []types.Header{}, err
+		return []types.HeaderImpl{}, err
 	}
 	return res, nil
 }
@@ -188,7 +188,7 @@ func (c *Client) get(ctx context.Context, out any, format string, args ...any) e
 		return err
 	}
 	if err := json.Unmarshal(body, out); err != nil {
-		return err
+		return fmt.Errorf("request failed with body %s and error %v", string(body), err)
 	}
 	return nil
 }

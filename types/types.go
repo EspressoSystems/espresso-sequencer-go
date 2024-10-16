@@ -527,8 +527,8 @@ func GetDummyHeader() Header {
 		FeeInfo:             &FeeInfo{Account: common.HexToAddress("0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"), Amount: *NewU256().SetUint64(0).ToDecimal()},
 		L1Finalized:         &blockInfo,
 		BuilderSignature: &BuilderSignature{
-			// R: NewU256().SetBytes([32]byte(common.Hex2Bytes("0x1f92bab6350d4f33e04f9e9278d89f644d0abea16d6f882e91f87bec4e0ba53d"))),
-			// S: NewU256().SetBytes([32]byte(common.Hex2Bytes("0x2067627270a89b06e7486c2c56fef0fee5f49a14b296a1cde580b0b40fa7430f"))),
+			R: common.HexToHash("0x1f92bab6350d4f33e04f9e9278d89f644d0abea16d6f882e91f87bec4e0ba53d"),
+			S: common.HexToHash("0x2067627270a89b06e7486c2c56fef0fee5f49a14b296a1cde580b0b40fa7430f"),
 			V: uint64(27),
 		},
 	}

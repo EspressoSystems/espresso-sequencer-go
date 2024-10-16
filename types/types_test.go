@@ -48,8 +48,6 @@ var ReferenceBuilderCommitment, _ = tagged_base64.Parse("BUILDER_COMMITMENT~1yS-
 var ReferenceBlockMerkleTreeRoot, _ = tagged_base64.Parse("MERKLE_COMM~yB4_Aqa35_PoskgTpcCR1oVLh6BUdLHIs7erHKWi-usUAAAAAAAAAAEAAAAAAAAAJg")
 var ReferenceFeeMerkleTreeRoot, _ = tagged_base64.Parse("MERKLE_COMM~VJ9z239aP9GZDrHp3VxwPd_0l28Hc5KEAB1pFeCIxhYgAAAAAAAAAAIAAAAAAAAAdA")
 
-var v = uint64(27)
-
 var ReferenceHeader Header = Header{
 	ChainConfig:         ReferenceChainConfig,
 	Height:              42,

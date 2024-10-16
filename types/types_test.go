@@ -2,6 +2,7 @@ package types
 
 import (
 	"encoding/json"
+	"fmt"
 	"strings"
 	"testing"
 
@@ -47,6 +48,8 @@ var ReferenceBuilderCommitment, _ = tagged_base64.Parse("BUILDER_COMMITMENT~1yS-
 var ReferenceBlockMerkleTreeRoot, _ = tagged_base64.Parse("MERKLE_COMM~yB4_Aqa35_PoskgTpcCR1oVLh6BUdLHIs7erHKWi-usUAAAAAAAAAAEAAAAAAAAAJg")
 var ReferenceFeeMerkleTreeRoot, _ = tagged_base64.Parse("MERKLE_COMM~VJ9z239aP9GZDrHp3VxwPd_0l28Hc5KEAB1pFeCIxhYgAAAAAAAAAAIAAAAAAAAAdA")
 
+var v = uint64(27)
+
 var ReferenceHeader Header = Header{
 	ChainConfig:         ReferenceChainConfig,
 	Height:              42,
@@ -59,6 +62,11 @@ var ReferenceHeader Header = Header{
 	BlockMerkleTreeRoot: ReferenceBlockMerkleTreeRoot,
 	FeeMerkleTreeRoot:   ReferenceFeeMerkleTreeRoot,
 	FeeInfo:             &FeeInfo{Account: common.HexToAddress("0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"), Amount: *NewU256().SetUint64(0).ToDecimal()},
+	BuilderSignature: &BuilderSignature{
+		R: common.HexToHash("0x1f92bab6350d4f33e04f9e9278d89f644d0abea16d6f882e91f87bec4e0ba53d"),
+		S: common.HexToHash("0x2067627270a89b06e7486c2c56fef0fee5f49a14b296a1cde580b0b40fa7430f"),
+		V: 27,
+	},
 }
 
 var ReferenceTransaction Transaction = Transaction{
@@ -118,7 +126,8 @@ func TestEspressoTypesHeaderJson(t *testing.T) {
 		},
 		"block_merkle_tree_root": "MERKLE_COMM~yB4_Aqa35_PoskgTpcCR1oVLh6BUdLHIs7erHKWi-usUAAAAAAAAAAEAAAAAAAAAJg",
 		"fee_merkle_tree_root": "MERKLE_COMM~VJ9z239aP9GZDrHp3VxwPd_0l28Hc5KEAB1pFeCIxhYgAAAAAAAAAAIAAAAAAAAAdA",
-		"fee_info":{"account":"0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266","amount":"0"}
+		"fee_info":{"account":"0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266","amount":"0"},
+		"builder_signature":{"r":"0x1f92bab6350d4f33e04f9e9278d89f644d0abea16d6f882e91f87bec4e0ba53d","s":"0x2067627270a89b06e7486c2c56fef0fee5f49a14b296a1cde580b0b40fa7430f","v":27}
 	}`))
 
 	// Check encoding.
@@ -135,7 +144,7 @@ func TestEspressoTypesHeaderJson(t *testing.T) {
 	}
 	require.Equal(t, decoded, ReferenceHeader)
 
-	CheckJsonRequiredFields[Header](t, data, "height", "timestamp", "l1_head", "payload_commitment", "builder_commitment", "block_merkle_tree_root", "fee_merkle_tree_root", "fee_info", "chain_config")
+	CheckJsonRequiredFields[Header](t, data, "height", "timestamp", "l1_head", "payload_commitment", "builder_commitment", "block_merkle_tree_root", "fee_merkle_tree_root", "fee_info", "chain_config", "builder_signature")
 }
 
 func TestEspressoTransactionJson(t *testing.T) {
@@ -174,7 +183,8 @@ func TestEspressoTypesNsTable(t *testing.T) {
 }
 
 func TestEspressoTypesHeaderCommit(t *testing.T) {
-	require.Equal(t, ReferenceHeader.Commit(), Commitment{108, 66, 152, 60, 96, 143, 195, 17, 58, 161, 229, 97, 42, 65, 218, 52, 73, 30, 164, 118, 5, 26, 70, 222, 184, 71, 228, 1, 92, 215, 177, 152})
+	fmt.Printf("%v", ReferenceHeader.Commit())
+	require.Equal(t, ReferenceHeader.Commit(), Commitment{231, 29, 239, 71, 22, 101, 198, 223, 100, 115, 197, 203, 125, 6, 172, 149, 141, 226, 79, 254, 84, 28, 152, 122, 37, 222, 143, 27, 192, 81, 80, 57})
 }
 
 func TestEspressoTypesTransaction(t *testing.T) {

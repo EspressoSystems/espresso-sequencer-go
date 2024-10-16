@@ -43,6 +43,7 @@ type Header struct {
 	BlockMerkleTreeRoot *TaggedBase64          `json:"block_merkle_tree_root"`
 	FeeMerkleTreeRoot   *TaggedBase64          `json:"fee_merkle_tree_root"`
 	FeeInfo             *FeeInfo               `json:"fee_info"`
+	BuilderSignature    *BuilderSignature      `json:"builder_signature"`
 }
 
 func (h *Header) UnmarshalJSON(b []byte) error {
@@ -59,6 +60,7 @@ func (h *Header) UnmarshalJSON(b []byte) error {
 		BlockMerkleTreeRoot **TaggedBase64          `json:"block_merkle_tree_root"`
 		FeeMerkleTreeRoot   **TaggedBase64          `json:"fee_merkle_tree_root"`
 		FeeInfo             **FeeInfo               `json:"fee_info"`
+		BuilderSignature    **BuilderSignature      `json:"builder_signature"`
 	}
 
 	var dec Dec
@@ -114,6 +116,12 @@ func (h *Header) UnmarshalJSON(b []byte) error {
 	if dec.ChainConfig == nil {
 		return fmt.Errorf("Field chain_info of type Header is required")
 	}
+
+	if dec.BuilderSignature == nil {
+		return fmt.Errorf("Field builder_signature of type Header is required")
+	}
+	h.BuilderSignature = *dec.BuilderSignature
+
 	h.ChainConfig = *dec.ChainConfig
 
 	h.L1Finalized = dec.L1Finalized
@@ -141,6 +149,7 @@ func (self *Header) Commit() Commitment {
 		VarSizeField("block_merkle_tree_root", self.BlockMerkleTreeRoot.Value()).
 		VarSizeField("fee_merkle_tree_root", self.FeeMerkleTreeRoot.Value()).
 		Field("fee_info", self.FeeInfo.Commit()).
+		Field("builder_signature", self.BuilderSignature.Commit()).
 		Finalize()
 }
 
@@ -163,6 +172,20 @@ func (self *ResolvableChainConfig) Commit() Commitment {
 
 	// It shouldn't happen
 	return Commitment{}
+}
+
+type BuilderSignature struct {
+	R common.Hash `json:"r"`
+	S common.Hash `json:"s"`
+	V uint64      `json:"v"`
+}
+
+func (bs *BuilderSignature) Commit() Commitment {
+	return NewRawCommitmentBuilder("BUILDER_SIGNATURE").
+		FixedSizeField("r", bs.R[:]).
+		FixedSizeField("s", bs.S[:]).
+		Uint64Field("v", bs.V).
+		Finalize()
 }
 
 type EitherChainConfig struct {
@@ -503,5 +526,10 @@ func GetDummyHeader() Header {
 		PayloadCommitment:   payloadCommitment,
 		FeeInfo:             &FeeInfo{Account: common.HexToAddress("0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"), Amount: *NewU256().SetUint64(0).ToDecimal()},
 		L1Finalized:         &blockInfo,
+		BuilderSignature: &BuilderSignature{
+			// R: NewU256().SetBytes([32]byte(common.Hex2Bytes("0x1f92bab6350d4f33e04f9e9278d89f644d0abea16d6f882e91f87bec4e0ba53d"))),
+			// S: NewU256().SetBytes([32]byte(common.Hex2Bytes("0x2067627270a89b06e7486c2c56fef0fee5f49a14b296a1cde580b0b40fa7430f"))),
+			V: uint64(27),
+		},
 	}
 }

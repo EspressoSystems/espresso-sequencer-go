@@ -2,7 +2,6 @@ package types
 
 import (
 	"encoding/json"
-	"fmt"
 	"strings"
 	"testing"
 
@@ -181,7 +180,6 @@ func TestEspressoTypesNsTable(t *testing.T) {
 }
 
 func TestEspressoTypesHeaderCommit(t *testing.T) {
-	fmt.Printf("%v", ReferenceHeader.Commit())
 	require.Equal(t, ReferenceHeader.Commit(), Commitment{231, 29, 239, 71, 22, 101, 198, 223, 100, 115, 197, 203, 125, 6, 172, 149, 141, 226, 79, 254, 84, 28, 152, 122, 37, 222, 143, 27, 192, 81, 80, 57})
 }
 

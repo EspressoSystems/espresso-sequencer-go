@@ -353,6 +353,20 @@ func (self *FeeInfo) Commit() Commitment {
 		Finalize()
 }
 
+type BuilderSignature struct {
+	R common.Hash `json:"r"`
+	S common.Hash `json:"s"`
+	V uint64      `json:"v"`
+}
+
+func (bs *BuilderSignature) Commit() Commitment {
+	return NewRawCommitmentBuilder("BUILDER_SIGNATURE").
+		FixedSizeField("r", bs.R[:]).
+		FixedSizeField("s", bs.S[:]).
+		Uint64Field("v", bs.V).
+		Finalize()
+}
+
 // For some intricate reasons, rollups need to build a dummy header as a placeholder. However, an empty Header can be serialized
 // but can not be deserialized because of the checks. Thus we provide this dummy header as a workaround.
 func GetDummyHeader() Header {
@@ -390,5 +404,10 @@ func GetDummyHeader() Header {
 		PayloadCommitment:   payloadCommitment,
 		FeeInfo:             &FeeInfo{Account: common.HexToAddress("0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"), Amount: *NewU256().SetUint64(0).ToDecimal()},
 		L1Finalized:         &blockInfo,
+		BuilderSignature: &BuilderSignature{
+			R: common.HexToHash("0x1f92bab6350d4f33e04f9e9278d89f644d0abea16d6f882e91f87bec4e0ba53d"),
+			S: common.HexToHash("0x2067627270a89b06e7486c2c56fef0fee5f49a14b296a1cde580b0b40fa7430f"),
+			V: uint64(27),
+		},
 	}
 }

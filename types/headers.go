@@ -127,6 +127,7 @@ type Header struct {
 	BlockMerkleTreeRoot *TaggedBase64          `json:"block_merkle_tree_root"`
 	FeeMerkleTreeRoot   *TaggedBase64          `json:"fee_merkle_tree_root"`
 	FeeInfo             *FeeInfo               `json:"fee_info"`
+	BuilderSignature    *BuilderSignature      `json:"builder_signature"           rlp:"nil"`
 }
 
 func (h *Header) Version() Version {
@@ -152,6 +153,10 @@ func (h *Header) GetFeeMerkleTreeRoot() *TaggedBase64 {
 	return h.FeeMerkleTreeRoot
 }
 
+func (h *Header) GetBuilderSignature() *BuilderSignature {
+	return h.BuilderSignature
+}
+
 func (h *Header) UnmarshalJSON(b []byte) error {
 	// Parse using pointers so we can distinguish between missing and default fields.
 	type Dec struct {
@@ -166,6 +171,7 @@ func (h *Header) UnmarshalJSON(b []byte) error {
 		BlockMerkleTreeRoot **TaggedBase64          `json:"block_merkle_tree_root"`
 		FeeMerkleTreeRoot   **TaggedBase64          `json:"fee_merkle_tree_root"`
 		FeeInfo             **FeeInfo               `json:"fee_info"`
+		BuilderSignature    *BuilderSignature       `json:"builder_signature"           rlp:"nil"`
 	}
 
 	var dec Dec
@@ -224,6 +230,8 @@ func (h *Header) UnmarshalJSON(b []byte) error {
 	h.ChainConfig = *dec.ChainConfig
 
 	h.L1Finalized = dec.L1Finalized
+	h.BuilderSignature = dec.BuilderSignature
+
 	return nil
 }
 
@@ -232,6 +240,12 @@ func (self *Header) Commit() Commitment {
 	if self.L1Finalized != nil {
 		comm := self.L1Finalized.Commit()
 		l1FinalizedComm = &comm
+	}
+
+	var builderSignatureCommitment *Commitment
+	if self.BuilderSignature != nil {
+		comm := self.BuilderSignature.Commit()
+		builderSignatureCommitment = &comm
 	}
 
 	return NewRawCommitmentBuilder("BLOCK").
@@ -248,6 +262,7 @@ func (self *Header) Commit() Commitment {
 		VarSizeField("block_merkle_tree_root", self.BlockMerkleTreeRoot.Value()).
 		VarSizeField("fee_merkle_tree_root", self.FeeMerkleTreeRoot.Value()).
 		Field("fee_info", self.FeeInfo.Commit()).
+		OptionalField("builder_signature", builderSignatureCommitment).
 		Finalize()
 }
 

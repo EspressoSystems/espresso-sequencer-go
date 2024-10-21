@@ -1,32 +1,37 @@
 {
+  "chain_config": {
     "chain_config": {
-        "chain_config": {
-            "Left": {
-                "chain_id": "35353",
-                "max_block_size": "10240",
-                "base_fee": "0",
-                "fee_contract": "0x0000000000000000000000000000000000000000",
-                "fee_recipient": "0x0000000000000000000000000000000000000000"
-            }
-        }
-    },
-    "height": 42,
-    "timestamp": 789,
-    "l1_head": 124,
-    "l1_finalized": {
-        "number": 123,
-        "timestamp": "0x456",
-        "hash": "0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
-    },
-    "payload_commitment": "HASH~1yS-KEtL3oDZDBJdsW51Pd7zywIiHesBZsTbpOzrxOfu",
-    "builder_commitment": "BUILDER_COMMITMENT~1yS-KEtL3oDZDBJdsW51Pd7zywIiHesBZsTbpOzrxOdZ",
-    "ns_table": {
-        "bytes": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-    },
-    "block_merkle_tree_root": "MERKLE_COMM~yB4_Aqa35_PoskgTpcCR1oVLh6BUdLHIs7erHKWi-usUAAAAAAAAAAEAAAAAAAAAJg",
-    "fee_merkle_tree_root": "MERKLE_COMM~VJ9z239aP9GZDrHp3VxwPd_0l28Hc5KEAB1pFeCIxhYgAAAAAAAAAAIAAAAAAAAAdA",
-    "fee_info": {
-        "account": "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266",
-        "amount": "0"
+      "Left": {
+        "chain_id": "35353",
+        "max_block_size": "10240",
+        "base_fee": "0",
+        "fee_contract": "0x0000000000000000000000000000000000000000",
+        "fee_recipient": "0x0000000000000000000000000000000000000000"
+      }
     }
+  },
+  "height": 42,
+  "timestamp": 789,
+  "l1_head": 124,
+  "l1_finalized": {
+    "number": 123,
+    "timestamp": "0x456",
+    "hash": "0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+  },
+  "payload_commitment": "HASH~1yS-KEtL3oDZDBJdsW51Pd7zywIiHesBZsTbpOzrxOfu",
+  "builder_commitment": "BUILDER_COMMITMENT~1yS-KEtL3oDZDBJdsW51Pd7zywIiHesBZsTbpOzrxOdZ",
+  "ns_table": {
+    "bytes": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+  },
+  "block_merkle_tree_root": "MERKLE_COMM~yB4_Aqa35_PoskgTpcCR1oVLh6BUdLHIs7erHKWi-usUAAAAAAAAAAEAAAAAAAAAJg",
+  "fee_merkle_tree_root": "MERKLE_COMM~VJ9z239aP9GZDrHp3VxwPd_0l28Hc5KEAB1pFeCIxhYgAAAAAAAAAAIAAAAAAAAAdA",
+  "fee_info": {
+    "account": "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266",
+    "amount": "0"
+  },
+  "builder_signature": {
+    "r": "0x1f92bab6350d4f33e04f9e9278d89f644d0abea16d6f882e91f87bec4e0ba53d",
+    "s": "0x2067627270a89b06e7486c2c56fef0fee5f49a14b296a1cde580b0b40fa7430f",
+    "v": 27
+  }
 }

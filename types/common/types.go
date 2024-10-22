@@ -1,4 +1,4 @@
-package types
+package common
 
 import (
 	"encoding/base64"
@@ -367,47 +367,26 @@ func (bs *BuilderSignature) Commit() Commitment {
 		Finalize()
 }
 
-// For some intricate reasons, rollups need to build a dummy header as a placeholder. However, an empty Header can be serialized
-// but can not be deserialized because of the checks. Thus we provide this dummy header as a workaround.
-func GetDummyHeader() Header {
-	var payloadCommitment, _ = tagged_base64.Parse("HASH~1yS-KEtL3oDZDBJdsW51Pd7zywIiHesBZsTbpOzrxOfu")
-	var builderCommitment, _ = tagged_base64.Parse("BUILDER_COMMITMENT~1yS-KEtL3oDZDBJdsW51Pd7zywIiHesBZsTbpOzrxOdZ")
-	var blockMerkleTreeRoot, _ = tagged_base64.Parse("MERKLE_COMM~yB4_Aqa35_PoskgTpcCR1oVLh6BUdLHIs7erHKWi-usUAAAAAAAAAAEAAAAAAAAAJg")
-	var feeMerkleTreeRoot, _ = tagged_base64.Parse("MERKLE_COMM~VJ9z239aP9GZDrHp3VxwPd_0l28Hc5KEAB1pFeCIxhYgAAAAAAAAAAIAAAAAAAAAdA")
-	var blockInfo = L1BlockInfo{
-		Number:    123,
-		Timestamp: *NewU256().SetUint64(0x456),
-		Hash:      common.Hash{0x01, 0x23, 0x45, 0x67, 0x89, 0xab, 0xcd, 0xef, 0x01, 0x23, 0x45, 0x67, 0x89, 0xab, 0xcd, 0xef, 0x01, 0x23, 0x45, 0x67, 0x89, 0xab, 0xcd, 0xef, 0x01, 0x23, 0x45, 0x67, 0x89, 0xab, 0xcd, 0xef},
+type Version struct {
+	Major uint16 `json:"major"`
+	Minor uint16 `json:"minor"`
+}
+
+func (v *Version) UnmarshalJSON(b []byte) error {
+	// Use an alias type to avoid recusive calls of this function
+	type Alias Version
+
+	type Dec struct {
+		Ver Alias `json:"Version"`
 	}
 
-	return Header{
-		ChainConfig: &ResolvableChainConfig{
-			EitherChainConfig{
-				Left: &ChainConfig{
-					ChainId:      *NewU256().SetUint64(0x8a19).ToDecimal(),
-					MaxBlockSize: *NewU256().SetUint64(10240).ToDecimal(),
-					BaseFee:      *NewU256().SetUint64(0).ToDecimal(),
-					FeeContract:  &common.Address{},
-					FeeRecipient: common.Address{},
-				},
-			},
-		},
-		Height:    0,
-		Timestamp: 789,
-		L1Head:    124,
-		NsTable: &NsTable{
-			Bytes: []byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-		},
-		BlockMerkleTreeRoot: blockMerkleTreeRoot,
-		FeeMerkleTreeRoot:   feeMerkleTreeRoot,
-		BuilderCommitment:   builderCommitment,
-		PayloadCommitment:   payloadCommitment,
-		FeeInfo:             &FeeInfo{Account: common.HexToAddress("0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"), Amount: *NewU256().SetUint64(0).ToDecimal()},
-		L1Finalized:         &blockInfo,
-		BuilderSignature: &BuilderSignature{
-			R: common.HexToHash("0x1f92bab6350d4f33e04f9e9278d89f644d0abea16d6f882e91f87bec4e0ba53d"),
-			S: common.HexToHash("0x2067627270a89b06e7486c2c56fef0fee5f49a14b296a1cde580b0b40fa7430f"),
-			V: uint64(27),
-		},
+	var dec Dec
+	if err := json.Unmarshal(b, &dec); err != nil {
+		return err
 	}
+
+	v.Major = dec.Ver.Major
+	v.Minor = dec.Ver.Minor
+
+	return nil
 }

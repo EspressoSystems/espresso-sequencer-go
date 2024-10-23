@@ -19,6 +19,7 @@ type Header struct {
 	BlockMerkleTreeRoot *common.TaggedBase64          `json:"block_merkle_tree_root"`
 	FeeMerkleTreeRoot   *common.TaggedBase64          `json:"fee_merkle_tree_root"`
 	FeeInfo             *[]common.FeeInfo             `json:"fee_info"`
+	BuilderSignature    *[]common.BuilderSignature    `json:"builder_signature"`
 }
 
 func (h *Header) Version() common.Version {
@@ -57,6 +58,7 @@ func (h *Header) UnmarshalJSON(b []byte) error {
 		BlockMerkleTreeRoot **common.TaggedBase64          `json:"block_merkle_tree_root"`
 		FeeMerkleTreeRoot   **common.TaggedBase64          `json:"fee_merkle_tree_root"`
 		FeeInfo             **[]common.FeeInfo             `json:"fee_info"`
+		BuilderSignature    *[]common.BuilderSignature     `json:"builder_signature"`
 	}
 
 	var dec Dec
@@ -115,9 +117,35 @@ func (h *Header) UnmarshalJSON(b []byte) error {
 	h.ChainConfig = *dec.ChainConfig
 
 	h.L1Finalized = dec.L1Finalized
+	h.BuilderSignature = dec.BuilderSignature
 	return nil
 }
 
 func (self *Header) Commit() common.Commitment {
-	panic("unimplemented")
+	var l1FinalizedComm *common.Commitment
+	if self.L1Finalized != nil {
+		comm := self.L1Finalized.Commit()
+		l1FinalizedComm = &comm
+	}
+
+	var feeInfoComms []common.Commitment
+	for _, feeInfo := range *self.FeeInfo {
+		feeInfoComms = append(feeInfoComms, feeInfo.Commit())
+	}
+
+	return common.NewRawCommitmentBuilder("BLOCK").
+		Field("chain_config", self.ChainConfig.Commit()).
+		Uint64Field("height", self.Height).
+		Uint64Field("timestamp", self.Timestamp).
+		Uint64Field("l1_head", self.L1Head).
+		OptionalField("l1_finalized", l1FinalizedComm).
+		ConstantString("payload_commitment").
+		FixedSizeBytes(self.PayloadCommitment.Value()).
+		ConstantString("builder_commitment").
+		FixedSizeBytes(self.BuilderCommitment.Value()).
+		Field("ns_table", self.NsTable.Commit()).
+		VarSizeField("block_merkle_tree_root", self.BlockMerkleTreeRoot.Value()).
+		VarSizeField("fee_merkle_tree_root", self.FeeMerkleTreeRoot.Value()).
+		ArrayField("fee_info", feeInfoComms).
+		Finalize()
 }

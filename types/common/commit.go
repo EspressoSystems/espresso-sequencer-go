@@ -169,6 +169,15 @@ func (b *RawCommitmentBuilder) VarSizeBytes(bytes Bytes) *RawCommitmentBuilder {
 	return b
 }
 
+func (b *RawCommitmentBuilder) ArrayField(f string, array []Commitment) *RawCommitmentBuilder {
+	b.ConstantString(f).Uint64(uint64(len(array)))
+
+	for _, e := range array {
+		b.FixedSizeBytes(e[:])
+	}
+	return b
+}
+
 func (b *RawCommitmentBuilder) Finalize() Commitment {
 	var comm Commitment
 	bytes := b.hasher.Sum(nil)

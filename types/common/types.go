@@ -359,14 +359,6 @@ type BuilderSignature struct {
 	V uint64      `json:"v"`
 }
 
-func (bs *BuilderSignature) Commit() Commitment {
-	return NewRawCommitmentBuilder("BUILDER_SIGNATURE").
-		FixedSizeField("r", bs.R[:]).
-		FixedSizeField("s", bs.S[:]).
-		Uint64Field("v", bs.V).
-		Finalize()
-}
-
 type Version struct {
 	Major uint16 `json:"major"`
 	Minor uint16 `json:"minor"`

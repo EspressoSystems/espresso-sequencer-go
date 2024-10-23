@@ -8,6 +8,7 @@ import (
 	common_types "github.com/EspressoSystems/espresso-sequencer-go/types/common"
 	"github.com/EspressoSystems/espresso-sequencer-go/types/v0/v0_1"
 	v01 "github.com/EspressoSystems/espresso-sequencer-go/types/v0/v0_1"
+	v02 "github.com/EspressoSystems/espresso-sequencer-go/types/v0/v0_2"
 	v03 "github.com/EspressoSystems/espresso-sequencer-go/types/v0/v0_3"
 	common "github.com/ethereum/go-ethereum/common"
 )
@@ -80,7 +81,7 @@ func parseHeader(data []byte) (HeaderInterface, error) {
 
 	version := rawHeader.Version
 	if version.Major == 0 && version.Minor == 2 {
-		var header v01.Header
+		var header v02.Header
 		if err := json.Unmarshal(rawHeader.Fields, &header); err != nil {
 			return nil, err
 		}

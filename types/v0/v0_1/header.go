@@ -134,12 +134,6 @@ func (self *Header) Commit() common.Commitment {
 		l1FinalizedComm = &comm
 	}
 
-	var builderSignatureCommitment *common.Commitment
-	if self.BuilderSignature != nil {
-		comm := self.BuilderSignature.Commit()
-		builderSignatureCommitment = &comm
-	}
-
 	return common.NewRawCommitmentBuilder("BLOCK").
 		Field("chain_config", self.ChainConfig.Commit()).
 		Uint64Field("height", self.Height).
@@ -154,6 +148,5 @@ func (self *Header) Commit() common.Commitment {
 		VarSizeField("block_merkle_tree_root", self.BlockMerkleTreeRoot.Value()).
 		VarSizeField("fee_merkle_tree_root", self.FeeMerkleTreeRoot.Value()).
 		Field("fee_info", self.FeeInfo.Commit()).
-		OptionalField("builder_signature", builderSignatureCommitment).
 		Finalize()
 }

@@ -6,7 +6,6 @@ import (
 	"fmt"
 
 	types "github.com/EspressoSystems/espresso-sequencer-go/types"
-	common "github.com/EspressoSystems/espresso-sequencer-go/types/common"
 )
 
 // Interface to the Espresso Sequencer query service.
@@ -21,23 +20,23 @@ type QueryService interface {
 	// along with a proof that these are all such transactions.
 	FetchTransactionsInBlock(ctx context.Context, blockHeight uint64, namespace uint64) (TransactionsInBlock, error)
 	// Get the transaction by its hash.
-	FetchTransactionByHash(ctx context.Context, hash *common.TaggedBase64) (common.TransactionQueryData, error)
+	FetchTransactionByHash(ctx context.Context, hash *types.TaggedBase64) (types.TransactionQueryData, error)
 }
 
 // Response to `FetchTransactionsInBlock`
 type TransactionsInBlock struct {
 	// The transactions.
-	Transactions []common.Bytes `json:"transactions"`
+	Transactions []types.Bytes `json:"transactions"`
 	// A proof that these are all the transactions in the block with the requested namespace.
-	Proof     common.NamespaceProof `json:"proof"`
-	VidCommon common.VidCommon      `json:"vidCommon"`
+	Proof     types.NamespaceProof `json:"proof"`
+	VidCommon types.VidCommon      `json:"vidCommon"`
 }
 
 func (t *TransactionsInBlock) UnmarshalJSON(b []byte) error {
 	// Parse using pointers so we can distinguish between missing and default fields.
 	type Dec struct {
-		Transactions *[]common.Bytes        `json:"transactions"`
-		Proof        *common.NamespaceProof `json:"proof"`
+		Transactions *[]types.Bytes        `json:"transactions"`
+		Proof        *types.NamespaceProof `json:"proof"`
 	}
 
 	var dec Dec

@@ -25,18 +25,6 @@ var ReferenceNsTable NsTable = NsTable{
 	Bytes: []byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 }
 
-var ReferenceChainConfig = &ResolvableChainConfig{
-	EitherChainConfig{
-		Left: &ChainConfig{
-			ChainId:      *NewU256().SetUint64(0x8a19).ToDecimal(),
-			MaxBlockSize: *NewU256().SetUint64(10240).ToDecimal(),
-			BaseFee:      *NewU256().SetUint64(0).ToDecimal(),
-			FeeContract:  &common.Address{},
-			FeeRecipient: common.Address{},
-		},
-	},
-}
-
 var ReferencePayloadCommitment, _ = tagged_base64.Parse("HASH~1yS-KEtL3oDZDBJdsW51Pd7zywIiHesBZsTbpOzrxOfu")
 var ReferenceBuilderCommitment, _ = tagged_base64.Parse("BUILDER_COMMITMENT~1yS-KEtL3oDZDBJdsW51Pd7zywIiHesBZsTbpOzrxOdZ")
 var ReferenceBlockMerkleTreeRoot, _ = tagged_base64.Parse("MERKLE_COMM~yB4_Aqa35_PoskgTpcCR1oVLh6BUdLHIs7erHKWi-usUAAAAAAAAAAEAAAAAAAAAJg")

@@ -4,61 +4,70 @@ import (
 	"encoding/json"
 	"fmt"
 
-	common "github.com/EspressoSystems/espresso-sequencer-go/types/common"
+	"github.com/EspressoSystems/espresso-sequencer-go/types/common"
+	common_types "github.com/EspressoSystems/espresso-sequencer-go/types/common"
 )
 
 type Header struct {
-	ChainConfig         *common.ResolvableChainConfig `json:"chain_config"`
-	Height              uint64                        `json:"height"`
-	Timestamp           uint64                        `json:"timestamp"`
-	L1Head              uint64                        `json:"l1_head"`
-	L1Finalized         *common.L1BlockInfo           `json:"l1_finalized"           rlp:"nil"`
-	PayloadCommitment   *common.TaggedBase64          `json:"payload_commitment"`
-	BuilderCommitment   *common.TaggedBase64          `json:"builder_commitment"`
-	NsTable             *common.NsTable               `json:"ns_table"`
-	BlockMerkleTreeRoot *common.TaggedBase64          `json:"block_merkle_tree_root"`
-	FeeMerkleTreeRoot   *common.TaggedBase64          `json:"fee_merkle_tree_root"`
-	FeeInfo             *[]common.FeeInfo             `json:"fee_info"`
-	BuilderSignature    *[]common.BuilderSignature    `json:"builder_signature"`
+	ChainConfig         *ResolvableChainConfig     `json:"chain_config"`
+	Height              uint64                     `json:"height"`
+	Timestamp           uint64                     `json:"timestamp"`
+	L1Head              uint64                     `json:"l1_head"`
+	L1Finalized         *common_types.L1BlockInfo  `json:"l1_finalized"           rlp:"nil"`
+	PayloadCommitment   *common_types.TaggedBase64 `json:"payload_commitment"`
+	BuilderCommitment   *common_types.TaggedBase64 `json:"builder_commitment"`
+	NsTable             *common_types.NsTable      `json:"ns_table"`
+	BlockMerkleTreeRoot *common_types.TaggedBase64 `json:"block_merkle_tree_root"`
+	FeeMerkleTreeRoot   *common_types.TaggedBase64 `json:"fee_merkle_tree_root"`
+	FeeInfo             *[]common_types.FeeInfo    `json:"fee_info"`
+	BuilderSignature    *[]common_types.Signature  `json:"builder_signature"`
+	AuctionResults      *SolverAuctionResults      `json:"auction_results"`
 }
 
-func (h *Header) Version() common.Version {
-	return common.Version{Major: 0, Minor: 3}
+func (h *Header) Version() common_types.Version {
+	return common_types.Version{Major: 0, Minor: 3}
 }
 
 func (h *Header) GetBlockHeight() uint64 {
 	return h.Height
 }
-func (h *Header) GetPayloadCommitment() *common.TaggedBase64 {
+func (h *Header) GetPayloadCommitment() *common_types.TaggedBase64 {
 	return h.PayloadCommitment
 }
-func (h *Header) GetBuilderCommitment() *common.TaggedBase64 {
+func (h *Header) GetL1Head() uint64 {
+	return h.L1Head
+}
+func (h *Header) GetTimestamp() uint64 {
+	return h.Timestamp
+}
+func (h *Header) GetBuilderCommitment() *common_types.TaggedBase64 {
 	return h.BuilderCommitment
 }
-func (h *Header) GetNsTable() *common.NsTable {
+func (h *Header) GetNsTable() *common_types.NsTable {
 	return h.NsTable
 }
-func (h *Header) GetBlockMerkleTreeRoot() *common.TaggedBase64 {
+func (h *Header) GetBlockMerkleTreeRoot() *common_types.TaggedBase64 {
 	return h.BlockMerkleTreeRoot
 }
-func (h *Header) GetFeeMerkleTreeRoot() *common.TaggedBase64 {
+func (h *Header) GetFeeMerkleTreeRoot() *common_types.TaggedBase64 {
 	return h.FeeMerkleTreeRoot
 }
 
 func (h *Header) UnmarshalJSON(b []byte) error {
 	type Dec struct {
-		ChainConfig         **common.ResolvableChainConfig `json:"chain_config"`
-		Height              *uint64                        `json:"height"`
-		Timestamp           *uint64                        `json:"timestamp"`
-		L1Head              *uint64                        `json:"l1_head"`
-		L1Finalized         *common.L1BlockInfo            `json:"l1_finalized"           rlp:"nil"`
-		PayloadCommitment   **common.TaggedBase64          `json:"payload_commitment"`
-		BuilderCommitment   **common.TaggedBase64          `json:"builder_commitment"`
-		NsTable             **common.NsTable               `json:"ns_table"`
-		BlockMerkleTreeRoot **common.TaggedBase64          `json:"block_merkle_tree_root"`
-		FeeMerkleTreeRoot   **common.TaggedBase64          `json:"fee_merkle_tree_root"`
-		FeeInfo             **[]common.FeeInfo             `json:"fee_info"`
-		BuilderSignature    *[]common.BuilderSignature     `json:"builder_signature"`
+		ChainConfig         **ResolvableChainConfig     `json:"chain_config"`
+		Height              *uint64                     `json:"height"`
+		Timestamp           *uint64                     `json:"timestamp"`
+		L1Head              *uint64                     `json:"l1_head"`
+		L1Finalized         *common_types.L1BlockInfo   `json:"l1_finalized"           rlp:"nil"`
+		PayloadCommitment   **common_types.TaggedBase64 `json:"payload_commitment"`
+		BuilderCommitment   **common_types.TaggedBase64 `json:"builder_commitment"`
+		NsTable             **common_types.NsTable      `json:"ns_table"`
+		BlockMerkleTreeRoot **common_types.TaggedBase64 `json:"block_merkle_tree_root"`
+		FeeMerkleTreeRoot   **common_types.TaggedBase64 `json:"fee_merkle_tree_root"`
+		FeeInfo             **[]common_types.FeeInfo    `json:"fee_info"`
+		BuilderSignature    *[]common_types.Signature   `json:"builder_signature"`
+		AuctionResults      **SolverAuctionResults      `json:"auction_results"`
 	}
 
 	var dec Dec
@@ -118,22 +127,27 @@ func (h *Header) UnmarshalJSON(b []byte) error {
 
 	h.L1Finalized = dec.L1Finalized
 	h.BuilderSignature = dec.BuilderSignature
+
+	if dec.AuctionResults == nil {
+		return fmt.Errorf("Field auction_results of type Header is required")
+	}
+	h.AuctionResults = *dec.AuctionResults
 	return nil
 }
 
-func (self *Header) Commit() common.Commitment {
-	var l1FinalizedComm *common.Commitment
+func (self *Header) Commit() common_types.Commitment {
+	var l1FinalizedComm *common_types.Commitment
 	if self.L1Finalized != nil {
 		comm := self.L1Finalized.Commit()
 		l1FinalizedComm = &comm
 	}
 
-	var feeInfoComms []common.Commitment
+	var feeInfoComms []common_types.Commitment
 	for _, feeInfo := range *self.FeeInfo {
 		feeInfoComms = append(feeInfoComms, feeInfo.Commit())
 	}
 
-	return common.NewRawCommitmentBuilder("BLOCK").
+	comm := common_types.NewRawCommitmentBuilder("BLOCK").
 		Field("chain_config", self.ChainConfig.Commit()).
 		Uint64Field("height", self.Height).
 		Uint64Field("timestamp", self.Timestamp).
@@ -147,5 +161,12 @@ func (self *Header) Commit() common.Commitment {
 		VarSizeField("block_merkle_tree_root", self.BlockMerkleTreeRoot.Value()).
 		VarSizeField("fee_merkle_tree_root", self.FeeMerkleTreeRoot.Value()).
 		ArrayField("fee_info", feeInfoComms).
+		Field("auction_results", self.AuctionResults.Commit()).
+		Finalize()
+
+	return common.NewRawCommitmentBuilder("BLOCK").
+		Uint64Field("version_major", 0).
+		Uint64Field("version_minor", 3).
+		Field("fields", comm).
 		Finalize()
 }

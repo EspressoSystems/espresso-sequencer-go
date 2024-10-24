@@ -13,10 +13,48 @@ import (
 	common "github.com/ethereum/go-ethereum/common"
 )
 
+// Republic
+type EitherChainConfig0_1 = v01.EitherChainConfig
+type ResolvableChainConfig0_1 = v01.ResolvableChainConfig
+type ChainConfig0_1 = v01.ChainConfig
+
+type EitherChainConfig0_3 = v03.EitherChainConfig
+type ResolvableChainConfig0_3 = v03.ResolvableChainConfig
+type ChainConfig0_3 = v03.ChainConfig
+
+type Header0_1 = v01.Header
+type Header0_2 = v02.Header
+type Header0_3 = v03.Header
+
+type Bytes = common_types.Bytes
+
+type BlockMerkleSnapshot = common_types.BlockMerkleSnapshot
+type Commitment = common_types.Commitment
+type FeeInfo = common_types.FeeInfo
+type HotShotBlockMerkleProof = common_types.HotShotBlockMerkleProof
+type L1BlockInfo = common_types.L1BlockInfo
+type NamespaceProof = common_types.NamespaceProof
+type NsTable = common_types.NsTable
+type Signature = common_types.Signature
+type TaggedBase64 = common_types.TaggedBase64
+type Transaction = common_types.Transaction
+type Version = common_types.Version
+type VidCommon = common_types.VidCommon
+
+type TransactionQueryData = common_types.TransactionQueryData
+type VidCommonQueryData = common_types.VidCommonQueryData
+
+type U256 = common_types.U256
+type U256Decimal = common_types.U256Decimal
+
+var NewU256 = common_types.NewU256
+
 type HeaderInterface interface {
 	Commit() common_types.Commitment
 	Version() common_types.Version
 	GetBlockHeight() uint64
+	GetL1Head() uint64
+	GetTimestamp() uint64
 	GetPayloadCommitment() *common_types.TaggedBase64
 	GetBuilderCommitment() *common_types.TaggedBase64
 	GetNsTable() *common_types.NsTable
@@ -113,9 +151,9 @@ func GetDummyHeader() v0_1.Header {
 	}
 
 	return v0_1.Header{
-		ChainConfig: &common_types.ResolvableChainConfig{
-			ChainConfig: common_types.EitherChainConfig{
-				Left: &common_types.ChainConfig{
+		ChainConfig: &v0_1.ResolvableChainConfig{
+			ChainConfig: v0_1.EitherChainConfig{
+				Left: &v0_1.ChainConfig{
 					ChainId:      *common_types.NewU256().SetUint64(0x8a19).ToDecimal(),
 					MaxBlockSize: *common_types.NewU256().SetUint64(10240).ToDecimal(),
 					BaseFee:      *common_types.NewU256().SetUint64(0).ToDecimal(),
@@ -136,7 +174,7 @@ func GetDummyHeader() v0_1.Header {
 		PayloadCommitment:   payloadCommitment,
 		FeeInfo:             &common_types.FeeInfo{Account: common.HexToAddress("0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"), Amount: *common_types.NewU256().SetUint64(0).ToDecimal()},
 		L1Finalized:         &blockInfo,
-		BuilderSignature: &common_types.BuilderSignature{
+		BuilderSignature: &common_types.Signature{
 			R: common.HexToHash("0x1f92bab6350d4f33e04f9e9278d89f644d0abea16d6f882e91f87bec4e0ba53d"),
 			S: common.HexToHash("0x2067627270a89b06e7486c2c56fef0fee5f49a14b296a1cde580b0b40fa7430f"),
 			V: uint64(27),

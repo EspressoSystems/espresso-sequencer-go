@@ -34,7 +34,7 @@ func (h *Header) GetFeeMerkleTreeRoot() *common.TaggedBase64 {
 	return h.FeeMerkleTreeRoot
 }
 
-func (h *Header) GetBuilderSignature() *common.BuilderSignature {
+func (h *Header) GetBuilderSignature() *common.Signature {
 	return h.BuilderSignature
 }
 

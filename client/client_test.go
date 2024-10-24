@@ -96,7 +96,7 @@ func waitForWith(
 }
 
 func waitForEspressoNode(t *testing.T, ctx context.Context) error {
-	return waitForWith(t, ctx, 400*time.Second, 1*time.Second, func() bool {
+	return waitForWith(t, ctx, 30*time.Second, 1*time.Second, func() bool {
 		out, err := exec.Command("curl", "-s", "-L", "-f", "http://localhost:21000/availability/block/10").Output()
 		if err != nil {
 			log.Warn("error executing curl command:", "err", err)

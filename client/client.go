@@ -32,9 +32,9 @@ func NewClient(url string) *Client {
 }
 
 func (c *Client) FetchVidCommonByHeight(ctx context.Context, blockHeight uint64) (common.VidCommon, error) {
-	var res common.VidCommonQueryData
+	var res types.VidCommonQueryData
 	if err := c.get(ctx, &res, "availability/vid/common/%d", blockHeight); err != nil {
-		return common.VidCommon{}, err
+		return types.VidCommon{}, err
 	}
 	return res.Common, nil
 }
@@ -63,22 +63,22 @@ func (c *Client) FetchHeadersByRange(ctx context.Context, from uint64, until uin
 	return res, nil
 }
 
-func (c *Client) FetchTransactionByHash(ctx context.Context, hash *common.TaggedBase64) (common.TransactionQueryData, error) {
+func (c *Client) FetchTransactionByHash(ctx context.Context, hash *types.TaggedBase64) (types.TransactionQueryData, error) {
 	if hash == nil {
-		return common.TransactionQueryData{}, fmt.Errorf("hash is nil")
+		return types.TransactionQueryData{}, fmt.Errorf("hash is nil")
 	}
-	var res common.TransactionQueryData
+	var res types.TransactionQueryData
 	if err := c.get(ctx, &res, "availability/transaction/hash/%s", hash.String()); err != nil {
-		return common.TransactionQueryData{}, err
+		return types.TransactionQueryData{}, err
 	}
 	return res, nil
 }
 
 // Fetches a block merkle proof at the snapshot rootHeight for the leaf at the provided HotShot height
-func (c *Client) FetchBlockMerkleProof(ctx context.Context, rootHeight uint64, hotshotHeight uint64) (common.HotShotBlockMerkleProof, error) {
-	var res common.HotShotBlockMerkleProof
+func (c *Client) FetchBlockMerkleProof(ctx context.Context, rootHeight uint64, hotshotHeight uint64) (types.HotShotBlockMerkleProof, error) {
+	var res types.HotShotBlockMerkleProof
 	if err := c.get(ctx, &res, "block-state/%d/%d", rootHeight, hotshotHeight); err != nil {
-		return common.HotShotBlockMerkleProof{}, err
+		return types.HotShotBlockMerkleProof{}, err
 	}
 	return res, nil
 }
@@ -94,7 +94,7 @@ func (c *Client) FetchTransactionsInBlock(ctx context.Context, blockHeight uint6
 	}
 
 	// Extract the transactions.
-	var txs []common.Bytes
+	var txs []types.Bytes
 	for i, tx := range *res.Transactions {
 		if tx.Namespace != namespace {
 			return TransactionsInBlock{}, fmt.Errorf("transaction %d has wrong namespace (%d, expected %d)", i, tx.Namespace, namespace)
@@ -123,7 +123,7 @@ func (c *Client) FetchTransactionsInBlock(ctx context.Context, blockHeight uint6
 
 }
 
-func (c *Client) SubmitTransaction(ctx context.Context, tx common.Transaction) (*common.TaggedBase64, error) {
+func (c *Client) SubmitTransaction(ctx context.Context, tx types.Transaction) (*types.TaggedBase64, error) {
 	marshalled, err := json.Marshal(tx)
 	if err != nil {
 		return nil, err
@@ -148,7 +148,7 @@ func (c *Client) SubmitTransaction(ctx context.Context, tx common.Transaction) (
 		return nil, err
 	}
 
-	var hash common.TaggedBase64
+	var hash types.TaggedBase64
 	if err := json.Unmarshal(body, &hash); err != nil {
 		return nil, err
 	}
@@ -156,8 +156,8 @@ func (c *Client) SubmitTransaction(ctx context.Context, tx common.Transaction) (
 }
 
 type NamespaceResponse struct {
-	Proof        *json.RawMessage      `json:"proof"`
-	Transactions *[]common.Transaction `json:"transactions"`
+	Proof        *json.RawMessage     `json:"proof"`
+	Transactions *[]types.Transaction `json:"transactions"`
 }
 
 func (c *Client) get(ctx context.Context, out any, format string, args ...any) error {

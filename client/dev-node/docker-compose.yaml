@@ -1,0 +1,16 @@
+version: '3.9'
+services:
+  espresso-dev-node:
+    image: ghcr.io/espressosystems/espresso-sequencer/espresso-dev-node:main
+    ports:
+      - "$ESPRESSO_SEQUENCER_API_PORT:$ESPRESSO_SEQUENCER_API_PORT"
+      - "$ESPRESSO_BUILDER_PORT:$ESPRESSO_BUILDER_PORT"
+      - "$ESPRESSO_DEV_NODE_PORT:$ESPRESSO_DEV_NODE_PORT"
+    environment:
+      - ESPRESSO_SEQUENCER_API_PORT
+      - ESPRESSO_BUILDER_PORT
+      - ESPRESSO_DEV_NODE_PORT
+      - RUST_LOG=info
+      - RUST_LOG_FORMAT
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

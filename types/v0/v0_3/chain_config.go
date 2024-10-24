@@ -60,14 +60,14 @@ func (self *ResolvableChainConfig) Commit() common_types.Commitment {
 }
 
 type EitherChainConfig struct {
-	Left  *ChainConfig   `json:"Left"`
-	Right **TaggedBase64 `json:"Right"`
+	Left  *ChainConfig   `json:"left"`
+	Right **TaggedBase64 `json:"right"`
 }
 
 func (i *EitherChainConfig) UnmarshalJSON(b []byte) error {
 	type Dec struct {
-		Left  *ChainConfig   `json:"Left"`
-		Right **TaggedBase64 `json:"Right"`
+		Left  *ChainConfig   `json:"left"`
+		Right **TaggedBase64 `json:"right"`
 	}
 	var dec Dec
 	if err := json.Unmarshal(b, &dec); err != nil {
@@ -90,10 +90,10 @@ func (i *EitherChainConfig) UnmarshalJSON(b []byte) error {
 
 func (i *EitherChainConfig) MarshalJSON() ([]byte, error) {
 	type Left struct {
-		Left *ChainConfig `json:"Left"`
+		Left *ChainConfig `json:"left"`
 	}
 	type Right struct {
-		Right **TaggedBase64 `json:"Right"`
+		Right **TaggedBase64 `json:"right"`
 	}
 
 	if i.Left != nil {

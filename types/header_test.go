@@ -22,6 +22,10 @@ func TestVersion(t *testing.T) {
 	if !(v.Major == 0 && v.Minor == 3) {
 		t.Fatalf("%v", v)
 	}
+
+	bytes, err := json.Marshal(v)
+	var a common_types.Version
+	json.Unmarshal(bytes, &a)
 }
 
 func TestHeader0_1(t *testing.T) {
@@ -58,6 +62,29 @@ func TestHeader0_3(t *testing.T) {
 	testHeaderFields(header, t)
 
 	require.Equal(t, header.Commit(), common_types.Commitment{4, 105, 64, 105, 216, 176, 58, 92, 102, 133, 12, 93, 167, 97, 210, 238, 97, 233, 27, 232, 159, 12, 236, 125, 161, 192, 100, 76, 66, 87, 199, 78})
+}
+
+func TestHeaderImplMarshalAndUnmarshal(t *testing.T) {
+	var header HeaderInterface
+	header = getHeaderFromTestFile("./test-data/header0_1.json", t)
+	testHeaderImplMarshalAndUnmarshal(header, t)
+	header = getHeaderFromTestFile("./test-data/header0_2.json", t)
+	testHeaderImplMarshalAndUnmarshal(header, t)
+	header = getHeaderFromTestFile("./test-data/header0_3.json", t)
+	testHeaderImplMarshalAndUnmarshal(header, t)
+}
+
+func testHeaderImplMarshalAndUnmarshal(header HeaderInterface, t *testing.T) {
+	headerImpl := HeaderImpl{Header: header}
+	bytes, err := json.Marshal(headerImpl)
+	if err != nil {
+		t.Fatal("Failed to marshal header", err)
+	}
+	var actualHeaderImpl HeaderImpl
+	err = json.Unmarshal(bytes, &actualHeaderImpl)
+	if err != nil {
+		t.Fatal("failed to unmarshal header", err)
+	}
 }
 
 func testHeaderFields(header HeaderInterface, t *testing.T) {

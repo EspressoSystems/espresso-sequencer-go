@@ -305,3 +305,17 @@ func (v *Version) UnmarshalJSON(b []byte) error {
 
 	return nil
 }
+
+func (v Version) MarshalJSON() ([]byte, error) {
+	type Alias Version
+
+	type Dec struct {
+		Ver Alias `json:"Version"`
+	}
+
+	var dec Dec
+	dec.Ver.Major = v.Major
+	dec.Ver.Minor = v.Minor
+
+	return json.Marshal(dec)
+}

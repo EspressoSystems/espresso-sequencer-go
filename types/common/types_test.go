@@ -1,4 +1,4 @@
-package types
+package common
 
 import (
 	"encoding/json"
@@ -11,11 +11,6 @@ import (
 
 	"github.com/stretchr/testify/require"
 )
-
-func removeWhitespace(s string) string {
-	// Split the string on whitespace then concatenate the segments
-	return strings.Join(strings.Fields(s), "")
-}
 
 // Reference data taken from the reference sequencer implementation
 // (https://github.com/EspressoSystems/espresso-sequencer/blob/main/data)
@@ -30,42 +25,20 @@ var ReferenceNsTable NsTable = NsTable{
 	Bytes: []byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 }
 
-var ReferenceChainConfig = &ResolvableChainConfig{
-	EitherChainConfig{
-		Left: &ChainConfig{
-			ChainId:      *NewU256().SetUint64(0x8a19).ToDecimal(),
-			MaxBlockSize: *NewU256().SetUint64(10240).ToDecimal(),
-			BaseFee:      *NewU256().SetUint64(0).ToDecimal(),
-			FeeContract:  &common.Address{},
-			FeeRecipient: common.Address{},
-		},
-	},
-}
-
 var ReferencePayloadCommitment, _ = tagged_base64.Parse("HASH~1yS-KEtL3oDZDBJdsW51Pd7zywIiHesBZsTbpOzrxOfu")
 var ReferenceBuilderCommitment, _ = tagged_base64.Parse("BUILDER_COMMITMENT~1yS-KEtL3oDZDBJdsW51Pd7zywIiHesBZsTbpOzrxOdZ")
 var ReferenceBlockMerkleTreeRoot, _ = tagged_base64.Parse("MERKLE_COMM~yB4_Aqa35_PoskgTpcCR1oVLh6BUdLHIs7erHKWi-usUAAAAAAAAAAEAAAAAAAAAJg")
 var ReferenceFeeMerkleTreeRoot, _ = tagged_base64.Parse("MERKLE_COMM~VJ9z239aP9GZDrHp3VxwPd_0l28Hc5KEAB1pFeCIxhYgAAAAAAAAAAIAAAAAAAAAdA")
-
-var ReferenceHeader Header = Header{
-	ChainConfig:         ReferenceChainConfig,
-	Height:              42,
-	Timestamp:           789,
-	L1Head:              124,
-	L1Finalized:         &ReferenceL1BLockInfo,
-	PayloadCommitment:   ReferencePayloadCommitment,
-	BuilderCommitment:   ReferenceBuilderCommitment,
-	NsTable:             &ReferenceNsTable,
-	BlockMerkleTreeRoot: ReferenceBlockMerkleTreeRoot,
-	FeeMerkleTreeRoot:   ReferenceFeeMerkleTreeRoot,
-	FeeInfo:             &FeeInfo{Account: common.HexToAddress("0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"), Amount: *NewU256().SetUint64(0).ToDecimal()},
-}
 
 var ReferenceTransaction Transaction = Transaction{
 	Namespace: 12648430,
 	Payload:   []byte{76, 111, 114, 101, 109, 32, 105, 112, 115, 117, 109, 32, 100, 111, 108, 111, 114, 32, 115, 105, 116, 32, 97, 109, 101, 116, 44, 32, 99, 111, 110, 115, 101, 99, 116, 101, 116, 117, 114, 32, 97, 100, 105, 112, 105, 115, 99, 105, 110, 103, 32, 101, 108, 105, 116, 46, 32, 68, 111, 110, 101, 99, 32, 108, 101, 99, 116, 117, 115, 32, 118, 101, 108, 105, 116, 44, 32, 99, 111, 109, 109, 111, 100, 111, 32, 101, 103, 101, 116, 32, 116, 101, 108, 108, 117, 115, 32, 118, 105, 116, 97, 101, 44, 32, 109, 111, 108, 101, 115, 116, 105, 101, 32, 109, 97, 120, 105, 109, 117, 115, 32, 116, 117, 114, 112, 105, 115, 46, 32, 77, 97, 101, 99, 101, 110, 97, 115, 32, 108, 97, 99, 117, 115, 32, 109, 97, 117, 114, 105, 115, 44, 32, 97, 117, 99, 116, 111, 114, 32, 113, 117, 105, 115, 32, 108, 97, 99, 117, 115, 32, 97, 116, 44, 32, 97, 117, 99, 116, 111, 114, 32, 118, 111, 108, 117, 116, 112, 97, 116, 32, 110, 105, 115, 105, 46, 32, 70, 117, 115, 99, 101, 32, 109, 111, 108, 101, 115, 116, 105, 101, 32, 117, 114, 110, 97, 32, 115, 105, 116, 32, 97, 109, 101, 116, 32, 113, 117, 97, 109, 32, 105, 109, 112, 101, 114, 100, 105, 101, 116, 32, 115, 117, 115, 99, 105, 112, 105, 116, 46, 32, 68, 111, 110, 101, 99, 32, 101, 108, 105, 116, 32, 108, 101, 99, 116, 117, 115, 44, 32, 100, 97, 112, 105, 98, 117, 115, 32, 105, 110, 32, 105, 112, 115, 117, 109, 32, 101, 116, 44, 32, 118, 105, 118, 101, 114, 114, 97, 32, 112, 104, 97, 114, 101, 116, 114, 97, 32, 102, 101, 108, 105, 115, 46, 32, 83, 101, 100, 32, 115, 101, 100, 32, 115, 101, 109, 32, 115, 101, 100, 32, 108, 105, 98, 101, 114, 111, 32, 115, 101, 109, 112, 101, 114, 32, 112, 111, 115, 117, 101, 114, 101, 46, 32, 85, 116, 32, 101, 117, 105, 115, 109, 111, 100, 32, 112, 117, 114, 117, 115, 32, 97, 116, 32, 109, 111, 108, 101, 115, 116, 105, 101, 32, 118, 111, 108, 117, 116, 112, 97, 116, 46, 32, 78, 117, 110, 99, 32, 101, 117, 105, 115, 109, 111, 100, 32, 105, 100, 32, 101, 115, 116, 32, 110, 101, 99, 32, 101, 117, 105, 115, 109, 111, 100, 46, 32, 65, 108, 105, 113, 117, 97, 109, 32, 113, 117, 105, 115, 32, 101, 114, 97, 116, 32, 98, 105, 98, 101, 110, 100, 117, 109, 44, 32, 101, 103, 101, 115, 116, 97, 115, 32, 97, 117, 103, 117, 101, 32, 113, 117, 105, 115, 44, 32, 116, 105, 110, 99, 105, 100, 117, 110, 116, 32, 116, 101, 108, 108, 117, 115, 46, 32, 68, 117, 105, 115, 32, 100, 97, 112, 105, 98, 117, 115, 32, 97, 99, 32, 106, 117, 115, 116, 111, 32, 117, 116, 32, 114, 104, 111, 110, 99, 117, 115, 46, 32, 78, 117, 108, 108, 97, 32, 118, 101, 104, 105, 99, 117, 108, 97, 32, 97, 117, 103, 117, 101, 32, 110, 111, 110, 32, 97, 114, 99, 117, 32, 118, 101, 115, 116, 105, 98, 117, 108, 117, 109, 32, 116, 101, 109, 112, 117, 115, 46, 32, 68, 117, 105, 115, 32, 117, 108, 108, 97, 109, 99, 111, 114, 112, 101, 114, 32, 115, 105, 116, 32, 97, 109, 101, 116, 32, 108, 97, 99, 117, 115, 32, 101, 116, 32, 100, 105, 103, 110, 105, 115, 115, 105, 109, 46, 32, 77, 97, 117, 114, 105, 115, 32, 97, 117, 99, 116, 111, 114, 32, 115, 111, 108, 108, 105, 99, 105, 116, 117, 100, 105, 110, 32, 102, 101, 117, 103, 105, 97, 116, 46, 32, 70, 117, 115, 99, 101, 32, 116, 105, 110, 99, 105, 100, 117, 110, 116, 32, 99, 111, 110, 100, 105, 109, 101, 110, 116, 117, 109, 32, 100, 97, 112, 105, 98, 117, 115, 46, 32, 65, 108, 105, 113, 117, 97, 109, 32, 97, 114, 99, 117, 32, 108, 101, 99, 116, 117, 115, 44, 32, 98, 108, 97, 110, 100, 105, 116, 32, 115, 101, 100, 32, 115, 101, 109, 32, 115, 105, 116, 32, 97, 109, 101, 116, 44, 32, 102, 101, 114, 109, 101, 110, 116, 117, 109, 32, 118, 101, 104, 105, 99, 117, 108, 97, 32, 109, 101, 116, 117, 115, 46, 32, 77, 97, 101, 99, 101, 110, 97, 115, 32, 116, 117, 114, 112, 105, 115, 32, 110, 101, 113, 117, 101, 44, 32, 116, 114, 105, 115, 116, 105, 113, 117, 101, 32, 101, 103, 101, 116, 32, 116, 105, 110, 99, 105, 100, 117, 110, 116, 32, 117, 116, 44, 32, 115, 99, 101, 108, 101, 114, 105, 115, 113, 117, 101, 32, 101, 117, 32, 108, 97, 99, 117, 115, 46, 32, 85, 116, 32, 98, 108, 97, 110, 100, 105, 116, 32, 101, 117, 32, 108, 101, 111, 32, 118, 105, 116, 97, 101, 32, 118, 111, 108, 117, 116, 112, 97, 116, 46},
 }
 
+func removeWhitespace(s string) string {
+	// Split the string on whitespace then concatenate the segments
+	return strings.Join(strings.Fields(s), "")
+}
 func TestEspressoTypesL1BLockInfoJson(t *testing.T) {
 	data := []byte(removeWhitespace(`{
 		"number": 123,
@@ -88,54 +61,6 @@ func TestEspressoTypesL1BLockInfoJson(t *testing.T) {
 	require.Equal(t, decoded, ReferenceL1BLockInfo)
 
 	CheckJsonRequiredFields[L1BlockInfo](t, data, "number", "timestamp", "hash")
-}
-
-func TestEspressoTypesHeaderJson(t *testing.T) {
-	data := []byte(removeWhitespace(`{
-		"chain_config": {
-			"chain_config": {
-			  "Left": {
-				"chain_id": "35353",
-				"max_block_size": "10240",
-				"base_fee": "0",
-				"fee_contract": "0x0000000000000000000000000000000000000000",
-				"fee_recipient": "0x0000000000000000000000000000000000000000"
-			  }
-			}
-		},
-		"height": 42,
-		"timestamp": 789,
-		"l1_head": 124,
-		"l1_finalized": {
-			"number": 123,
-			"timestamp": "0x456",
-			"hash": "0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
-		},
-		"payload_commitment": "HASH~1yS-KEtL3oDZDBJdsW51Pd7zywIiHesBZsTbpOzrxOfu",
-		"builder_commitment": "BUILDER_COMMITMENT~1yS-KEtL3oDZDBJdsW51Pd7zywIiHesBZsTbpOzrxOdZ",
-		"ns_table": {
-			"bytes":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-		},
-		"block_merkle_tree_root": "MERKLE_COMM~yB4_Aqa35_PoskgTpcCR1oVLh6BUdLHIs7erHKWi-usUAAAAAAAAAAEAAAAAAAAAJg",
-		"fee_merkle_tree_root": "MERKLE_COMM~VJ9z239aP9GZDrHp3VxwPd_0l28Hc5KEAB1pFeCIxhYgAAAAAAAAAAIAAAAAAAAAdA",
-		"fee_info":{"account":"0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266","amount":"0"}
-	}`))
-
-	// Check encoding.
-	encoded, err := json.Marshal(ReferenceHeader)
-	if err != nil {
-		t.Fatalf("Failed to marshal JSON: %v", err)
-	}
-	require.Equal(t, encoded, data)
-
-	// Check decoding
-	var decoded Header
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		t.Fatalf("Failed to unmarshal JSON: %v", err)
-	}
-	require.Equal(t, decoded, ReferenceHeader)
-
-	CheckJsonRequiredFields[Header](t, data, "height", "timestamp", "l1_head", "payload_commitment", "builder_commitment", "block_merkle_tree_root", "fee_merkle_tree_root", "fee_info", "chain_config")
 }
 
 func TestEspressoTransactionJson(t *testing.T) {
@@ -171,10 +96,6 @@ func TestEspressoTypesL1BlockInfoCommit(t *testing.T) {
 
 func TestEspressoTypesNsTable(t *testing.T) {
 	require.Equal(t, ReferenceNsTable.Commit(), Commitment{24, 191, 165, 16, 16, 48, 53, 144, 229, 119, 16, 233, 201, 36, 89, 64, 40, 77, 158, 105, 253, 188, 220, 221, 32, 2, 252, 91, 209, 13, 58, 232})
-}
-
-func TestEspressoTypesHeaderCommit(t *testing.T) {
-	require.Equal(t, ReferenceHeader.Commit(), Commitment{108, 66, 152, 60, 96, 143, 195, 17, 58, 161, 229, 97, 42, 65, 218, 52, 73, 30, 164, 118, 5, 26, 70, 222, 184, 71, 228, 1, 92, 215, 177, 152})
 }
 
 func TestEspressoTypesTransaction(t *testing.T) {

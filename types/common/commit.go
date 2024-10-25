@@ -1,4 +1,4 @@
-package types
+package common
 
 import (
 	"bytes"
@@ -166,6 +166,15 @@ func (b *RawCommitmentBuilder) VarSizeBytes(bytes Bytes) *RawCommitmentBuilder {
 	// First commit to the length, to prevent length extension and domain collision attacks.
 	b.Uint64(uint64(len(bytes)))
 	b.hasher.Write(bytes)
+	return b
+}
+
+func (b *RawCommitmentBuilder) ArrayField(f string, array []Commitment) *RawCommitmentBuilder {
+	b.ConstantString(f).Uint64(uint64(len(array)))
+
+	for _, e := range array {
+		b.FixedSizeBytes(e[:])
+	}
 	return b
 }
 

@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/EspressoSystems/espresso-sequencer-go/types"
+	types "github.com/EspressoSystems/espresso-sequencer-go/types"
 )
 
 // Interface to the Espresso Sequencer query service.
@@ -13,9 +13,9 @@ type QueryService interface {
 	// Get the latest block number
 	FetchLatestBlockHeight(ctx context.Context) (uint64, error)
 	// Get the header for block number `height`.
-	FetchHeaderByHeight(ctx context.Context, height uint64) (types.Header, error)
+	FetchHeaderByHeight(ctx context.Context, height uint64) (types.HeaderImpl, error)
 	// Get the headers starting from the given :from up until the given :until
-	FetchHeadersByRange(ctx context.Context, from uint64, until uint64) ([]types.Header, error)
+	FetchHeadersByRange(ctx context.Context, from uint64, until uint64) ([]types.HeaderImpl, error)
 	// Get the transactions belonging to the given namespace at the block height,
 	// along with a proof that these are all such transactions.
 	FetchTransactionsInBlock(ctx context.Context, blockHeight uint64, namespace uint64) (TransactionsInBlock, error)

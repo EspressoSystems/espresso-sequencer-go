@@ -4,7 +4,7 @@ import (
 	"context"
 	"math/big"
 
-	"github.com/EspressoSystems/espresso-sequencer-go/types"
+	common_types "github.com/EspressoSystems/espresso-sequencer-go/types/common"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
 )
@@ -13,7 +13,7 @@ var _ LightClientReaderInterface = (*LightClientReader)(nil)
 
 type LightClientReaderInterface interface {
 	ValidatedHeight() (validatedHeight uint64, l1Height uint64, err error)
-	FetchMerkleRoot(hotShotHeight uint64, opts *bind.CallOpts) (types.BlockMerkleSnapshot, error)
+	FetchMerkleRoot(hotShotHeight uint64, opts *bind.CallOpts) (common_types.BlockMerkleSnapshot, error)
 
 	IsHotShotLive(delayThreshold uint64) (bool, error)
 	IsHotShotLiveAtHeight(height, delayThreshold uint64) (bool, error)
@@ -53,16 +53,16 @@ func (l *LightClientReader) ValidatedHeight() (validatedHeight uint64, l1Height 
 
 // Fetch the merkle root at the first light client snapshot that proves the provided hotshot leaf height.
 // CallOpt included as a parameter in case validators need to fetch historical merkle roots if they are catching up.
-func (l *LightClientReader) FetchMerkleRoot(hotShotHeight uint64, opts *bind.CallOpts) (types.BlockMerkleSnapshot, error) {
+func (l *LightClientReader) FetchMerkleRoot(hotShotHeight uint64, opts *bind.CallOpts) (common_types.BlockMerkleSnapshot, error) {
 	snapshot, err := l.LightClient.GetHotShotCommitment(opts, new(big.Int).SetUint64(hotShotHeight))
 	if err != nil {
-		return types.BlockMerkleSnapshot{}, err
+		return common_types.BlockMerkleSnapshot{}, err
 	}
-	root, err := types.CommitmentFromUint256(types.NewU256().SetBigInt(snapshot.HotShotBlockCommRoot))
+	root, err := common_types.CommitmentFromUint256(common_types.NewU256().SetBigInt(snapshot.HotShotBlockCommRoot))
 	if err != nil {
-		return types.BlockMerkleSnapshot{}, err
+		return common_types.BlockMerkleSnapshot{}, err
 	}
-	return types.BlockMerkleSnapshot{
+	return common_types.BlockMerkleSnapshot{
 		Root:   root,
 		Height: snapshot.HotshotBlockHeight,
 	}, nil

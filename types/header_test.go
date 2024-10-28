@@ -16,16 +16,21 @@ func TestVersion(t *testing.T) {
 	var v common_types.Version
 	err := json.Unmarshal(data, &v)
 	if err != nil {
-		t.Fatalf("Failed to marshal JSON: %v", err)
+		t.Fatal("Failed to marshal JSON", err)
 	}
 
 	if !(v.Major == 0 && v.Minor == 3) {
-		t.Fatalf("%v", v)
+		t.Fatal("Get the wrong version", v)
 	}
 
 	bytes, err := json.Marshal(v)
+	if err != nil {
+		t.Fatal("Failed to marshal version", err)
+	}
 	var a common_types.Version
-	json.Unmarshal(bytes, &a)
+	if err = json.Unmarshal(bytes, &a); err != nil {
+		t.Fatal("Failed to unmarshal version", err)
+	}
 }
 
 func TestHeader0_1(t *testing.T) {

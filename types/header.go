@@ -76,6 +76,25 @@ func (h *HeaderImpl) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
+func (h HeaderImpl) MarshalJSON() ([]byte, error) {
+	version := h.Header.Version()
+	if version.Major == 0 && version.Minor == 1 {
+		return json.Marshal(h.Header)
+	}
+
+	var rawHeader RawHeader
+	rawHeader.Version = version
+
+	bytes, err := json.Marshal(h.Header)
+	if err != nil {
+		return nil, err
+	}
+
+	rawHeader.Fields = bytes
+
+	return json.Marshal(rawHeader)
+}
+
 type RawHeader struct {
 	Version common_types.Version `json:"version"`
 	Fields  json.RawMessage      `json:"fields"`

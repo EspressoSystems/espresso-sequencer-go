@@ -10,6 +10,13 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+var (
+	HEADER0_1_COMMITMENT   = common_types.Commitment{118, 29, 74, 165, 219, 239, 197, 43, 231, 156, 250, 78, 139, 108, 136, 220, 51, 160, 242, 30, 165, 182, 189, 138, 191, 93, 226, 71, 54, 208, 190, 211}
+	HEADER0_2_COMMITMENT   = common_types.Commitment{87, 65, 137, 140, 189, 125, 156, 42, 229, 155, 217, 245, 205, 158, 160, 104, 226, 132, 122, 68, 140, 9, 62, 174, 71, 147, 254, 135, 177, 162, 233, 66}
+	HEADER0_3_COMMITMENT   = common_types.Commitment{4, 105, 64, 105, 216, 176, 58, 92, 102, 133, 12, 93, 167, 97, 210, 238, 97, 233, 27, 232, 159, 12, 236, 125, 161, 192, 100, 76, 66, 87, 199, 78}
+	HEADER0_3_2_COMMITMENT = common_types.Commitment{249, 248, 47, 186, 166, 165, 249, 214, 192, 89, 254, 52, 192, 218, 145, 40, 41, 38, 233, 185, 86, 220, 1, 125, 96, 72, 217, 46, 234, 176, 255, 25}
+)
+
 func TestVersion(t *testing.T) {
 	s := `{"Version":{"major":0,"minor":3}}`
 	data := []byte(s)
@@ -42,7 +49,7 @@ func TestHeader0_1(t *testing.T) {
 
 	testHeaderFields(header, t)
 
-	require.Equal(t, header.Commit(), common_types.Commitment{118, 29, 74, 165, 219, 239, 197, 43, 231, 156, 250, 78, 139, 108, 136, 220, 51, 160, 242, 30, 165, 182, 189, 138, 191, 93, 226, 71, 54, 208, 190, 211})
+	require.Equal(t, header.Commit(), HEADER0_1_COMMITMENT)
 }
 
 func TestHeader0_2(t *testing.T) {
@@ -54,7 +61,7 @@ func TestHeader0_2(t *testing.T) {
 
 	testHeaderFields(header, t)
 
-	require.Equal(t, header.Commit(), common_types.Commitment{87, 65, 137, 140, 189, 125, 156, 42, 229, 155, 217, 245, 205, 158, 160, 104, 226, 132, 122, 68, 140, 9, 62, 174, 71, 147, 254, 135, 177, 162, 233, 66})
+	require.Equal(t, header.Commit(), HEADER0_2_COMMITMENT)
 }
 
 func TestHeader0_3(t *testing.T) {
@@ -66,21 +73,26 @@ func TestHeader0_3(t *testing.T) {
 
 	testHeaderFields(header, t)
 
-	require.Equal(t, header.Commit(), common_types.Commitment{4, 105, 64, 105, 216, 176, 58, 92, 102, 133, 12, 93, 167, 97, 210, 238, 97, 233, 27, 232, 159, 12, 236, 125, 161, 192, 100, 76, 66, 87, 199, 78})
+	require.Equal(t, header.Commit(), HEADER0_3_COMMITMENT)
 }
 
 func TestHeaderImplMarshalAndUnmarshal(t *testing.T) {
 	var header HeaderInterface
 	header = getHeaderFromTestFile("./test-data/header0_1.json", t)
-	testHeaderImplMarshalAndUnmarshal(header, t)
+	testHeaderImplMarshalAndUnmarshal(header, t, HEADER0_1_COMMITMENT)
 	header = getHeaderFromTestFile("./test-data/header0_2.json", t)
-	testHeaderImplMarshalAndUnmarshal(header, t)
+	testHeaderImplMarshalAndUnmarshal(header, t, HEADER0_2_COMMITMENT)
 	header = getHeaderFromTestFile("./test-data/header0_3.json", t)
-	testHeaderImplMarshalAndUnmarshal(header, t)
+	testHeaderImplMarshalAndUnmarshal(header, t, HEADER0_3_COMMITMENT)
+	header = getHeaderFromTestFile("./test-data/header0_3_2.json", t)
+	testHeaderImplMarshalAndUnmarshal(header, t, HEADER0_3_2_COMMITMENT)
 }
 
-func testHeaderImplMarshalAndUnmarshal(header HeaderInterface, t *testing.T) {
+func testHeaderImplMarshalAndUnmarshal(header HeaderInterface, t *testing.T, commitment Commitment) {
 	headerImpl := HeaderImpl{Header: header}
+	if headerImpl.Header.Commit() != commitment {
+		t.Fatal("Incorrect commitment")
+	}
 	bytes, err := json.Marshal(headerImpl)
 	if err != nil {
 		t.Fatal("Failed to marshal header", err)
@@ -89,6 +101,10 @@ func testHeaderImplMarshalAndUnmarshal(header HeaderInterface, t *testing.T) {
 	err = json.Unmarshal(bytes, &actualHeaderImpl)
 	if err != nil {
 		t.Fatal("failed to unmarshal header", err)
+	}
+
+	if actualHeaderImpl.Header.Commit() != commitment {
+		t.Fatal("Incorrect commitment after marshal")
 	}
 }
 

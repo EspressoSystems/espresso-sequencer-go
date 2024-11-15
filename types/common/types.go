@@ -269,9 +269,9 @@ func (self *FeeInfo) Commit() Commitment {
 }
 
 type Signature struct {
-	R common.Hash `json:"r"`
-	S common.Hash `json:"s"`
-	V uint64      `json:"v"`
+	R U256   `json:"r"`
+	S U256   `json:"s"`
+	V uint64 `json:"v"`
 }
 
 func (s *Signature) Bytes() [65]byte {

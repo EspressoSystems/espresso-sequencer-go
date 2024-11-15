@@ -96,7 +96,7 @@ func waitForWith(
 }
 
 func waitForEspressoNode(t *testing.T, ctx context.Context) error {
-	return waitForWith(t, ctx, 30*time.Second, 1*time.Second, func() bool {
+	err := waitForWith(t, ctx, 30*time.Second, 1*time.Second, func() bool {
 		out, err := exec.Command("curl", "-s", "-L", "-f", "http://localhost:21000/availability/block/10").Output()
 		if err != nil {
 			log.Warn("error executing curl command:", "err", err)
@@ -105,4 +105,10 @@ func waitForEspressoNode(t *testing.T, ctx context.Context) error {
 
 		return len(out) > 0
 	})
+	if err != nil {
+		return err
+	}
+	// Wait a bit for dev node to be ready totally
+	time.Sleep(5 * time.Second)
+	return nil
 }

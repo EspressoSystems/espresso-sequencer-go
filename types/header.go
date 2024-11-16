@@ -4,13 +4,10 @@ import (
 	"encoding/json"
 	"fmt"
 
-	tagged_base64 "github.com/EspressoSystems/espresso-sequencer-go/tagged-base64"
 	common_types "github.com/EspressoSystems/espresso-sequencer-go/types/common"
-	"github.com/EspressoSystems/espresso-sequencer-go/types/v0/v0_1"
 	v01 "github.com/EspressoSystems/espresso-sequencer-go/types/v0/v0_1"
 	v02 "github.com/EspressoSystems/espresso-sequencer-go/types/v0/v0_2"
 	v03 "github.com/EspressoSystems/espresso-sequencer-go/types/v0/v0_3"
-	common "github.com/ethereum/go-ethereum/common"
 )
 
 // Republic
@@ -154,49 +151,4 @@ func parseHeader(data []byte) (HeaderInterface, error) {
 	}
 
 	return nil, fmt.Errorf("version error: %v", version)
-}
-
-// For some intricate reasons, rollups need to build a dummy header as a placeholder. However, an empty Header can be serialized
-// but can not be deserialized because of the checks. Thus we provide this dummy header as a workaround.
-func GetDummyHeader() v0_1.Header {
-	var payloadCommitment, _ = tagged_base64.Parse("HASH~1yS-KEtL3oDZDBJdsW51Pd7zywIiHesBZsTbpOzrxOfu")
-	var builderCommitment, _ = tagged_base64.Parse("BUILDER_COMMITMENT~1yS-KEtL3oDZDBJdsW51Pd7zywIiHesBZsTbpOzrxOdZ")
-	var blockMerkleTreeRoot, _ = tagged_base64.Parse("MERKLE_COMM~yB4_Aqa35_PoskgTpcCR1oVLh6BUdLHIs7erHKWi-usUAAAAAAAAAAEAAAAAAAAAJg")
-	var feeMerkleTreeRoot, _ = tagged_base64.Parse("MERKLE_COMM~VJ9z239aP9GZDrHp3VxwPd_0l28Hc5KEAB1pFeCIxhYgAAAAAAAAAAIAAAAAAAAAdA")
-	var blockInfo = common_types.L1BlockInfo{
-		Number:    123,
-		Timestamp: *common_types.NewU256().SetUint64(0x456),
-		Hash:      common.Hash{0x01, 0x23, 0x45, 0x67, 0x89, 0xab, 0xcd, 0xef, 0x01, 0x23, 0x45, 0x67, 0x89, 0xab, 0xcd, 0xef, 0x01, 0x23, 0x45, 0x67, 0x89, 0xab, 0xcd, 0xef, 0x01, 0x23, 0x45, 0x67, 0x89, 0xab, 0xcd, 0xef},
-	}
-
-	return v0_1.Header{
-		ChainConfig: &v0_1.ResolvableChainConfig{
-			ChainConfig: v0_1.EitherChainConfig{
-				Left: &v0_1.ChainConfig{
-					ChainId:      *common_types.NewU256().SetUint64(0x8a19).ToDecimal(),
-					MaxBlockSize: *common_types.NewU256().SetUint64(10240).ToDecimal(),
-					BaseFee:      *common_types.NewU256().SetUint64(0).ToDecimal(),
-					FeeContract:  &common.Address{},
-					FeeRecipient: common.Address{},
-				},
-			},
-		},
-		Height:    0,
-		Timestamp: 789,
-		L1Head:    124,
-		NsTable: &common_types.NsTable{
-			Bytes: []byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-		},
-		BlockMerkleTreeRoot: blockMerkleTreeRoot,
-		FeeMerkleTreeRoot:   feeMerkleTreeRoot,
-		BuilderCommitment:   builderCommitment,
-		PayloadCommitment:   payloadCommitment,
-		FeeInfo:             &common_types.FeeInfo{Account: common.HexToAddress("0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"), Amount: *common_types.NewU256().SetUint64(0).ToDecimal()},
-		L1Finalized:         &blockInfo,
-		BuilderSignature: &common_types.Signature{
-			R: common.HexToHash("0x1f92bab6350d4f33e04f9e9278d89f644d0abea16d6f882e91f87bec4e0ba53d"),
-			S: common.HexToHash("0x2067627270a89b06e7486c2c56fef0fee5f49a14b296a1cde580b0b40fa7430f"),
-			V: uint64(27),
-		},
-	}
 }

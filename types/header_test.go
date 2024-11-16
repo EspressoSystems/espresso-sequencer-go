@@ -123,3 +123,36 @@ func getHeaderFromTestFile(path string, t *testing.T) HeaderInterface {
 
 	return headerImpl.Header
 }
+
+func TestUnmarshalSignature(t *testing.T) {
+	// `r` ans `s` are hex string of odd length.
+	// It should be unmarshalled successfully
+	data := `
+{
+    "r": "0xa1c",
+    "s": "0x202",
+    "v": 27
+}
+	`
+	var signature Signature
+	err := json.Unmarshal([]byte(data), &signature)
+	if err != nil {
+		t.Fatal("Error unmarshaling:", err)
+	}
+	expectedR := int64(2588)
+	expectedS := int64(514)
+	expectedV := uint64(27)
+
+	if expectedR != signature.R.Int64() {
+		t.Fatal("getting a wrong r in unmarshal signature")
+	}
+
+	if expectedS != signature.S.Int64() {
+		t.Fatal("getting a wrong r in unmarshal signature")
+	}
+
+	if expectedV != signature.V {
+		t.Fatal("getting a wrong r in unmarshal signature")
+	}
+
+}

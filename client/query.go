@@ -14,6 +14,8 @@ type QueryService interface {
 	FetchLatestBlockHeight(ctx context.Context) (uint64, error)
 	// Get the header for block number `height`.
 	FetchHeaderByHeight(ctx context.Context, height uint64) (types.HeaderImpl, error)
+	// Get the raw header for block number `height`.
+	FetchRawHeaderByHeight(ctx context.Context, height uint64) (json.RawMessage, error)
 	// Get the headers starting from the given :from up until the given :until
 	FetchHeadersByRange(ctx context.Context, from uint64, until uint64) ([]types.HeaderImpl, error)
 	// Get the transactions belonging to the given namespace at the block height,

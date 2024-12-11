@@ -142,7 +142,8 @@ func parseHeader(data []byte) (HeaderInterface, error) {
 		return &header, nil
 	}
 
-	if version.Major == 0 && version.Minor == 3 {
+	// If minor version is not 2, we can assume it will be v0.3 header
+	if version.Major == 0 {
 		var header v03.Header
 		if err := json.Unmarshal(rawHeader.Fields, &header); err != nil {
 			return nil, err

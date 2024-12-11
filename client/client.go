@@ -193,6 +193,9 @@ func (c *Client) getRawMessage(ctx context.Context, format string, args ...any) 
 	// to the json decoder, so that we still have the body and can inspect it if unmarshalling
 	// failed.
 	body, err := io.ReadAll(res.Body)
+	if err != nil {
+		return nil, err
+	}
 	return body, nil
 }
 

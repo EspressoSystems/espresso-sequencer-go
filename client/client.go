@@ -55,6 +55,14 @@ func (c *Client) FetchHeaderByHeight(ctx context.Context, blockHeight uint64) (t
 	return res, nil
 }
 
+func (c *Client) FetchRawHeaderByHeight(ctx context.Context, blockHeight uint64) (json.RawMessage, error) {
+	res, err := c.getRawMessage(ctx, "availability/header/%d", blockHeight)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
+
 func (c *Client) FetchHeadersByRange(ctx context.Context, from uint64, until uint64) ([]types.HeaderImpl, error) {
 	var res []types.HeaderImpl
 	if err := c.get(ctx, &res, "availability/header/%d/%d", from, until); err != nil {
@@ -160,16 +168,16 @@ type NamespaceResponse struct {
 	Transactions *[]types.Transaction `json:"transactions"`
 }
 
-func (c *Client) get(ctx context.Context, out any, format string, args ...any) error {
+func (c *Client) getRawMessage(ctx context.Context, format string, args ...any) (json.RawMessage, error) {
 	url := c.baseUrl + fmt.Sprintf(format, args...)
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	res, err := c.client.Do(req)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer res.Body.Close()
 
@@ -178,13 +186,21 @@ func (c *Client) get(ctx context.Context, out any, format string, args ...any) e
 		// information about why the request failed. If this call fails, the response will be `nil`,
 		// which is fine to include in the log, so we can ignore errors.
 		body, _ := io.ReadAll(res.Body)
-		return fmt.Errorf("request failed with status %d and body %s", res.StatusCode, string(body))
+		return nil, fmt.Errorf("request failed with status %d and body %s", res.StatusCode, string(body))
 	}
 
 	// Read the response body into memory before we unmarshal it, rather than passing the io.Reader
 	// to the json decoder, so that we still have the body and can inspect it if unmarshalling
 	// failed.
 	body, err := io.ReadAll(res.Body)
+	if err != nil {
+		return nil, err
+	}
+	return body, nil
+}
+
+func (c *Client) get(ctx context.Context, out any, format string, args ...any) error {
+	body, err := c.getRawMessage(ctx, format, args...)
 	if err != nil {
 		return err
 	}

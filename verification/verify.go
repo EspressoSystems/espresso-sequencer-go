@@ -1,7 +1,7 @@
 // Copyright 2021-2022, Offchain Labs, Inc.
 // For license information, see https://github.com/nitro/blob/master/LICENSE
 
-package espressocrypto
+package verification
 
 import (
 	"crypto/sha256"
@@ -11,18 +11,6 @@ import (
 
 	espressoTypes "github.com/EspressoSystems/espresso-sequencer-go/types"
 )
-
-func hashTxns(namespace uint32, txns []espressoTypes.Bytes) string {
-	hasher := sha256.New()
-	ns_buf := make([]byte, 4)
-	binary.LittleEndian.PutUint32(ns_buf, namespace)
-	hasher.Write(ns_buf)
-	for _, txn := range txns {
-		hasher.Write(txn)
-	}
-	hashResult := hasher.Sum(nil)
-	return hex.EncodeToString(hashResult)
-}
 
 func VerifyNamespace(
 	namespace uint64,
@@ -54,4 +42,16 @@ func VerifyMerkleProof(
 	circuit_comm_bytes espressoTypes.Commitment,
 ) bool {
 	return verifyMerkleProof(proof, header, []byte(blockComm.String()), circuit_comm_bytes[:])
+}
+
+func hashTxns(namespace uint32, txns []espressoTypes.Bytes) string {
+	hasher := sha256.New()
+	ns_buf := make([]byte, 4)
+	binary.LittleEndian.PutUint32(ns_buf, namespace)
+	hasher.Write(ns_buf)
+	for _, txn := range txns {
+		hasher.Write(txn)
+	}
+	hashResult := hasher.Sum(nil)
+	return hex.EncodeToString(hashResult)
 }

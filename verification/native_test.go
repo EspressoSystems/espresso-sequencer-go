@@ -1,4 +1,4 @@
-package espressocrypto
+package verification
 
 import (
 	"encoding/json"

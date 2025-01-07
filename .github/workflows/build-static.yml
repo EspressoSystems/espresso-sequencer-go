@@ -30,6 +30,12 @@ jobs:
           toolchain: "1.81.0"
           targets: ${{ matrix.target }}
 
+      - name: Set Enviornment
+        if: ${{ matrix.target == 'aarch64-unknown-linux-musl' }}
+        run: |
+          echo CARGO_TARGET_AARCH64_UNKNOWN_LINUX_MUSL_LINKER=aarch64-linux-gnu-gcc >> ${{ github.env }}
+          echo CC=aarch64-linux-gnu-gcc >> ${{ github.env }}
+
       - name: Build Static Library
         run: |
           echo "Building for target: ${{ matrix.target }}"

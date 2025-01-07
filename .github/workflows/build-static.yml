@@ -5,7 +5,7 @@ on:
     branches:
       - main
     tags:
-      - ^v
+      - "v*.*.*"
   pull_request:
   workflow_dispatch:
 
@@ -32,7 +32,9 @@ jobs:
           targets: ${{ matrix.target }}
 
       - name: Set Enviornment
+        # Install tools and set environment variables like this example
         # https://github.com/briansmith/ring/blob/main/mk/cargo.sh
+        # https://github.com/briansmith/ring/blob/main/mk/install-build-tools.sh
         if: ${{ matrix.target == 'aarch64-unknown-linux-gnu' }}
         run: |
           sudo apt-get install qemu-user gcc-aarch64-linux-gnu libc6-dev-arm64-cross
@@ -49,7 +51,7 @@ jobs:
 
       - name: Upload Artifact (Push Only)
         if: github.event_name == 'push'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: static-library-${{ matrix.target }}
           path: target/lib/libespresso_crypto_helper-${{ matrix.target }}.a
@@ -64,13 +66,13 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Download all Artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           path: target/lib
 
-      - name: Upload Release Assets
-        run: |
-          for file in target/lib/*.a; do
-            echo "Uploading $file"
-            gh release upload ${{ github.event.release.tag_name }} "$file" --repo ${{ github.repository }}
-          done
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: target/lib/*
+

@@ -57,17 +57,9 @@ func getFileName() string {
 	var fileName string
 	switch arch {
 	case "amd64":
-		if runtime.GOOS == "darwin" {
-			fileName = "x86_64-apple-darwin"
-		} else if runtime.GOOS == "linux" {
-			fileName = "x86_64-unknown-linux-musl"
-		}
+		fileName = "x86_64-unknown-linux-gnu"
 	case "arm64":
-		if runtime.GOOS == "darwin" {
-			fileName = "aarch64-apple-darwin"
-		} else if runtime.GOOS == "linux" {
-			fileName = "aarch64-unknown-linux-musl"
-		}
+		fileName = "aarch64-unknown-linux-gnu"
 	default:
 		panic(fmt.Sprintf("unsupported: %s", arch))
 	}

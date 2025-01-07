@@ -53,7 +53,7 @@ jobs:
         if: github.event_name == 'push'
         uses: actions/upload-artifact@v4
         with:
-          name: static-library-${{ matrix.target }}
+          name: libespresso_crypto_helper-${{ matrix.target }}.a
           path: target/lib/libespresso_crypto_helper-${{ matrix.target }}.a
 
   release:
@@ -74,5 +74,6 @@ jobs:
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: target/lib/*
+          files: |
+            target/lib/*/*.a
 

@@ -34,8 +34,7 @@ jobs:
       - name: Set Enviornment
         if: ${{ matrix.target == 'aarch64-unknown-linux-gnu' }}
         run: |
-          echo TARGET_AR=llvm-ar-14 >> ${{ github.env }}
-          echo TARGET_CC=clang-14 >> ${{ github.env }}
+          echo CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=aarch64-linux-gnu-gcc >> ${{ github.env }}
 
       - name: Build Static Library
         run: |

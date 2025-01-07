@@ -4,9 +4,9 @@ on:
   push:
     branches:
       - main
-  release:
-    types:
-      - published
+    tags:
+      - ^v
+  pull_request:
   workflow_dispatch:
 
 jobs:
@@ -15,8 +15,8 @@ jobs:
     strategy:
       matrix:
         target:
-          - x86_64-unknown-linux-gnu
-          # - aarch64-unknown-linux-gnu
+          - x86_64-unknown-linux-musl
+          # - aarch64-unknown-linux-musl
           - x86_64-apple-darwin
           - aarch64-apple-darwin
 
@@ -41,7 +41,7 @@ jobs:
           cp ./verification/rust/target/${{ matrix.target }}/release/libespresso_crypto_helper.a target/lib/libespresso_crypto_helper-${{ matrix.target }}.a
 
       - name: Build Static Library for Linux targets
-        if: ${{ runner.os == 'Linux' && runner.os == 'X86' && matrix.target == 'x86_64-unknown-linux-gnu' }}
+        if: ${{ runner.os == 'Linux' && runner.os == 'X86' && matrix.target == 'x86_64-unknown-linux-musl' }}
         run: |
           echo "Building for target: ${{ matrix.target }}"
           mkdir -p target/lib && \

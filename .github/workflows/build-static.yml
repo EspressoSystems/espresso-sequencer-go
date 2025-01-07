@@ -17,7 +17,7 @@ jobs:
       matrix:
         target:
           - x86_64-unknown-linux-gnu
-          - aarch64-unknown-linux-gnu
+          - aarch64-unknown-linux-musl
 
     runs-on: ["ubuntu-latest"]
 
@@ -32,12 +32,15 @@ jobs:
           targets: ${{ matrix.target }}
 
       - name: Set Enviornment
-        if: ${{ matrix.target == 'aarch64-unknown-linux-gnu' }}
+        # https://github.com/briansmith/ring/blob/main/mk/cargo.sh
+        if: ${{ matrix.target == 'aarch64-unknown-linux-musl' }}
         run: |
-          echo CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=aarch64-linux-gnu-gcc >> ${{ github.env }}
+          sudo apt-get install qemu-user
+          echo CARGO_TARGET_AARCH64_UNKNOWN_LINUX_MUSL_RUSTFLAGS="-Clink-self-contained=yes -Clinker=rust-lld" >> ${{ github.env }}
+          echo CARGO_TARGET_AARCH64_UNKNOWN_LINUX_MUSL_RUNNER="qemu-aarch64 -L /usr/aarch64-linux-gnu" >> ${{ github.env }}
 
       - name: Setup upterm session
-        if: ${{ matrix.target == 'aarch64-unknown-linux-gnu' }}
+        if: ${{ matrix.target == 'aarch64-unknown-linux-musl' }}
         uses: lhotari/action-upterm@v1
 
       - name: Build Static Library

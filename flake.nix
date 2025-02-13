@@ -95,6 +95,8 @@
                 golangci-lint
                 gotestsum
 
+                foundry-bin
+
                 # wasm
                 rust-cbindgen
                 wabt

@@ -36,7 +36,7 @@ func (c *MultipleNodesClient) FetchLatestBlockHeight(ctx context.Context) (uint6
 			return height, nil
 		}
 	}
-	return 0, errors.New("no nodes available")
+	return 0, errors.New("fetch latest block height failed with all nodes")
 }
 
 func (c *MultipleNodesClient) FetchHeaderByHeight(ctx context.Context, height uint64) (types.HeaderImpl, error) {
@@ -122,7 +122,14 @@ func (c *MultipleNodesClient) FetchVidCommonByHeight(ctx context.Context, blockH
 }
 
 func (c *MultipleNodesClient) SubmitTransaction(ctx context.Context, tx common.Transaction) (*common.TaggedBase64, error) {
-	return c.nodes[0].SubmitTransaction(ctx, tx)
+	// check if one node is successfullly able to submit the transaction
+	for _, node := range c.nodes {
+		hash, err := node.SubmitTransaction(ctx, tx)
+		if err == nil {
+			return hash, nil
+		}
+	}
+	return nil, errors.New("submit transaction failed with all nodes")
 }
 
 func FetchWithMajority[T any](ctx context.Context, nodes []*T, fetchFunc func(*T) (json.RawMessage, error)) (json.RawMessage, error) {
@@ -154,16 +161,22 @@ func FetchWithMajority[T any](ctx context.Context, nodes []*T, fetchFunc func(*T
 		case res := <-results:
 			if res.err == nil {
 				hash, err := hashNormalizedJSON(res.value)
+				// if err is not nil,
+				// this means that we still increase the response count
+				// but if err is nil, we check if the value is already in the map
+				// and if it is, we increase the count and check for majority
 				if err != nil {
-					return json.RawMessage{}, err
-				}
-				count, _ := valueCount.LoadOrStore(hash, 0)
-				if countInt, ok := count.(int); ok {
-					if countInt+1 >= majorityCount {
-						cancel()
-						return res.value, nil
+					fmt.Printf("error: failed to normalize json value: %v", res)
+				} else {
+					count, _ := valueCount.LoadOrStore(hash, 0)
+					if countInt, ok := count.(int); ok {
+						if countInt+1 >= majorityCount {
+							cancel()
+							return res.value, nil
+						}
+						valueCount.Store(hash, countInt+1)
 					}
-					valueCount.Store(hash, countInt+1)
+
 				}
 			}
 			responseCount++

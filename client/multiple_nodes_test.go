@@ -4,9 +4,12 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"io"
+	"os"
 	"testing"
 	"time"
 
+	types "github.com/EspressoSystems/espresso-sequencer-go/types"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )
@@ -112,6 +115,35 @@ func TestFetchWithMajority(t *testing.T) {
 	})
 	assert.NoError(t, err)
 	assert.Equal(t, json.RawMessage(`[{"data":"value1"}, {"data":"value2"}]`), result)
+
+	// Simulate a scenario where response is nested type
+	mockNode1.On("FetchRawHeaderByHeight", ctx, uint64(7)).Return(json.RawMessage(`{"data":{"key":"value", "key2":"[1,2,3,4]"}}`), nil)
+	mockNode2.On("FetchRawHeaderByHeight", ctx, uint64(7)).Return(json.RawMessage(`{"data":{"key":"value", "key2":"[1,2,3]"}}`), nil)
+	mockNode3.On("FetchRawHeaderByHeight", ctx, uint64(7)).Return(json.RawMessage(`{"data":{"key":"value", "key2":"[1,2,3]"}}`), nil)
+
+	result, err = FetchWithMajority(ctx, nodes, func(node *MockClient) (json.RawMessage, error) {
+		return node.FetchRawHeaderByHeight(ctx, 7)
+	})
+	assert.NoError(t, err)
+	assert.Equal(t, json.RawMessage(`{"data":{"key":"value", "key2":"[1,2,3]"}}`), result)
+
+	// Test with the mock header data
+	header1 := getHeaderFromTestFile("../types/test-data/header0_2.json", t)
+	header2 := getHeaderFromTestFile("../types/test-data/header0_3.json", t)
+	data1, err := json.Marshal(header1)
+	assert.NoError(t, err)
+	data2, err := json.MarshalIndent(header1, "", "  ") // With indent
+	assert.NoError(t, err)
+	data3, err := json.Marshal(header2)
+	assert.NoError(t, err)
+	mockNode1.On("FetchRawHeaderByHeight", ctx, uint64(8)).Return(json.RawMessage(data1), nil)
+	mockNode2.On("FetchRawHeaderByHeight", ctx, uint64(8)).Return(json.RawMessage(data2), nil)
+	mockNode3.On("FetchRawHeaderByHeight", ctx, uint64(8)).Return(json.RawMessage(data3), nil)
+	result, err = FetchWithMajority(ctx, nodes, func(node *MockClient) (json.RawMessage, error) {
+		return node.FetchRawHeaderByHeight(ctx, 8)
+	})
+	assert.NoError(t, err)
+	assert.Equal(t, json.RawMessage(data1), result)
 }
 
 func TestApiWithSingleEspressoDevNode(t *testing.T) {
@@ -150,4 +182,25 @@ func TestApiWithSingleEspressoDevNode(t *testing.T) {
 	if err != nil {
 		t.Fatal("failed to fetch transactions in block", err)
 	}
+}
+
+func getHeaderFromTestFile(path string, t *testing.T) types.HeaderInterface {
+	file, err := os.Open(path)
+	if err != nil {
+		t.Fatal("failed to open file:", err)
+	}
+	defer file.Close()
+
+	data, err := io.ReadAll(file)
+	if err != nil {
+		t.Fatal("Error reading file:", err)
+	}
+
+	var headerImpl types.HeaderImpl
+	err = json.Unmarshal(data, &headerImpl)
+	if err != nil {
+		t.Fatal("Error unmarshaling:", err)
+	}
+
+	return headerImpl.Header
 }

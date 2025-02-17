@@ -166,7 +166,7 @@ func FetchWithMajority[T any](ctx context.Context, nodes []*T, fetchFunc func(*T
 				// but if err is nil, we check if the value is already in the map
 				// and if it is, we increase the count and check for majority
 				if err != nil {
-					fmt.Printf("error: failed to normalize json value: %v", res)
+					fmt.Printf("error: failed to normalize json value: %v, error: %v", res.value, err)
 				} else {
 					count, _ := valueCount.LoadOrStore(hash, 0)
 					if countInt, ok := count.(int); ok {
@@ -194,56 +194,60 @@ func hashNormalizedJSON(data json.RawMessage) (string, error) {
 	if err := json.Unmarshal(data, &obj); err != nil {
 		return "", err
 	}
+	hash, err := normalizeAndHash(obj)
+	if err != nil {
+		return "", err
+	}
+	return hash, nil
+}
 
+func normalizeAndHash(obj interface{}) (string, error) {
 	switch v := obj.(type) {
 	case map[string]interface{}:
-		normalized, err := json.Marshal(normalizeJSON(v))
-		if err != nil {
-			return "", err
-		}
-		hash := sha256.Sum256(normalized)
-		return hex.EncodeToString(hash[:]), nil
+		return normalizeJSONMap(v)
 	case []interface{}:
-		normalized, err := json.Marshal(normalizeJSONArray(v))
+		return normalizeJSONArray(v)
+	default:
+		hash := sha256.Sum256([]byte(fmt.Sprintf("%v", v)))
+		return hex.EncodeToString(hash[:]), nil
+	}
+}
+
+func normalizeJSONMap(obj map[string]interface{}) (string, error) {
+	normalized := make([][]string, len(obj))
+	i := 0
+	for k, v := range obj {
+		s, err := normalizeAndHash(v)
 		if err != nil {
 			return "", err
 		}
-		hash := sha256.Sum256(normalized)
-		return hex.EncodeToString(hash[:]), nil
-	default:
-		return "", errors.New("unsupported JSON type")
+		normalized[i] = []string{k, s}
+		i += 1
 	}
+	sort.SliceStable(normalized, func(i, j int) bool {
+		return normalized[i][0] < normalized[j][0]
+	})
+	normalizedJSON, err := json.Marshal(normalized)
+	if err != nil {
+		return "", err
+	}
+	hash := sha256.Sum256(normalizedJSON)
+	return hex.EncodeToString(hash[:]), nil
 }
 
-func normalizeJSON(obj map[string]interface{}) map[string]interface{} {
-	for k, v := range obj {
-		if m, ok := v.(map[string]interface{}); ok {
-			obj[k] = normalizeJSON(m)
-		}
-	}
-
-	// Sort keys to ensure consistent order
-	keys := make([]string, 0, len(obj))
-	for k := range obj {
-		keys = append(keys, k)
-	}
-	sort.Strings(keys)
-
-	normalized := make(map[string]interface{}, len(obj))
-	for _, k := range keys {
-		normalized[k] = obj[k]
-	}
-	return normalized
-}
-
-func normalizeJSONArray(arr []interface{}) []interface{} {
-	normalized := make([]interface{}, len(arr))
+func normalizeJSONArray(arr []interface{}) (string, error) {
+	normalized := make([]string, len(arr))
 	for i, v := range arr {
-		if m, ok := v.(map[string]interface{}); ok {
-			normalized[i] = normalizeJSON(m)
-		} else {
-			normalized[i] = v
+		s, err := normalizeAndHash(v)
+		if err != nil {
+			return "", err
 		}
+		normalized[i] = s
 	}
-	return normalized
+	normalizedJSON, err := json.Marshal(normalized)
+	if err != nil {
+		return "", err
+	}
+	hash := sha256.Sum256(normalizedJSON)
+	return hex.EncodeToString(hash[:]), nil
 }

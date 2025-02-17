@@ -13,10 +13,10 @@ var workingDir = "./dev-node"
 
 func TestApiWithEspressoDevNode(t *testing.T) {
 	ctx := context.Background()
-	cleanup := runEspresso(t, ctx)
+	cleanup := runEspresso()
 	defer cleanup()
 
-	err := waitForEspressoNode(t, ctx)
+	err := waitForEspressoNode(ctx)
 	if err != nil {
 		t.Fatal("failed to start espresso dev node", err)
 	}
@@ -45,7 +45,7 @@ func TestApiWithEspressoDevNode(t *testing.T) {
 
 }
 
-func runEspresso(t *testing.T, ctx context.Context) func() {
+func runEspresso() func() {
 	shutdown := func() {
 		p := exec.Command("docker", "compose", "down")
 		p.Dir = workingDir
@@ -74,7 +74,6 @@ func runEspresso(t *testing.T, ctx context.Context) func() {
 }
 
 func waitForWith(
-	t *testing.T,
 	ctxinput context.Context,
 	timeout time.Duration,
 	interval time.Duration,
@@ -95,8 +94,8 @@ func waitForWith(
 	}
 }
 
-func waitForEspressoNode(t *testing.T, ctx context.Context) error {
-	err := waitForWith(t, ctx, 30*time.Second, 1*time.Second, func() bool {
+func waitForEspressoNode(ctx context.Context) error {
+	err := waitForWith(ctx, 30*time.Second, 1*time.Second, func() bool {
 		out, err := exec.Command("curl", "-s", "-L", "-f", "http://localhost:21000/availability/block/10").Output()
 		if err != nil {
 			log.Warn("error executing curl command:", "err", err)

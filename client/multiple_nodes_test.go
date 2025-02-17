@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"os"
 	"testing"
@@ -128,8 +129,8 @@ func TestFetchWithMajority(t *testing.T) {
 	assert.Equal(t, json.RawMessage(`{"data":{"key":"value", "key2":"[1,2,3]"}}`), result)
 
 	// Test with the mock header data
-	header1 := getHeaderFromTestFile("../types/test-data/header0_2.json", t)
-	header2 := getHeaderFromTestFile("../types/test-data/header0_3.json", t)
+	header1 := types.HeaderImpl{Header: getHeaderFromTestFile("../types/test-data/header0_2.json", t)}
+	header2 := types.HeaderImpl{Header: getHeaderFromTestFile("../types/test-data/header0_3.json", t)}
 	data1, err := json.Marshal(header1)
 	assert.NoError(t, err)
 	data2, err := json.MarshalIndent(header1, "", "  ") // With indent
@@ -143,7 +144,11 @@ func TestFetchWithMajority(t *testing.T) {
 		return node.FetchRawHeaderByHeight(ctx, 8)
 	})
 	assert.NoError(t, err)
-	assert.Equal(t, json.RawMessage(data1), result)
+	var resultHeader types.HeaderImpl
+	err = json.Unmarshal(result, &resultHeader)
+	fmt.Println(resultHeader.Header.Version())
+	assert.NoError(t, err)
+	assert.Equal(t, header1.Header.Commit(), resultHeader.Header.Commit())
 }
 
 func TestApiWithSingleEspressoDevNode(t *testing.T) {

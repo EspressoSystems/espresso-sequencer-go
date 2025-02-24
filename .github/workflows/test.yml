@@ -46,7 +46,7 @@ jobs:
           go mod tidy
           git diff --exit-code
 
-      - name: build verification
+      - name: Build verification
         run: just build-verification
 
       - name: Test

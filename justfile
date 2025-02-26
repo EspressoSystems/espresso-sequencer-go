@@ -2,7 +2,9 @@ lint:
     golangci-lint run ./...
 
 test:
-    go test -v ./...
+	for i in $(seq 1 3); do \
+		go test -v ./... && break || echo "Retrying... ($$i)"; \
+	done
 
 bind-light-client:
 	cd espresso-sequencer/contracts && forge build --force

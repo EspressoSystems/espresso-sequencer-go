@@ -8,18 +8,50 @@ import (
 	"path"
 	"path/filepath"
 	"runtime"
+
+	"github.com/spf13/cobra"
 )
 
-const targetDir = "../target/lib"
+const targetDir = "../target"
 
-const baseURL = "https://github.com/ImJeremyHe/espresso-sequencer-go/releases/latest/download"
+const baseURL = "https://github.com/EspressoSystems/espresso-sequencer-go/releases"
 
 func main() {
+	var version string
+
+	var rootCmd = &cobra.Command{Use: "app"}
+	var downloadCmd = &cobra.Command{
+		Use:   "download",
+		Short: "Download the static library",
+		Run: func(cmd *cobra.Command, args []string) {
+			download(version)
+		},
+	}
+	downloadCmd.Flags().StringVarP(&version, "version", "v", "latest", "Specify the version to download")
+
+	var cleanCmd = &cobra.Command{
+		Use:   "clean",
+		Short: "Clean the downloaded files",
+		Run: func(cmd *cobra.Command, args []string) {
+			clean()
+		},
+	}
+
+	rootCmd.AddCommand(downloadCmd, cleanCmd)
+	err := rootCmd.Execute()
+	if err != nil {
+		fmt.Printf("Failed to execute command: %s\n", err)
+		os.Exit(1)
+	}
+}
+
+func download(version string) {
 	fileName := getFileName()
 	fileDir := getFileDir()
 	libFilePath := filepath.Join(fileDir, fileName)
 
 	if _, err := os.Stat(libFilePath); err == nil {
+		fmt.Println("File already exists.")
 		return
 	}
 
@@ -28,7 +60,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	url := fmt.Sprintf("%s/%s", baseURL, fileName)
+	url := fmt.Sprintf("%s/download/%s/%s", baseURL, version, fileName)
 
 	resp, err := http.Get(url)
 	if err != nil {
@@ -51,6 +83,16 @@ func main() {
 	}
 
 	fmt.Printf("Static library downloaded to: %s\n", libFilePath)
+}
+
+func clean() {
+	fileDir := getFileDir()
+	err := os.RemoveAll(fileDir)
+	if err != nil {
+		fmt.Printf("Failed to clean files: %s\n", err)
+		os.Exit(1)
+	}
+	fmt.Println("Cleaned downloaded files.")
 }
 
 func getFileName() string {

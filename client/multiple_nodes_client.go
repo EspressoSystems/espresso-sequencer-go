@@ -16,6 +16,7 @@ import (
 
 var _ QueryService = (*MultipleNodesClient)(nil)
 var _ SubmitAPI = (*MultipleNodesClient)(nil)
+var _ EspressoClient = (*MultipleNodesClient)(nil)
 
 type MultipleNodesClient struct {
 	nodes []*Client

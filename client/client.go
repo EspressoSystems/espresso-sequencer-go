@@ -15,6 +15,7 @@ import (
 
 var _ QueryService = (*Client)(nil)
 var _ SubmitAPI = (*Client)(nil)
+var _ EspressoClient = (*Client)(nil)
 
 type Client struct {
 	baseUrl string

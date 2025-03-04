@@ -43,6 +43,11 @@ func TestApiWithEspressoDevNode(t *testing.T) {
 		t.Fatal("failed to fetch headers by range", err)
 	}
 
+	_, err = client.FetchBlockMerkleProof(ctx, 1, blockHeight)
+	if err != nil {
+		t.Fatal("failed to fetch block merkle proof", err)
+	}
+
 }
 
 func runEspresso() func() {

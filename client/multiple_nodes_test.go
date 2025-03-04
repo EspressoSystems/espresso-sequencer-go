@@ -187,6 +187,11 @@ func TestApiWithSingleEspressoDevNode(t *testing.T) {
 	if err != nil {
 		t.Fatal("failed to fetch transactions in block", err)
 	}
+
+	_, err = client.FetchBlockMerkleProof(ctx, 1, blockHeight)
+	if err != nil {
+		t.Fatal("failed to fetch block merkle proof", err)
+	}
 }
 
 func getHeaderFromTestFile(path string, t *testing.T) types.HeaderInterface {

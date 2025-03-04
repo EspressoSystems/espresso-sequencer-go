@@ -70,14 +70,13 @@ func (c *MultipleNodesClient) FetchHeadersByRange(ctx context.Context, from uint
 	return res, nil
 }
 
-func (c *MultipleNodesClient) getWithMajority(ctx context.Context, out any, format string, args ...any) error {
-	body, err := FetchWithMajority(ctx, c.nodes, func(node *Client) (json.RawMessage, error) {
-		return node.getRawMessage(ctx, format, args...)
-	})
-	if err != nil {
-		return err
+// Fetches a block merkle proof at the snapshot rootHeight for the leaf at the provided HotShot height
+func (c *MultipleNodesClient) FetchBlockMerkleProof(ctx context.Context, rootHeight uint64, hotshotHeight uint64) (types.HotShotBlockMerkleProof, error) {
+	var res types.HotShotBlockMerkleProof
+	if err := c.getWithMajority(ctx, &res, "block-state/%d/%d", rootHeight, hotshotHeight); err != nil {
+		return types.HotShotBlockMerkleProof{}, err
 	}
-	return json.Unmarshal(body, out)
+	return res, nil
 }
 
 func (c *MultipleNodesClient) FetchTransactionsInBlock(ctx context.Context, blockHeight uint64, namespace uint64) (TransactionsInBlock, error) {
@@ -133,6 +132,23 @@ func (c *MultipleNodesClient) SubmitTransaction(ctx context.Context, tx common.T
 	return nil, errors.New("submit transaction failed with all nodes")
 }
 
+// An internal helper function that uses FetchWithMajority to handle performing the RPC request
+// and handles deserializing the response
+func (c *MultipleNodesClient) getWithMajority(ctx context.Context, out any, format string, args ...any) error {
+	body, err := FetchWithMajority(ctx, c.nodes, func(node *Client) (json.RawMessage, error) {
+		return node.getRawMessage(ctx, format, args...)
+	})
+	if err != nil {
+		return err
+	}
+	return json.Unmarshal(body, out)
+}
+
+
+// FetchWithMajority takes a list of clients  and a fetch function.
+// The fetch function is called on each client. The resulting RPC responses have their json normalized, hashed, and compared.
+// If a majority of the clients return the same json (after normalization) then this function will return the json result that has
+// agreement from a quorom of the clients.
 func FetchWithMajority[T any](ctx context.Context, nodes []*T, fetchFunc func(*T) (json.RawMessage, error)) (json.RawMessage, error) {
 	type result struct {
 		value json.RawMessage

@@ -25,8 +25,8 @@ type QueryService interface {
 	FetchTransactionByHash(ctx context.Context, hash *types.TaggedBase64) (types.TransactionQueryData, error)
 	// Get the VidCommon for the given block height.
 	FetchVidCommonByHeight(ctx context.Context, blockHeight uint64) (types.VidCommon, error)
-  // Fetch the block merkle proof for the supplied snapshot root height at the provided hotshot height.
-  FetchBlockMerkleProof(ctx context.Context, rootHeight uint64, hotshotHeight uint64) (types.HotShotBlockMerkleProof, error) 
+   // Fetch the block merkle proof for the supplied snapshot root height at the provided hotshot height.
+   FetchBlockMerkleProof(ctx context.Context, rootHeight uint64, hotshotHeight uint64) (types.HotShotBlockMerkleProof, error) 
 }
 
 // Response to `FetchTransactionsInBlock`

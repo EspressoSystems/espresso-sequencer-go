@@ -69,6 +69,14 @@ func (c *MultipleNodesClient) FetchHeadersByRange(ctx context.Context, from uint
 	return res, nil
 }
 
+func (c *MultipleNodesClient) FetchBlockMerkleProof(ctx context.Context, rootHeight uint64, hotshotHeight uint64) (types.HotShotBlockMerkleProof, error) {
+	var res types.HotShotBlockMerkleProof
+	if err := c.getWithMajority(ctx, &res, "block-state/%d/%d", rootHeight, hotshotHeight); err != nil {
+		return types.HotShotBlockMerkleProof{}, err
+	}
+	return res, nil
+}
+
 func (c *MultipleNodesClient) getWithMajority(ctx context.Context, out any, format string, args ...any) error {
 	body, err := FetchWithMajority(ctx, c.nodes, func(node *Client) (json.RawMessage, error) {
 		return node.getRawMessage(ctx, format, args...)
